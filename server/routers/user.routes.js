@@ -5,7 +5,10 @@ import {
   loginUser,
   logOut,
   registerUser,
+  updateUserProofile,
+  userProfile,
 } from "../controllers/user.controller.js";
+import { isAuthenticated } from "../middleware/auth.js";
 
 const router = Router();
 
@@ -13,5 +16,9 @@ const router = Router();
 router.route("/register").post(upload.single("profileImage"), registerUser);
 router.route("/login").post(loginUser);
 router.route("/logout").get(logOut);
+router.route("/profile/:id").get(isAuthenticated, userProfile);
+router
+  .route("/updateuserprofile/:id")
+  .put(isAuthenticated, upload.single("profileImage"), updateUserProofile);
 
 export default router;

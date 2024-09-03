@@ -92,17 +92,18 @@ export const loginUser = async (req, res) => {
     // finding user has registered or not
 
     const user = await User.findOne({ email });
-    if (!user)
+    if (!user) {
       return res
         .status(401)
         .json({ message: "User not found", success: false });
+    }
 
     // checking password is correct or not
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Incorrect password " });
     }
-    const token = generateToken([user._id, user.fullName]);
+    const token = generateToken(user._id);
 
     setTokenCookie(res, token);
 
@@ -130,5 +131,66 @@ export const logOut = async (req, res) => {
   } catch (error) {
     console.error(`Error While LogOut: ${error.message}`);
     return res.status(500).json({ message: "Error While LogOut" });
+  }
+};
+
+// get userProfile
+
+export const userProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User Not Found", success: false });
+    }
+    return res
+      .status(200)
+      .json({ message: "User Profile", user, success: true });
+  } catch (error) {
+    console.error(`Error While gettingProfile: ${error.message}`);
+    return res.status(500).json({ message: "Error While getting profile" });
+  }
+};
+
+// update  userProfile
+
+export const updateUserProofile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { fullName, username } = req.body;
+    let profileImageLocalPath = req.file ? req.file.path : null;
+
+    // finding user
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: "User Not Found" });
+
+    // prepare for update the profile
+    const updates = {};
+    if (fullName) updates.fullName = fullName;
+    if (username) updates.username = username;
+    if (profileImageLocalPath) {
+      const profileImage = await uploadOnCloudinary(profileImageLocalPath);
+      updates.profileImage = profileImage.url;
+    }
+
+    // now update user profile
+    const updatedUser = await User.findByIdAndUpdate(id, updates, {
+      new: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res
+        .status(403)
+        .json({ message: "Failed to Update", success: false });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Updated Successfully", updatedUser, success: true });
+  } catch (error) {
+    console.error(`Error While updating: ${error.message}`);
+    return res.status(500).json({ message: "Error While updating" });
   }
 };
