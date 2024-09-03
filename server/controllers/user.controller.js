@@ -194,3 +194,53 @@ export const updateUserProofile = async (req, res) => {
     return res.status(500).json({ message: "Error While updating" });
   }
 };
+
+// change password
+export const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const { id } = req.params;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        message: "currentPassword & newPassword required ",
+        success: false,
+      });
+    }
+    if (newPassword.length <= 6) {
+      return res.status(400).json({
+        message: "New password must be longer than 6 characters",
+        success: false,
+      });
+    }
+
+    // finding logged in user
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+    // Check if current password is correct.
+    const isPasswordMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    // checking password is correct or not
+    if (!isPasswordMatch) {
+      return res
+        .status(403)
+        .json({ message: "Current password is in Incorrect", success: false });
+    }
+    // now hashing the password
+    const hashPassword = await bcrypt.hash(newPassword, 16);
+    // saving the new password
+    user.password = hashPassword;
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "Password updated successfully", success: true });
+  } catch (error) {
+    console.error(`Error While updating password: ${error.message}`);
+    return res.status(500).json({ message: "Error While updating password" });
+  }
+};

@@ -2,6 +2,7 @@
 import { Router } from "express";
 import { upload } from "../middleware/multer.js";
 import {
+  changePassword,
   loginUser,
   logOut,
   registerUser,
@@ -20,5 +21,6 @@ router.route("/profile/:id").get(isAuthenticated, userProfile);
 router
   .route("/updateuserprofile/:id")
   .put(isAuthenticated, upload.single("profileImage"), updateUserProofile);
+router.route("/updatepassword/:id").put(isAuthenticated, changePassword);
 
 export default router;
