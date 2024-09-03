@@ -20,8 +20,10 @@ app.use(
 // routes
 
 import userRoute from "./routers/user.routes.js";
+import vlogRoute from "./routers/vlog.routes.js";
 
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/vlog", vlogRoute);
 
 // getting app
 app.get("/", (req, res) => {
