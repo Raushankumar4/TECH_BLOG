@@ -14,10 +14,12 @@ const vlogSchema = new Schema(
       type: String,
       required: false,
     },
-    comment: {
-      type: Array,
-      default: [],
-    },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   { timestamps: true }
 );

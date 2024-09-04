@@ -2,8 +2,10 @@ import { Router } from "express";
 import { isAuthenticated } from "../middleware/auth.js";
 import { upload } from "../middleware/multer.js";
 import {
+  addComment,
   deleteVlog,
   getAllPosts,
+  getComments,
   getMyPosts,
   postTheVlog,
   updatePost,
@@ -20,5 +22,7 @@ router
   .put(isAuthenticated, upload.single("postImage"), updatePost);
 router.route("/myposts/:id").get(isAuthenticated, getMyPosts);
 router.route("/allposts").get(isAuthenticated, getAllPosts);
+router.route("/comment").post(isAuthenticated, addComment);
+router.route("/comment/:vlogId").get(isAuthenticated, getComments);
 
 export default router;

@@ -1,4 +1,5 @@
 import { Vlog } from "../models/vlog.model.js";
+import { Comment } from "../models/comment.model.js";
 import {
   deleteFromCloudinary,
   uploadOnCloudinary,
@@ -183,4 +184,48 @@ export const getAllPosts = async (req, res) => {
   }
 };
 
+// add comment on post
 
+export const addComment = async (req, res) => {
+  try {
+    const { userId, vlogId, text } = req.body;
+    if (!userId || !vlogId || !text) {
+      return res.status(400).json({
+        message: "User ID, Vlog ID, and text are required",
+        success: false,
+      });
+    }
+    // create comment
+    const comment = new Comment({ userId, vlogId, text });
+    await comment.save();
+    // Add the comment to the vlog's comments array
+    await Vlog.findByIdAndUpdate(vlogId, { $push: { comments: comment._id } });
+    return res
+      .status(200)
+      .json({ message: "Comment added successfully", success: true, comment });
+  } catch (error) {
+    console.error(`Error while adding comment: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while adding comment" });
+  }
+};
+
+
+// Get comments for a post
+export const getComments = async (req, res) => {
+  try {
+    const { vlogId } = req.params;
+
+    // Find the vlog and populate comments
+    const vlog = await Vlog.findById(vlogId).populate('comments');
+    if (!vlog) {
+      return res.status(404).json({ message: 'Vlog not found', success: false });
+    }
+
+    return res.status(200).json({ comments: vlog.comments, success: true });
+  } catch (error) {
+    console.error(`Error while getting comments: ${error.message}`);
+    return res.status(500).json({ message: 'Internal server error while getting comments' });
+  }
+};

@@ -3,33 +3,35 @@ import mongoose, { Schema } from "mongoose";
 const userSchema = new Schema(
   {
     fullName: {
-      type: "String",
+      type: String,
       required: true,
     },
     username: {
-      type: "String",
+      type: String,
       required: true,
       trim: true,
     },
     email: {
-      type: "String",
+      type: String,
       required: true,
       trim: true,
       unique: true,
     },
     password: {
-      type: "String",
+      type: String,
       required: true,
       trim: true,
     },
     profileImage: {
-      type: "String",
+      type: String,
       required: false,
     },
-    savedPost: {
-      type: Array,
-      default: [],
-    },
+    savedPosts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Vlog",
+      },
+    ],
   },
   { timestamps: true }
 );
