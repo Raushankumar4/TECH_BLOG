@@ -28,7 +28,7 @@ const userSchema = new Schema(
     },
     savedPosts: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.Mixed,
         ref: "Vlog",
       },
     ],

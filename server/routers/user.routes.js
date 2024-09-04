@@ -6,6 +6,7 @@ import {
   loginUser,
   logOut,
   registerUser,
+  savePost,
   updateUserProofile,
   userProfile,
 } from "../controllers/user.controller.js";
@@ -22,5 +23,6 @@ router
   .route("/updateuserprofile/:id")
   .put(isAuthenticated, upload.single("profileImage"), updateUserProofile);
 router.route("/updatepassword/:id").put(isAuthenticated, changePassword);
+router.route("/savepost").post(isAuthenticated, savePost);
 
 export default router;
