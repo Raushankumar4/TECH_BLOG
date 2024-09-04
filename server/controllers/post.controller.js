@@ -211,21 +211,94 @@ export const addComment = async (req, res) => {
   }
 };
 
-
 // Get comments for a post
 export const getComments = async (req, res) => {
   try {
     const { vlogId } = req.params;
 
     // Find the vlog and populate comments
-    const vlog = await Vlog.findById(vlogId).populate('comments');
+    const vlog = await Vlog.findById(vlogId).populate("comments");
     if (!vlog) {
-      return res.status(404).json({ message: 'Vlog not found', success: false });
+      return res
+        .status(404)
+        .json({ message: "Vlog not found", success: false });
     }
 
     return res.status(200).json({ comments: vlog.comments, success: true });
   } catch (error) {
     console.error(`Error while getting comments: ${error.message}`);
-    return res.status(500).json({ message: 'Internal server error while getting comments' });
+    return res
+      .status(500)
+      .json({ message: "Internal server error while getting comments" });
+  }
+};
+
+// Delete a comment
+
+export const deleteComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+
+    // Find and delete the comment
+    const comment = await Comment.findOneAndDelete(commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ message: "Comment not found", success: false });
+    }
+
+    // Remove the comment from the associated vlog's comments array
+    await Vlog.findByIdAndUpdate(comment.vlogId, {
+      $pull: { comments: commentId },
+    });
+
+    return res
+      .status(200)
+      .json({ message: "Comment deleted successfully", success: true });
+  } catch (error) {
+    console.error(`Error while deleting comment: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while deleting comment" });
+  }
+};
+
+// update comment
+
+export const updateComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const { text } = req.body;
+
+    if (!text) {
+      return res
+        .status(400)
+        .json({ message: "Text field is required", success: false });
+    }
+
+    // Find and update the comment
+    const comment = await Comment.findByIdAndUpdate(
+      commentId,
+      { text },
+      { new: true }
+    );
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ message: "Comment not found", success: false });
+    }
+
+    return res
+      .status(200)
+      .json({
+        message: "Comment updated successfully",
+        success: true,
+        comment,
+      });
+  } catch (error) {
+    console.error(`Error while updating comment: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while updating comment" });
   }
 };
