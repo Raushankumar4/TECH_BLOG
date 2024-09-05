@@ -3,6 +3,8 @@ import { Router } from "express";
 import { upload } from "../middleware/multer.js";
 import {
   changePassword,
+  contactUs,
+  getOtherUsers,
   getSavedPosts,
   loginUser,
   logOut,
@@ -27,8 +29,8 @@ router
 router.route("/updatepassword/:id").put(isAuthenticated, changePassword);
 router.route("/savepost").post(isAuthenticated, savePost);
 router.route("/unsavepost").post(isAuthenticated, unsavePost);
-router.route("/getsavedPost/:userId").get(isAuthenticated,getSavedPosts);
-
-
+router.route("/getsavedPost/:userId").get(isAuthenticated, getSavedPosts);
+router.route("/getotherusers/:id").get(isAuthenticated, getOtherUsers);
+router.route("/contactus").post(contactUs);
 
 export default router;

@@ -6,6 +6,7 @@ import {
   removeTokenCookie,
   setTokenCookie,
 } from "../utils/generateToken.js";
+import { Contact } from "../models/contactus.model.js";
 
 // register user
 export const registerUser = async (req, res) => {
@@ -316,29 +317,90 @@ export const getSavedPosts = async (req, res) => {
 
 export const unsavePost = async (req, res) => {
   try {
-  const { userId, postId } = req.body;
-  if (!userId || !postId) {
-  return res.status(400).json({ message: 'User ID and Post ID are required', success: false });
-  }
-  
-      // Find the user and remove the post from saved posts
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found', success: false });
-      }
-  
-      if (!user.savedPosts.includes(postId)) {
-        return res.status(400).json({ message: 'Post not found in saved posts', success: false });
-      }
-  
-      // Remove the post from saved posts
-      user.savedPosts = user.savedPosts.filter(id => id.toString() !== postId.toString());
-      await user.save();
-  
-      return res.status(200).json({ message: 'Post unsaved successfully', success: true });
-  
+    const { userId, postId } = req.body;
+    if (!userId || !postId) {
+      return res
+        .status(400)
+        .json({ message: "User ID and Post ID are required", success: false });
+    }
+
+    // Find the user and remove the post from saved posts
+    const user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    if (!user.savedPosts.includes(postId)) {
+      return res
+        .status(400)
+        .json({ message: "Post not found in saved posts", success: false });
+    }
+
+    // Remove the post from saved posts
+    user.savedPosts = user.savedPosts.filter(
+      (id) => id.toString() !== postId.toString()
+    );
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ message: "Post unsaved successfully", success: true });
   } catch (error) {
-  console.error(`Error while unsaving post: ${error.message}`);
-  return res.status(500).json({ message: 'Internal server error while unsaving post' });
+    console.error(`Error while unsaving post: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while unsaving post" });
   }
-  };
+};
+
+// get other user
+export const getOtherUsers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const otherUsers = await User.find({ _id: { $ne: id } }).select(
+      "-password"
+    );
+    if (!otherUsers) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+    return res
+      .status(200)
+      .json({ message: "All Other Users", otherUsers, success: true });
+  } catch (error) {
+    console.error(`Error while ugetting OtherUsers: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while getting OtherUsers" });
+  }
+};
+
+// contact us
+
+export const contactUs = async (req, res) => {
+  try {
+    const { name, email, phone, message } = req.body;
+    if (!name || !email || !phone || !message) {
+      return res
+        .status(400)
+        .json({ message: "All fields are required", success: false });
+    }
+    const sendMessage = await Contact.create({ name, email, phone, message });
+    if (!sendMessage) {
+      return res
+        .status(400)
+        .json({ message: "Message not sent", success: false });
+    }
+    return res
+      .status(200)
+      .json({ message: "Message sent successfully", success: true });
+  } catch (error) {
+    console.error(`Error while Sending Message: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while Sending Message" });
+  }
+};

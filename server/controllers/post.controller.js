@@ -288,13 +288,11 @@ export const updateComment = async (req, res) => {
         .json({ message: "Comment not found", success: false });
     }
 
-    return res
-      .status(200)
-      .json({
-        message: "Comment updated successfully",
-        success: true,
-        comment,
-      });
+    return res.status(200).json({
+      message: "Comment updated successfully",
+      success: true,
+      comment,
+    });
   } catch (error) {
     console.error(`Error while updating comment: ${error.message}`);
     return res
