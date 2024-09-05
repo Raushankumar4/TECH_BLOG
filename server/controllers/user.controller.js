@@ -6,8 +6,6 @@ import {
   removeTokenCookie,
   setTokenCookie,
 } from "../utils/generateToken.js";
-import mongoose from "mongoose";
-import { Vlog } from "../models/vlog.model.js";
 
 // register user
 export const registerUser = async (req, res) => {
@@ -248,21 +246,14 @@ export const changePassword = async (req, res) => {
 };
 
 // saved another user vlog
-
 export const savePost = async (req, res) => {
   try {
     const { userId, postId } = req.body;
 
-    // Validate input
-    if (
-      !userId ||
-      !postId ||
-      !mongoose.Types.ObjectId.isValid(userId) ||
-      !mongoose.Types.ObjectId.isValid(postId)
-    ) {
+    if (!userId || !postId) {
       return res
         .status(400)
-        .json({ message: "Invalid User ID or Post ID", success: false });
+        .json({ message: "User ID and Post ID are required", success: false });
     }
 
     // Find the user
@@ -273,23 +264,18 @@ export const savePost = async (req, res) => {
         .json({ message: "User not found", success: false });
     }
 
-    // Check if the post exists
-    const vlog = await Vlog.findById(postId);
-    if (!vlog) {
-      return res
-        .status(404)
-        .json({ message: "Post not found", success: false });
-    }
+    // Ensure savedPosts is initialized as an array
+    user.savedPosts = user.savedPosts || [];
 
     // Check if the post is already saved
-    if (user.savedPosts.some((post) => post._id.toString() === postId)) {
+    if (user.savedPosts.includes(postId)) {
       return res
         .status(400)
         .json({ message: "Post already saved", success: false });
     }
 
-    // Save the whole vlog document
-    user.savedPosts.push(vlog);
+    // Save the post
+    user.savedPosts.push(postId);
     await user.save();
 
     return res
@@ -297,11 +283,62 @@ export const savePost = async (req, res) => {
       .json({ message: "Post saved successfully", success: true });
   } catch (error) {
     console.error(`Error while saving post: ${error.message}`);
-    return res
-      .status(500)
-      .json({
-        message: "Internal server error while saving post",
-        success: false,
-      });
+    return res.status(500).json({
+      message: "Internal server error while saving post",
+      success: false,
+    });
   }
 };
+
+// Get saved posts for a user
+export const getSavedPosts = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Find the user and populate saved posts
+    const user = await User.findById(userId).populate("savedPosts");
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    return res.status(200).json({ savedPosts: user.savedPosts, success: true });
+  } catch (error) {
+    console.error(`Error while getting saved posts: ${error.message}`);
+    return res
+      .status(500)
+      .json({ message: "Internal server error while getting saved posts" });
+  }
+};
+
+// unsave post
+
+export const unsavePost = async (req, res) => {
+  try {
+  const { userId, postId } = req.body;
+  if (!userId || !postId) {
+  return res.status(400).json({ message: 'User ID and Post ID are required', success: false });
+  }
+  
+      // Find the user and remove the post from saved posts
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found', success: false });
+      }
+  
+      if (!user.savedPosts.includes(postId)) {
+        return res.status(400).json({ message: 'Post not found in saved posts', success: false });
+      }
+  
+      // Remove the post from saved posts
+      user.savedPosts = user.savedPosts.filter(id => id.toString() !== postId.toString());
+      await user.save();
+  
+      return res.status(200).json({ message: 'Post unsaved successfully', success: true });
+  
+  } catch (error) {
+  console.error(`Error while unsaving post: ${error.message}`);
+  return res.status(500).json({ message: 'Internal server error while unsaving post' });
+  }
+  };

@@ -3,10 +3,12 @@ import { Router } from "express";
 import { upload } from "../middleware/multer.js";
 import {
   changePassword,
+  getSavedPosts,
   loginUser,
   logOut,
   registerUser,
   savePost,
+  unsavePost,
   updateUserProofile,
   userProfile,
 } from "../controllers/user.controller.js";
@@ -24,5 +26,9 @@ router
   .put(isAuthenticated, upload.single("profileImage"), updateUserProofile);
 router.route("/updatepassword/:id").put(isAuthenticated, changePassword);
 router.route("/savepost").post(isAuthenticated, savePost);
+router.route("/unsavepost").post(isAuthenticated, unsavePost);
+router.route("/getsavedPost/:userId").get(isAuthenticated,getSavedPosts);
+
+
 
 export default router;
