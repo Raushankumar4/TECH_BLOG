@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
@@ -12,7 +15,7 @@ app.use(cookieParser());
 // CORS configuration
 app.use(
   cors({
-    origin: process.env.FRONTENTED_URI,
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
