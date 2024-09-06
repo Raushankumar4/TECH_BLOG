@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import defaultImage from "../../../../public/default.jpg";
 import axios from "axios";
-import { url } from "../../../constant";
+import { url, user } from "../../../constant";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
@@ -62,20 +62,16 @@ const SignUp = () => {
       if (userInput.profileImage)
         formData.append("profileImage", userInput.profileImage);
 
-      const { data } = await axios.post(
-        `${url}/api/v1/user/register`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const { data } = await axios.post(`${url}${user}/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setIsLoading(false);
       toast.success(data.message);
       navigate("/login");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message || error.message);
       setIsLoading(false);
     }
   };
@@ -212,14 +208,14 @@ const SignUp = () => {
                 type="submit"
                 className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Sign Up
+                {isLoading ? "Signing Up..." : "Sign Up"}
               </button>
             </form>
           </div>
           <div className="mt-4 text-sm text-gray-500">
             Already have an account?{" "}
             <Link to="/login" className="font-medium text-blue-600 underline">
-              {isLoading ? "Loading..." : "Login"}
+              Login
             </Link>
           </div>
         </div>

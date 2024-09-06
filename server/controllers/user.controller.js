@@ -86,12 +86,13 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
+    if (!email || !password) {
       return res
         .status(401)
-        .json({ message: "Please enter email or password" });
-    // finding user has registered or not
+        .json({ message: "Please enter email and password" });
+    }
 
+    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res
@@ -99,24 +100,29 @@ export const loginUser = async (req, res) => {
         .json({ message: "User not found", success: false });
     }
 
-    // checking password is correct or not
+    // Check if the password is correct
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
-      return res.status(401).json({ message: "Incorrect password " });
+      return res.status(401).json({ message: "Incorrect password" });
     }
+
+    // Generate JWT token
     const token = generateToken(user._id);
 
+    // Set the token in a cookie
     setTokenCookie(res, token);
 
+    // Respond with a success message and user details without the password
+    const { password: userPassword, ...userWithoutPassword } = user.toObject();
     return res.status(200).json({
       message: `Welcome ${user.fullName}`,
-      user,
+      user: userWithoutPassword, // Send user details without the password
       token,
       success: true,
     });
   } catch (error) {
-    console.error(`Error While login: ${error.message}`);
-    return res.status(500).json({ message: "Error While login" });
+    console.error(`Error while logging in: ${error.message}`);
+    return res.status(500).json({ message: "Error while logging in" });
   }
 };
 
