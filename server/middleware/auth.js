@@ -43,3 +43,31 @@ export const isAuthenticated = async (req, res, next) => {
     );
   }
 };
+
+
+
+// import jwt from "jsonwebtoken";
+// import dotenv from "dotenv";
+
+// dotenv.config();
+
+// Middleware to check if the user is authenticated
+// const isAuthenticated = (req, res, next) => {
+//   const token = req.cookies.token;
+//   if (!token) {
+//     return res
+//       .status(401)
+//       .json({ message: "No token provided, authentication required." });
+//   }
+
+//   jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+//     if (err) {
+//       return res.status(403).json({ message: "Invalid token, access denied." });
+//     }
+//     req.user = user;
+//     next();
+//   });
+// };
+
+// export { isAuthenticated };
+

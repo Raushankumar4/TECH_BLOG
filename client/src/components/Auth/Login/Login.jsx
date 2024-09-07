@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { url, user } from "../../../constant";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { loginSuccess } from "../../Redux/Store/Slices/authslice";
 import { setUser } from "../../Redux/Store/Slices/userSlice";
+import Modal from "../../Modal/Modal";
+import SignUp from "../SignUp/SignUp";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +15,8 @@ const Login = () => {
     email: "",
     password: "",
   });
-
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const navgivate = useNavigate();
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setUserInput((prevInp) => ({
@@ -38,12 +41,12 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       setIsLoading(false);
-      toast.error(error.response.data.message || error.message);
+      toast.error(error?.response?.data?.message || error.message);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4 sm:p-8">
+    <div className="flex flex-col items-center justify-center   p-4 sm:p-8">
       <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-white">
         <div className="text-center mb-6">
           <h1 className="text-2xl md:text-3xl font-bold">Login</h1>
@@ -91,12 +94,26 @@ const Login = () => {
           </button>
         </form>
         <div className="mt-4 text-sm text-gray-500 text-center">
-          Don't have an account?
-          <Link to="/signup" className="font-medium text-blue-600 underline">
+          Dont have an account?
+          <button
+            onClick={() => setIsOpenModal((prev) => !prev)}
+            to="/signup"
+            className="font-medium text-blue-600 underline"
+          >
             Sign Up
-          </Link>
+          </button>
         </div>
       </div>
+      <Modal
+        isOpen={isOpenModal}
+        onClose={() =>
+          setIsOpenModal(() => {
+            navgivate("/");
+          })
+        }
+      >
+        <SignUp />
+      </Modal>
     </div>
   );
 };
