@@ -7,8 +7,8 @@ import {
 
 export const postTheVlog = async (req, res) => {
   try {
-    const { description, id } = req.body;
-    if (!description || !id) {
+    const { description, id, title } = req.body;
+    if (!description || !id || !title) {
       return res
         .status(401)
         .json({ message: "all field are required", success: false });
@@ -25,6 +25,7 @@ export const postTheVlog = async (req, res) => {
     const postCreated = await Vlog.create({
       userId: id,
       description,
+      title,
       postImage: postImageurl,
     });
 
@@ -158,12 +159,12 @@ export const getMyPosts = async (req, res) => {
     if (!posts) {
       return res.status(404).json({ message: "No posts found" });
     }
-    return res.status(200).json({ posts, success: true });
+    return res.status(200).json({ message: "My Vlogs", posts, success: true });
   } catch (error) {
-    console.error(`Error while getting posts: ${error.message}`);
+    console.error(`Error while getting Vlogs: ${error.message}`);
     return res
       .status(500)
-      .json({ message: "Internal server error while getting posts" });
+      .json({ message: "Internal server error while getting vlogs" });
   }
 };
 
