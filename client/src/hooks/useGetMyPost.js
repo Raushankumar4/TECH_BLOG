@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { url, vlog } from "../constant";
+import { url, vlogrl } from "../constant";
 import { setMyVlogs } from "../components/Redux/Store/Slices/vlogSlice";
 import toast from "react-hot-toast";
 
@@ -15,7 +15,7 @@ export const useGetMyPost = (id) => {
       try {
         if (!id || !token) return;
 
-        const { data } = await axios.get(`${url}${vlog}/myposts/${id}`, {
+        const { data } = await axios.get(`${url}${vlogrl}/myposts/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,

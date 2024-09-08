@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { url, vlog } from "../../constant";
+import { useSelector } from "react-redux";
+import { url, vlogrl } from "../../constant";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const CreateVlog = () => {
   const [userInput, setUserInput] = useState({
     title: "",
@@ -54,7 +54,7 @@ const CreateVlog = () => {
       formData.append("title", userInput.title);
       formData.append("description", userInput.description);
       formData.append("id", id);
-      const { data } = await axios.post(`${url}${vlog}/create`, formData, {
+      const { data } = await axios.post(`${url}${vlogrl}/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -72,8 +72,13 @@ const CreateVlog = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6">Create Vlog</h1>
+    <div className="max-w-4xl my-10 mx-auto p-4 sm:p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 ">
+        <Link to="/blog" className="mx-4 rounded-md text-xl">
+          ←
+        </Link>
+        Create Vlog
+      </h1>
       <form onSubmit={handleOnCreateVlog} className="space-y-6">
         {/* Title Input */}
         <div>

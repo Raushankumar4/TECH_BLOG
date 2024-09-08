@@ -3,6 +3,7 @@ import Modal from "../Modal/Modal";
 import Login from "../Auth/Login/Login";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [isPostOpen, setIsPostOpen] = useState(false);
@@ -56,7 +57,11 @@ const HomePage = () => {
             whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
             whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
           >
-            {!isAuthenticated ? "Create Account" : "Get Started"}
+            {!isAuthenticated ? (
+              "Create Account"
+            ) : (
+              <Link to="/createVlog">Get Started</Link>
+            )}
           </motion.button>
         </motion.div>
       </div>

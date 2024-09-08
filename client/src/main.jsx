@@ -13,6 +13,7 @@ import PageNotFound from "./components/Pages/NotFound/PageNotFound.jsx";
 import Profile from "./components/Pages/Profile/Profile.jsx";
 import HomePage from "./components/Home/Home.jsx";
 import Blog from "./components/Blog/Blog.jsx";
+import CreateVlog from "./components/Blog/CreateVlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "blog",
         element: <Blog />,
+      },
+      {
+        path: "createVlog",
+        element: <CreateVlog />,
       },
       {
         path: "*",

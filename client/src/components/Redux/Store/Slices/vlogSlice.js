@@ -13,8 +13,21 @@ const vlogSlice = createSlice({
     getRefresh: (state) => {
       state.refresh = !state.refresh;
     },
+    deleteVlog: (state, action) => {
+      const { id } = action.payload;
+      state.myVlogs = state.myVlogs.filter((vlog) => vlog?._id !== id);
+      state.refresh = !state.refresh;
+    },
+    updateVlog: (state, action) => {
+      const updatedVlog = action.payload;
+      state.myVlogs = state.myVlogs.map((vlog) =>
+        vlog.id === updatedVlog.id ? updatedVlog : vlog
+      );
+      state.refresh = !state.refresh;
+    },
   },
 });
 
-export const { setMyVlogs, getRefresh } = vlogSlice.actions;
+export const { setMyVlogs, getRefresh, deleteVlog, updateVlog } =
+  vlogSlice.actions;
 export default vlogSlice.reducer;
