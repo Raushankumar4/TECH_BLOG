@@ -31,7 +31,9 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-200  text-gray-800 shadow-md">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="text-2xl font-bold">BLOG</div>
+        <Link to="/" className="text-2xl font-bold">
+          BLOG
+        </Link>
         <button
           className="lg:hidden text-gray-800 text-2xl"
           onClick={toggleMenu}
@@ -40,8 +42,15 @@ const Navbar = () => {
           {isOpen ? <HiX /> : <HiMenu />}
         </button>
         <div className="hidden lg:flex space-x-6 font-medium text-md">
-          <Link className="hover:text-gray-600">About</Link>
           <Link className="hover:text-gray-600">Contact</Link>
+          {isAuthenticated && (
+            <>
+              <Link to="/profile" className="hover:text-gray-600">
+                Profile
+              </Link>
+              <Link className="hover:text-gray-600">Blog</Link>
+            </>
+          )}
           <button onClick={handleLogout} className="hover:text-gray-600">
             {isAuthenticated && "logOut"}
           </button>

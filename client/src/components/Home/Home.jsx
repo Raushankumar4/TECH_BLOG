@@ -6,8 +6,7 @@ import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const [isPostOpen, setIsPostOpen] = useState(false);
-  const user = useSelector((state) => state.user.user);
-  console.log("user", user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gray-200 p-4 overflow-hidden">
@@ -51,17 +50,17 @@ const HomePage = () => {
             matter.
           </p>
           <motion.button
-            onClick={() => setIsPostOpen((prev) => !user && !prev)}
+            onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
             href="#get-started" // Update with the actual link or section ID
             className="mt-8 inline-block px-6 py-3 text-white bg-blue-500 rounded-xl shadow-lg transition duration-300"
             whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
             whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
           >
-            {!user ? "Create Account" : "Get Started"}
+            {!isAuthenticated ? "Create Account" : "Get Started"}
           </motion.button>
         </motion.div>
       </div>
-      {!user && (
+      {!isAuthenticated && (
         <Modal isOpen={isPostOpen} onClose={() => setIsPostOpen(false)}>
           <Login />
         </Modal>
