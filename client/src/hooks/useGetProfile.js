@@ -3,11 +3,13 @@ import { url, user } from "../constant";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserProfile } from "../components/Redux/Store/Slices/userSlice";
 
 export const useGetProfile = (id) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMyProfile = async () => {
@@ -21,6 +23,7 @@ export const useGetProfile = (id) => {
           },
           withCredentials: true,
         });
+        dispatch(setUserProfile(data?.user));
         toast.success(data?.message);
       } catch (error) {
         toast.error(error?.response?.data?.message || error.message);

@@ -1,28 +1,31 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { url, user } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthRefresh, logout } from "../Redux/Store/Slices/authslice";
+import { logout } from "../Redux/Store/Slices/authslice";
 import { toast } from "react-hot-toast";
-import { setUser } from "../Redux/Store/Slices/userSlice";
+import { setUser, setUserProfile } from "../Redux/Store/Slices/userSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
+  const naviagate = useNavigate();
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const handleLogout = async () => {
     try {
       const { data } = await axios.get(`${url}${user}/logout`);
-      dispatch(getAuthRefresh());
+
       dispatch(logout());
       dispatch(setUser(null));
+      dispatch(setUserProfile(null));
       toast.success(data?.message);
+      naviagate("/");
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
     }

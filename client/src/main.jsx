@@ -12,6 +12,7 @@ import persistStore from "redux-persist/es/persistStore";
 import PageNotFound from "./components/Pages/NotFound/PageNotFound.jsx";
 import Profile from "./components/Pages/Profile/Profile.jsx";
 import HomePage from "./components/Home/Home.jsx";
+import Blog from "./components/Blog/Blog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "blog",
+        element: <Blog />,
       },
       {
         path: "*",
