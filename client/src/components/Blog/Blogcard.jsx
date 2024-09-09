@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaTrash, FaEdit, FaHeart } from "react-icons/fa";
+import GetVlogComments from "./GetVlogComments";
 
 const BlogCard = ({
   onWishlistClick = () => {},
@@ -11,6 +12,7 @@ const BlogCard = ({
 }) => {
   const [showComments, setShowComments] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const getAllComent = useSelector((state) => state.vlog.comments);
 
   const handleCommentClick = () => {
     setShowComments(!showComments);
@@ -83,7 +85,7 @@ const BlogCard = ({
         <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button
             onClick={handleCommentClick}
-            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 transition"
+            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 transition "
           >
             {vlog?.comments?.length === 0
               ? "No comments yet."
@@ -94,12 +96,12 @@ const BlogCard = ({
           <div className="mt-6 p-4 bg-gray-100 rounded-lg">
             <h3 className="text-lg font-semibold mb-4">Comments</h3>
             <ul className="space-y-4">
-              <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter:</strong>
+              <li className="p-4 bg-white rounded shadow-sm ">
+                <strong>Commenter</strong>
+                <GetVlogComments />
               </li>
-
-              {vlog?.comments?.length || "No comments yet."}
             </ul>
+            {vlog?.comments?.length === 0 && "No comments yet."}
           </div>
         )}
       </div>

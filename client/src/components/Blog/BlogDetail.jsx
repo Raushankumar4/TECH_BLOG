@@ -8,9 +8,12 @@ import { url, vlogrl } from "../../constant";
 import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import GetVlogComments from "./GetVlogComments";
+import { useEffect } from "react";
 
 const BlogDetail = ({ onWishlistClick = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const allVlogs = useSelector((state) => state.vlog.allVlogs);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -149,23 +152,31 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
           >
             {vlog?.comments?.length === 0
               ? "No comments yet."
-              : `All comments (${getAllComent?.length})`}
+              : `All comments ${getAllComent?.length}`}
           </button>
           <div>
-            <input
-              className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none "
-              name="text"
-              type="text"
-              placeholder="Add a comment "
-              onChange={handleOnChange}
-              value={addComment.text}
-            />
-            <button
-              onClick={handleOnComment}
-              className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
-            >
-              Comment
-            </button>
+            {!showComments && (
+              <>
+                <input
+                  className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none "
+                  name="text"
+                  type="text"
+                  placeholder="Add a comment "
+                  onChange={handleOnChange}
+                  value={addComment.text}
+                  required
+                  disabled={isLoading}
+                  autoComplete="off"
+                />
+                <button
+                  disabled={isLoading}
+                  onClick={handleOnComment}
+                  className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
+                >
+                  {isLoading ? "Commenting..." : "Comment"}
+                </button>
+              </>
+            )}
           </div>
         </div>
         {showComments && (
@@ -184,12 +195,16 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
                     placeholder="Add a comment "
                     onChange={handleOnChange}
                     value={addComment.text}
+                    required
+                    autoComplete="off"
+                    disabled={isLoading}
                   />
                   <button
+                    disabled={isLoading}
                     onClick={handleOnComment}
                     className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
                   >
-                    Comment
+                    {isLoading ? "Commenting..." : "Comment"}
                   </button>
                 </div>
               </li>

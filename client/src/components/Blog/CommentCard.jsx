@@ -1,11 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import axios from "axios";
+import { url, vlogrl } from "../../constant";
+import { toast } from "react-hot-toast";
+import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const CommentCard = ({ comment, key }) => {
+const CommentCard = ({ comment, onDelete = () => {} }) => {
+  const [editComment, setEditComment] = useState(false);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+
+  const [updatedComment, setUpdatedComment] = useState({
+    text: "",
+  });
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedComment((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleEditCommet = async (commentId) => {
+    try {
+      if (!token) return toast.error("Please login first");
+      const { data } = await axios.put(
+        `${url}${vlogrl}/updatecomment/${commentId}`,
+        updatedComment,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(getRefresh());
+      setEditComment(false);
+      toast.success(data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    }
+  };
+
   return (
     <div
-      key={key}
-      className="w-full bg-white shadow-lg rounded-lg overflow-hidden mb-4" // Full width and margin for spacing
+      key={comment?._id}
+      className="w-full bg-white shadow-lg rounded-lg overflow-hidden mb-4" // Full width and
     >
       {/* User Profile and Comment Section */}
       <div className="flex flex-col sm:flex-row items-start p-4 border-b border-gray-200">
@@ -28,12 +70,45 @@ const CommentCard = ({ comment, key }) => {
       <div className="p-4 w-full">
         <ul className="space-y-4">
           <li className="p-4 bg-gray-50 border border-gray-200 rounded-lg flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-gray-800 mb-2 sm:mb-0">{comment?.text}</p>
+            <p
+              className={`${
+                editComment ? "hidden" : "block"
+              }  text-gray-800 mb-2 sm:mb-0`}
+            >
+              {comment?.text}
+            </p>
+            <p
+              className={`${
+                !editComment ? "hidden" : "block"
+              }  text-gray-800 mb-2 sm:mb-0`}
+            >
+              <input
+                type="text"
+                name="text"
+                value={updatedComment.text}
+                onChange={handleOnChange}
+                placeholder="Edit Comment"
+                className="border outline-none hover:ring-2  rounded-md p-2 w-full"
+              />
+
+              <button
+                onClick={() => handleEditCommet(comment?._id)}
+                className=" mx-2 text-blue-500 hover:text-blue-700 focus:outline-none"
+              >
+                save
+              </button>
+            </p>
             <div className="flex gap-2">
-              <button className="text-blue-500 hover:text-blue-700 focus:outline-none">
+              <button
+                onClick={() => setEditComment(true)}
+                className="text-blue-500 hover:text-blue-700 focus:outline-none"
+              >
                 <FaEdit size={16} />
               </button>
-              <button className="text-red-500 hover:text-red-700 focus:outline-none">
+              <button
+                onClick={onDelete}
+                className="text-red-500 hover:text-red-700 focus:outline-none"
+              >
                 <FaTrash size={16} />
               </button>
             </div>

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { url, vlogrl } from "../../constant";
 import axios from "axios";
-import { setComment } from "../Redux/Store/Slices/vlogSlice";
+import { getRefresh, setComment } from "../Redux/Store/Slices/vlogSlice";
 import CommentCard from "./CommentCard";
+import toast from "react-hot-toast";
 
 const GetVlogComments = () => {
   const { id } = useParams();
@@ -40,10 +41,35 @@ const GetVlogComments = () => {
     fetchAllComents();
   }, [refresh]);
 
+  // delete Comment
+  const deleteComment = async (commentId) => {
+    try {
+      const { data } = await axios.delete(
+        `${url}${vlogrl}/deletecomment/${commentId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(getRefresh());
+      toast.success(data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    }
+  };
+
   return (
     <div>
       {commenList?.map((comment) => (
-        <CommentCard comment={comment} key={comment?._id} />
+        <CommentCard
+          onDelete={() => deleteComment(comment?._id)}
+          onUpdate={() => {}}
+          comment={comment}
+          key={comment?._id}
+        />
       ))}
     </div>
   );
