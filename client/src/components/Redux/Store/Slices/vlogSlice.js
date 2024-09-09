@@ -6,6 +6,7 @@ const vlogSlice = createSlice({
     myVlogs: null,
     refresh: false,
     allVlogs: null,
+    comments: null,
   },
   reducers: {
     setMyVlogs: (state, action) => {
@@ -17,6 +18,10 @@ const vlogSlice = createSlice({
     getRefresh: (state) => {
       state.refresh = !state.refresh;
     },
+    setComment: (state, action) => {
+      state.comments = action.payload;
+    },
+
     deleteVlog: (state, action) => {
       const { id } = action.payload;
       state.myVlogs = state.myVlogs.filter((vlog) => vlog?._id !== id);
@@ -32,6 +37,12 @@ const vlogSlice = createSlice({
   },
 });
 
-export const { setMyVlogs, setAllVlogs, getRefresh, deleteVlog, updateVlog } =
-  vlogSlice.actions;
+export const {
+  setMyVlogs,
+  setComment,
+  setAllVlogs,
+  getRefresh,
+  deleteVlog,
+  updateVlog,
+} = vlogSlice.actions;
 export default vlogSlice.reducer;

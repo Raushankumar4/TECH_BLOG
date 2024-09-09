@@ -1,15 +1,23 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { HiArrowLeft } from "react-icons/hi";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { url, vlogrl } from "../../constant";
+import { toast } from "react-hot-toast";
+import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
+import GetVlogComments from "./GetVlogComments";
 
 const BlogDetail = ({ onWishlistClick = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
   const allVlogs = useSelector((state) => state.vlog.allVlogs);
   const { id } = useParams();
-
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
   const vlog = allVlogs.find((vlog) => id === vlog?._id);
-  console.log(vlog);
 
   // Format the date
   const postDate = new Date(vlog?.createdAt);
@@ -21,16 +29,67 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
     setShowComments(!showComments);
   };
 
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  const [addComment, setAddComment] = useState({
+    text: "",
+    userId: "",
+    vlogId: "",
+  });
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setAddComment((prev) => ({
+      ...prev,
+      [name]: value,
+      userId: user?._id,
+      vlogId: vlog?._id,
+    }));
+  };
+
+  const handleOnComment = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(`${url}${vlogrl}/comment`, addComment, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+      dispatch(getRefresh());
+      toast.success(data?.message);
+      setAddComment({ text: "" });
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    }
+  };
+
   return (
     <div className="relative p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border">
-      {/* Icons for update, delete, and wishlist */}
-      <div className="absolute top-4 right-4 flex space-x-4 z-10">
+      {/* Icons for back and wishlist */}
+      <div className="absolute top-10 right-10 flex space-x-4 z-10">
         <button
           onClick={onWishlistClick}
-          className="text-yellow-500 hover:text-yellow-600 transition"
+          className="relative group hover:text-red-600 transition"
           aria-label="Wishlist"
         >
           <FaHeart size={24} />
+          {/* Tooltip */}
+          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity text-nowrap">
+            Add to favorites
+          </span>
+        </button>
+        <button
+          onClick={handleBackClick}
+          className="text-gray-700 hover:text-gray-900 transition"
+          aria-label="Back"
+        >
+          <HiArrowLeft size={24} />
+          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 hover:opacity-100 transition-opacity text-nowrap">
+            go back
+          </span>
         </button>
       </div>
 
@@ -42,6 +101,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
               vlog?.userId?.profileImage ||
               "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg"
             }
+            alt="User Profile"
           />
           <span className="text-gray-900 font-medium text-lg">
             @{vlog?.userId?.fullName}
@@ -67,14 +127,16 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
 
       <div className="relative">
         <img
-          className="w-full rounded-md h-80 md:mx-auto md:h-80 object-cover"
+          className="w-full rounded-md h-80 object-cover"
           src={
+            vlog?.postImage ||
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaPcs0BFfc4yvzXRgMPeBHO9AHvgS49Qtoqw&s"
           }
           alt="Vlog Cover"
         />
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent text-white">
-          {/* Title is moved to be directly above description */}
+          {/* Title overlay on image */}
+          <h2 className="text-2xl font-bold">{vlog?.title || "Title"}</h2>
         </div>
       </div>
 
@@ -86,18 +148,35 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
           >
             {vlog?.comments?.length === 0
               ? "No comments yet."
-              : `all comments${vlog?.comments?.length}`}
+              : `All comments (${vlog?.comments?.length})`}
           </button>
+          <div>
+            <input
+              className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none "
+              name="text"
+              type="text"
+              placeholder="Add a comment "
+              onChange={handleOnChange}
+              value={addComment.text}
+            />
+            <button
+              onClick={handleOnComment}
+              className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
+            >
+              Comment
+            </button>
+          </div>
         </div>
         {showComments && (
           <div className="mt-6 p-4 bg-gray-100 rounded-lg">
             <h3 className="text-lg font-semibold mb-4">Comments</h3>
             <ul className="space-y-4">
               <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter 1:</strong> This is a great blog post!
+                <strong>Commenter 1:</strong>
               </li>
               <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter 2:</strong> I found this very informative,
+                <strong>Commenter 2:</strong>
+                <GetVlogComments />
                 thanks!
               </li>
               {"No comments yet."}
