@@ -45,17 +45,23 @@ const Navbar = () => {
           {isOpen ? <HiX /> : <HiMenu />}
         </button>
         <div className="hidden lg:flex space-x-6 font-medium text-md">
-          <Link className="hover:text-gray-600">Contact</Link>
           {isAuthenticated && (
             <>
               <Link to="/profile" className="hover:text-gray-600">
                 Profile
               </Link>
-              <Link to="/blog" className="hover:text-gray-600">
+              <Link to="/bloglist" className="hover:text-gray-600">
                 Blog
+              </Link>
+              <Link to="/blog" className="hover:text-gray-600">
+                My Blog
+              </Link>
+              <Link to="/blogjj" className="hover:text-gray-600">
+                Favorite
               </Link>
             </>
           )}
+          <Link className="hover:text-gray-600">Contact</Link>
           <button onClick={handleLogout} className="hover:text-gray-600">
             {isAuthenticated && "logOut"}
           </button>

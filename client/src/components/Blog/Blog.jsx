@@ -5,7 +5,6 @@ import axios from "axios";
 import { url, vlogrl } from "../../constant";
 import { deleteVlog, getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import toast from "react-hot-toast";
-import CreateVlog from "./CreateVlog";
 import { Link } from "react-router-dom";
 
 const Blog = () => {

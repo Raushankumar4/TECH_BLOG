@@ -4,13 +4,16 @@ import { useSelector } from "react-redux";
 import { url, vlogrl } from "../../constant";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+
 const CreateVlog = () => {
   const [userInput, setUserInput] = useState({
     title: "",
     description: "",
     postImage: null,
+    categories: [],
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const [newCategory, setNewCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const user = useSelector((state) => state.user.user);
@@ -35,6 +38,28 @@ const CreateVlog = () => {
     }
   };
 
+  const handleAddCategory = () => {
+    if (
+      newCategory.trim() &&
+      !userInput.categories.includes(newCategory.trim())
+    ) {
+      setUserInput((prevInput) => ({
+        ...prevInput,
+        categories: [...prevInput.categories, newCategory.trim()],
+      }));
+      setNewCategory("");
+    }
+  };
+
+  const handleRemoveCategory = (categoryToRemove) => {
+    setUserInput((prevInput) => ({
+      ...prevInput,
+      categories: prevInput.categories.filter(
+        (category) => category !== categoryToRemove
+      ),
+    }));
+  };
+
   const handleRemoveImage = () => {
     setUserInput((prevInput) => ({
       ...prevInput,
@@ -54,6 +79,7 @@ const CreateVlog = () => {
       formData.append("title", userInput.title);
       formData.append("description", userInput.description);
       formData.append("id", id);
+      formData.append("categories", userInput.categories);
       const { data } = await axios.post(`${url}${vlogrl}/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -115,6 +141,55 @@ const CreateVlog = () => {
             rows="4"
             className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900"
           />
+        </div>
+
+        {/* Categories Input */}
+        <div>
+          <label
+            htmlFor="categories"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Categories (Add multiple by pressing Enter)
+          </label>
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Add a category"
+              className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleAddCategory();
+                }
+              }}
+            />
+            <button
+              type="button"
+              onClick={handleAddCategory}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition"
+            >
+              Add
+            </button>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {userInput.categories.map((category) => (
+              <span
+                key={category}
+                className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full flex items-center space-x-2"
+              >
+                <span>{category}</span>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveCategory(category)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  &times;
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Image Upload */}

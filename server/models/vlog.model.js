@@ -18,6 +18,9 @@ const vlogSchema = new Schema(
       type: String,
       required: false,
     },
+    categories: {
+      type: Array,
+    },
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

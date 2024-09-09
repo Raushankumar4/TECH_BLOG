@@ -14,6 +14,8 @@ import Profile from "./components/Pages/Profile/Profile.jsx";
 import HomePage from "./components/Home/Home.jsx";
 import Blog from "./components/Blog/Blog.jsx";
 import CreateVlog from "./components/Blog/CreateVlog.jsx";
+import BlogList from "./components/Blog/BlogList.jsx";
+import BlogDetail from "./components/Blog/BlogDetail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
       {
         path: "createVlog",
         element: <CreateVlog />,
+      },
+      {
+        path: "bloglist",
+        element: <BlogList />,
+      },
+      {
+        path: "blog/:id",
+        element: <BlogDetail />,
       },
       {
         path: "*",

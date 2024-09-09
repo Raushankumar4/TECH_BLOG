@@ -5,10 +5,14 @@ const vlogSlice = createSlice({
   initialState: {
     myVlogs: null,
     refresh: false,
+    allVlogs: null,
   },
   reducers: {
     setMyVlogs: (state, action) => {
       state.myVlogs = action.payload;
+    },
+    setAllVlogs: (state, action) => {
+      state.allVlogs = action.payload;
     },
     getRefresh: (state) => {
       state.refresh = !state.refresh;
@@ -21,13 +25,13 @@ const vlogSlice = createSlice({
     updateVlog: (state, action) => {
       const updatedVlog = action.payload;
       state.myVlogs = state.myVlogs.map((vlog) =>
-        vlog.id === updatedVlog.id ? updatedVlog : vlog
+        vlog?._id === updatedVlog.id ? updatedVlog : vlog
       );
       state.refresh = !state.refresh;
     },
   },
 });
 
-export const { setMyVlogs, getRefresh, deleteVlog, updateVlog } =
+export const { setMyVlogs, setAllVlogs, getRefresh, deleteVlog, updateVlog } =
   vlogSlice.actions;
 export default vlogSlice.reducer;

@@ -32,7 +32,10 @@ const Profile = () => {
           <div className="w-full h-48 md:h-full p-4 flex items-center justify-center">
             <img
               className="w-full h-full object-cover rounded-lg"
-              src={userProfile?.profileImage}
+              src={
+                userProfile?.profileImage ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-kS7ERlqltxZMKtzUBK4LZU1roZd1D3O7RA&s"
+              }
               alt="Avatar"
             />
           </div>

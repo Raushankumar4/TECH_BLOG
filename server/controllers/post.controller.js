@@ -7,11 +7,12 @@ import {
 
 export const postTheVlog = async (req, res) => {
   try {
-    const { description, id, title } = req.body;
-    if (!description || !id || !title) {
-      return res
-        .status(401)
-        .json({ message: "all field are required", success: false });
+    const { description, id, title, categories } = req.body;
+    if (!description || !id || !title || !categories) {
+      return res.status(401).json({
+        message: "Description title and categories are required",
+        success: false,
+      });
     }
     let postImageurl = null;
     if (req.file) {
@@ -26,6 +27,7 @@ export const postTheVlog = async (req, res) => {
       userId: id,
       description,
       title,
+      categories,
       postImage: postImageurl,
     });
 
@@ -172,16 +174,22 @@ export const getMyPosts = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await Vlog.find();
-    if (!posts) {
+    // Find all posts and populate the userId field
+    const posts = await Vlog.find().populate({
+      path: "userId",
+      select: "-password",
+    });
+
+    if (!posts || posts.length === 0) {
       return res.status(404).json({ message: "No posts found" });
     }
-    return res.status(200).json({ posts, success: true });
+
+    return res.status(200).json({ message: "Blogs", posts, success: true });
   } catch (error) {
     console.error(`Error while getting posts: ${error.message}`);
-    return res
-      .status(500)
-      .json({ message: "Internal server error while getting posts" });
+    return res.status(500).json({
+      message: "Internal server error while getting posts",
+    });
   }
 };
 

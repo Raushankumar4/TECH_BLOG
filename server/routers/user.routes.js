@@ -27,7 +27,7 @@ router
   .route("/updateuserprofile/:id")
   .put(isAuthenticated, upload.single("profileImage"), updateUserProofile);
 router.route("/updatepassword/:id").put(isAuthenticated, changePassword);
-router.route("/savepost").post(isAuthenticated, savePost);
+router.route("/savepost/:postId").post(isAuthenticated, savePost);
 router.route("/unsavepost").post(isAuthenticated, unsavePost);
 router.route("/getsavedPost/:userId").get(isAuthenticated, getSavedPosts);
 router.route("/getotherusers/:id").get(isAuthenticated, getOtherUsers);

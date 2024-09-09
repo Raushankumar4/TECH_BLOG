@@ -255,7 +255,8 @@ export const changePassword = async (req, res) => {
 // saved another user vlog
 export const savePost = async (req, res) => {
   try {
-    const { userId, postId } = req.body;
+    const { userId } = req.body;
+    const { postId } = req.params;
 
     if (!userId || !postId) {
       return res
