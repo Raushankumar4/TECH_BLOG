@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { url, vlogrl } from "../../constant";
 import axios from "axios";
 import { setComment } from "../Redux/Store/Slices/vlogSlice";
+import CommentCard from "./CommentCard";
 
 const GetVlogComments = () => {
   const { id } = useParams();
@@ -13,6 +14,8 @@ const GetVlogComments = () => {
   const token = useSelector((state) => state.auth.token);
   console.log("hdhd", vlogId?._id);
   const dispatch = useDispatch();
+  const commenList = useSelector((state) => state.vlog.comments);
+  console.log("commenList", commenList);
 
   const fetchAllComents = async () => {
     try {
@@ -28,7 +31,7 @@ const GetVlogComments = () => {
       );
 
       console.log(data);
-      dispatch(setComment(data?.comment));
+      dispatch(setComment(data?.comments));
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +40,13 @@ const GetVlogComments = () => {
     fetchAllComents();
   }, [refresh]);
 
-  return <div>GetVlogComments</div>;
+  return (
+    <div>
+      {commenList?.map((comment) => (
+        <CommentCard comment={comment} key={comment?._id} />
+      ))}
+    </div>
+  );
 };
 
 export default GetVlogComments;

@@ -4,7 +4,7 @@ import {
   deleteFromCloudinary,
   uploadOnCloudinary,
 } from "../utils/cloudinary.js";
-import { User } from "../models/user.model.js";
+
 export const postTheVlog = async (req, res) => {
   try {
     const { description, id, title, categories } = req.body;
@@ -195,73 +195,73 @@ export const getAllPosts = async (req, res) => {
 
 // add comment on post
 
-// export const addComment = async (req, res) => {
-//   try {
-//     const { userId, vlogId, text } = req.body;
-//     if (!userId || !vlogId || !text) {
-//       return res.status(400).json({
-//         message: "User ID, Vlog ID, and text are required",
-//         success: false,
-//       });
-//     }
-//     // create comment
-//     const comment = new Comment({ userId, vlogId, text });
-//     await comment.save();
-//     // Add the comment to the vlog's comments array
-//     await Vlog.findByIdAndUpdate(vlogId, { $push: { comments: comment._id } });
-//     return res
-//       .status(200)
-//       .json({ message: "Comment added successfully", success: true, comment });
-//   } catch (error) {
-//     console.error(`Error while adding comment: ${error.message}`);
-//     return res
-//       .status(500)
-//       .json({ message: "Internal server error while adding comment" });
-//   }
-// };
-
 export const addComment = async (req, res) => {
   try {
     const { userId, vlogId, text } = req.body;
-
     if (!userId || !vlogId || !text) {
       return res.status(400).json({
         message: "User ID, Vlog ID, and text are required",
         success: false,
       });
     }
-
-    // Create comment
+    // create comment
     const comment = new Comment({ userId, vlogId, text });
     await comment.save();
-
     // Add the comment to the vlog's comments array
     await Vlog.findByIdAndUpdate(vlogId, { $push: { comments: comment._id } });
-
-    // Fetch user details
-    const user = await User.findById(userId);
-
-    // Return response with user details
-    return res.status(200).json({
-      message: "Comment added successfully",
-      success: true,
-      comment: {
-        ...comment.toObject(),
-        user: {
-          _id: user._id,
-          fullName: user.fullName,
-          profileImage: user.profileImage,
-        },
-      },
-    });
+    return res
+      .status(200)
+      .json({ message: "Comment added successfully", success: true, comment });
   } catch (error) {
     console.error(`Error while adding comment: ${error.message}`);
-    return res.status(500).json({
-      message: "Internal server error while adding comment",
-      success: false,
-    });
+    return res
+      .status(500)
+      .json({ message: "Internal server error while adding comment" });
   }
 };
+
+// export const addComment = async (req, res) => {
+//   try {
+//     const { userId, vlogId, text } = req.body;
+
+//     if (!userId || !vlogId || !text) {
+//       return res.status(400).json({
+//         message: "User ID, Vlog ID, and text are required",
+//         success: false,
+//       });
+//     }
+
+//     // Create comment
+//     const comment = new Comment({ userId, vlogId, text });
+//     await comment.save();
+
+//     // Add the comment to the vlog's comments array
+//     await Vlog.findByIdAndUpdate(vlogId, { $push: { comments: comment._id } });
+
+//     // Fetch user details
+//     const user = await User.findById(userId);
+
+//     // Return response with user details
+//     return res.status(200).json({
+//       message: "Comment added successfully",
+//       success: true,
+//       comment: {
+//         ...comment.toObject(),
+//         user: {
+//           _id: user._id,
+//           fullName: user.fullName,
+//           profileImage: user.profileImage,
+//         },
+//       },
+//     });
+//   } catch (error) {
+//     console.error(`Error while adding comment: ${error.message}`);
+//     return res.status(500).json({
+//       message: "Internal server error while adding comment",
+//       success: false,
+//     });
+//   }
+// };
 
 // Get comments for a post
 export const getComments = async (req, res) => {
@@ -269,7 +269,13 @@ export const getComments = async (req, res) => {
     const { vlogId } = req.params;
 
     // Find the vlog and populate comments
-    const vlog = await Vlog.findById(vlogId).populate("comments");
+    const vlog = await Vlog.findById(vlogId).populate({
+      path: "comments",
+      populate: {
+        path: "userId",
+        select: "-password",
+      },
+    });
     if (!vlog) {
       return res
         .status(404)

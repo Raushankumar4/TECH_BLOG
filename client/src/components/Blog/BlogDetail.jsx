@@ -18,6 +18,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const vlog = allVlogs.find((vlog) => id === vlog?._id);
+  const getAllComent = useSelector((state) => state.vlog.comments);
 
   // Format the date
   const postDate = new Date(vlog?.createdAt);
@@ -67,9 +68,9 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
   };
 
   return (
-    <div className="relative p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border">
+    <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border">
       {/* Icons for back and wishlist */}
-      <div className="absolute top-10 right-10 flex space-x-4 z-10">
+      <div className="absolute top-10 right-10 flex space-x-4 z-10 ">
         <button
           onClick={onWishlistClick}
           className="relative group hover:text-red-600 transition"
@@ -93,10 +94,10 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
         </button>
       </div>
 
-      <div className="p-6 flex flex-col">
-        <div className="flex items-center mb-4">
+      <div className="p-6 flex flex-col ">
+        <div className="flex items-center mb-4 ">
           <img
-            className="w-16 h-16 rounded-full border border-gray-300 mr-4"
+            className="w-16 h-16 rounded-full border border-gray-400 mr-4"
             src={
               vlog?.userId?.profileImage ||
               "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg"
@@ -148,7 +149,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
           >
             {vlog?.comments?.length === 0
               ? "No comments yet."
-              : `All comments (${vlog?.comments?.length})`}
+              : `All comments (${getAllComent?.length})`}
           </button>
           <div>
             <input
@@ -168,18 +169,30 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
           </div>
         </div>
         {showComments && (
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+          <div className="mt-6 p-4 bg-gray-100 rounded-lg w-full">
             <h3 className="text-lg font-semibold mb-4">Comments</h3>
-            <ul className="space-y-4">
-              <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter 1:</strong>
-              </li>
-              <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter 2:</strong>
+            <ul className="space-y-8 w-full">
+              <li className="p-4 bg-white rounded shadow-sm w-full">
                 <GetVlogComments />
-                thanks!
               </li>
-              {"No comments yet."}
+              <li className="p-4  rounded shadow-sm">
+                <div>
+                  <input
+                    className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none "
+                    name="text"
+                    type="text"
+                    placeholder="Add a comment "
+                    onChange={handleOnChange}
+                    value={addComment.text}
+                  />
+                  <button
+                    onClick={handleOnComment}
+                    className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
+                  >
+                    Comment
+                  </button>
+                </div>
+              </li>
             </ul>
           </div>
         )}

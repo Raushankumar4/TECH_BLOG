@@ -83,9 +83,11 @@ const BlogCard = ({
         <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button
             onClick={handleCommentClick}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition"
+            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 transition"
           >
-            Comment
+            {vlog?.comments?.length === 0
+              ? "No comments yet."
+              : `All comments (${getAllComent?.length})`}
           </button>
         </div>
         {showComments && (
@@ -93,12 +95,9 @@ const BlogCard = ({
             <h3 className="text-lg font-semibold mb-4">Comments</h3>
             <ul className="space-y-4">
               <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter 1:</strong> This is a great blog post!
+                <strong>Commenter:</strong>
               </li>
-              <li className="p-4 bg-white rounded shadow-sm">
-                <strong>Commenter 2:</strong> I found this very informative,
-                thanks!
-              </li>
+
               {vlog?.comments?.length || "No comments yet."}
             </ul>
           </div>
