@@ -12,7 +12,7 @@ const Modal = ({ isOpen, onClose, children }) => {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white p-6 rounded-lg shadow-lg max-w-lg max-h-[90vh] overflow-auto relative mx-4 w-full sm:w-[500px] md:w-[600px] lg:w-[900px] xl:w-[800px]"
+            className="bg-white p-6 rounded-lg shadow-lg max-w-lg max-h-[90vh] overflow-auto relative mx-4 w-full sm:w-[500px] md:w-[600px] lg:w-[900px] xl:w-[800px] dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}

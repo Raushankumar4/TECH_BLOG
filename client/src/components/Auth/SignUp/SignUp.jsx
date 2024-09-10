@@ -86,8 +86,8 @@ const SignUp = () => {
   }, [imagePreview]);
 
   return (
-    <div className="flex  flex-col items-center justify-center  bg-gray-50 p-4">
-      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
+    <div className="flex  flex-col items-center justify-center  bg-gray-50 p-4 dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
+      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
         <div className="grid gap-6 md:grid-cols-2">
           {/* Profile Image Section */}
           <div className="flex flex-col items-center justify-center">
@@ -138,7 +138,7 @@ const SignUp = () => {
                   name="fullName"
                   onChange={handleInChange}
                   placeholder="Enter your full name"
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="block w-full px-3 py-2 dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.fullName && (
                   <div className="text-red-500 text-xs">{errors.fullName}</div>
@@ -158,7 +158,7 @@ const SignUp = () => {
                   name="username"
                   onChange={handleInChange}
                   placeholder="Choose a username"
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.username && (
                   <div className="text-red-500 text-xs">{errors.username}</div>
@@ -178,7 +178,7 @@ const SignUp = () => {
                   name="email"
                   onChange={handleInChange}
                   placeholder="Enter your email"
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.email && (
                   <div className="text-red-500 text-xs">{errors.email}</div>
@@ -198,7 +198,7 @@ const SignUp = () => {
                   value={userInput.password}
                   onChange={handleInChange}
                   placeholder="Enter a password"
-                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
                 {errors.password && (
                   <div className="text-red-500 text-xs">{errors.password}</div>

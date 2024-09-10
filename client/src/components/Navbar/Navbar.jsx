@@ -51,9 +51,9 @@ const Navbar = () => {
         <div className="hidden lg:flex space-x-6 font-medium text-md">
           {isAuthenticated && (
             <>
-              <Link className="hover:text-gray-600 pt-1">
+              <h1 className="hover:text-gray-600 pt-1">
                 <ThemeToggle />
-              </Link>
+              </h1>
               <Link to="/profile" className="hover:text-gray-600">
                 Profile
               </Link>
