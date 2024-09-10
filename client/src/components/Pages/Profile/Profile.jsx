@@ -20,7 +20,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen dark:bg-gray-900 w-full flex items-center justify-center bg-gray-100 p-4">
       <motion.div
         className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden max-w-screen-md w-full h-full md:h-auto"
         initial="hidden"
@@ -42,8 +42,8 @@ const Profile = () => {
         </div>
 
         {/* Right Side: User Details, Settings, and Update Profile */}
-        <div className="md:w-2/3 p-4 md:p-6 flex flex-col justify-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+        <div className="md:w-2/3 dark:bg-gray-800 p-4 md:p-6 flex flex-col justify-center">
+          <h2 className="text-2xl dark:text-white md:text-3xl font-bold text-gray-900">
             John Doe
           </h2>
           <p className="text-lg md:text-xl text-gray-600 mt-1">

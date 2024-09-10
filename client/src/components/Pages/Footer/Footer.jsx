@@ -1,9 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  const theme = useSelector((state) => state.theme.theme);
   return (
-    <footer className="bg-gray-200 border-2 text-black py-6">
+    <footer className={`bg-gray-200  text-black py-6 ${theme}`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Left section */}

@@ -2,6 +2,8 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "./Slices/authslice";
 import userReducer from "./Slices/userSlice";
 import vlogReducer from "./Slices/vlogSlice";
+import themeReducer from "./Slices/themeslice";
+
 import {
   persistReducer,
   FLUSH,
@@ -23,6 +25,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   vlog: vlogReducer,
+  theme: themeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

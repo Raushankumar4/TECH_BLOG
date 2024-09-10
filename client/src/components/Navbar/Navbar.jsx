@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Store/Slices/authslice";
 import { toast } from "react-hot-toast";
 import { setUser, setUserProfile } from "../Redux/Store/Slices/userSlice";
+import ThemeToggle from "../../Utils/ThemeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
   const naviagate = useNavigate();
+  const theme = useSelector((state) => state.theme.theme);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -32,7 +34,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-200  text-gray-800 shadow-md">
+    <nav
+      className={`dark:bg-gray-900 bg-gray-200  dark:text-white text-gray-800 shadow-md`}
+    >
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold">
           BLOG
@@ -47,6 +51,9 @@ const Navbar = () => {
         <div className="hidden lg:flex space-x-6 font-medium text-md">
           {isAuthenticated && (
             <>
+              <Link className="hover:text-gray-600 pt-1">
+                <ThemeToggle />
+              </Link>
               <Link to="/profile" className="hover:text-gray-600">
                 Profile
               </Link>

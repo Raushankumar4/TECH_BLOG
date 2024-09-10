@@ -63,6 +63,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
         withCredentials: true,
       });
       dispatch(getRefresh());
+      setShowComments(true);
       toast.success(data?.message);
       setAddComment({ text: "" });
     } catch (error) {
@@ -147,10 +148,10 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
       <div className="p-6 flex flex-col">
         <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button
-            onClick={handleCommentClick}
+            onClick={() => handleCommentClick()}
             className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 transition"
           >
-            {vlog?.comments?.length === 0
+            {getAllComent?.length === 0
               ? "No comments yet."
               : `All comments ${getAllComent?.length}`}
           </button>
@@ -173,7 +174,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
                   onClick={handleOnComment}
                   className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
                 >
-                  {isLoading ? "Commenting..." : "Comment"}
+                  {isLoading ? "Commenting..." : `${"Comment"} `}
                 </button>
               </>
             )}

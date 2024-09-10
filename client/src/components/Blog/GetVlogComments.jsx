@@ -13,10 +13,8 @@ const GetVlogComments = () => {
   const refresh = useSelector((state) => state.vlog.refresh);
   const vlogId = vlog?.find((vlog) => vlog?._id === id);
   const token = useSelector((state) => state.auth.token);
-  console.log("hdhd", vlogId?._id);
   const dispatch = useDispatch();
   const commenList = useSelector((state) => state.vlog.comments);
-  console.log("commenList", commenList);
 
   const fetchAllComents = async () => {
     try {

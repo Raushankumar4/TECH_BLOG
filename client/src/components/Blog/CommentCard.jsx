@@ -12,7 +12,7 @@ const CommentCard = ({ comment, onDelete = () => {} }) => {
   const token = useSelector((state) => state.auth.token);
 
   const [updatedComment, setUpdatedComment] = useState({
-    text: "",
+    text: comment?.text || "",
   });
   const handleOnChange = (e) => {
     const { name, value } = e.target;

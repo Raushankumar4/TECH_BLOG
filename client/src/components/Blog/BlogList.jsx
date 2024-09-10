@@ -1,5 +1,4 @@
 import React from "react";
-import AllBlogCard from "./AllBlogCar";
 
 import AllBlog from "./AllBlog";
 

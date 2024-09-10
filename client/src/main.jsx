@@ -62,7 +62,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-let persistor = persistStore(store);
+const persistor = persistStore(store);
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>

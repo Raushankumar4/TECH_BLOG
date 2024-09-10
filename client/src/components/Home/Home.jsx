@@ -10,7 +10,9 @@ const HomePage = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-gray-200 p-4 overflow-hidden">
+    <div
+      className={`relative flex items-center justify-center min-h-screen bg-gray-200 p-4 overflow-hidden dark:bg-gray-900`}
+    >
       {/* Background Image with Blur */}
       <div className="absolute inset-0 z-[-1]">
         <img
@@ -42,10 +44,10 @@ const HomePage = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight text-center lg:text-left">
+          <h1 className="text-4xl dark:text-white lg:text-5xl font-bold text-gray-900 leading-tight text-center lg:text-left">
             Welcome to the Vlog
           </h1>
-          <p className="mt-4 text-lg text-gray-700 text-center lg:text-left">
+          <p className="mt-4 dark:text-white text-lg text-gray-700 text-center lg:text-left">
             Dive into our latest adventures and stories. Join us as we explore
             new places, share unique experiences, and capture moments that
             matter.
