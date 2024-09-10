@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { HiArrowLeft } from "react-icons/hi";
@@ -8,7 +8,6 @@ import { url, vlogrl } from "../../constant";
 import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import GetVlogComments from "./GetVlogComments";
-import { useEffect } from "react";
 
 const BlogDetail = ({ onWishlistClick = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
@@ -70,9 +69,13 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
       toast.error(error?.response?.data?.message || error.message);
     }
   };
+  useEffect(() => {
+    const commentength = getAllComent.length;
+    console.log(commentength);
+  }, []);
 
   return (
-    <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border">
+    <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
       {/* Icons for back and wishlist */}
       <div className="absolute top-10 right-10 flex space-x-4 z-10 ">
         <button
@@ -82,7 +85,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
         >
           <FaHeart size={24} />
           {/* Tooltip */}
-          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity text-nowrap">
+          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity text-nowrap dark:text-gray-400">
             Add to favorites
           </span>
         </button>
@@ -92,7 +95,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
           aria-label="Back"
         >
           <HiArrowLeft size={24} />
-          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 hover:opacity-100 transition-opacity text-nowrap">
+          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 hover:opacity-100 transition-opacity text-nowrap dark:text-gray-200">
             go back
           </span>
         </button>
@@ -108,16 +111,18 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
             }
             alt="User Profile"
           />
-          <span className="text-gray-900 font-medium text-lg">
+          <span className="text-gray-900 font-medium text-lg dark:text-gray-300">
             @{vlog?.userId?.fullName}
           </span>
         </div>
 
         {/* Title above description */}
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2 dark:text-gray-300">
           {vlog?.title || "Title"}
         </h2>
-        <p className="text-gray-700 text-base mb-6">{vlog?.description}</p>
+        <p className="text-gray-700 text-base mb-6 dark:text-gray-300">
+          {vlog?.description}
+        </p>
 
         {/* New Information: Categories and Date */}
         <div className="flex justify-between gap-2 mb-4">
@@ -141,7 +146,9 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
         />
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent text-white">
           {/* Title overlay on image */}
-          <h2 className="text-2xl font-bold">{vlog?.title || "Title"}</h2>
+          <h2 className="text-2xl font-bold dark:text-gray-300">
+            {vlog?.title || "Title"}
+          </h2>
         </div>
       </div>
 
@@ -149,17 +156,17 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
         <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button
             onClick={() => handleCommentClick()}
-            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 transition"
+            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 dark:bg-gray-800  transition dark:text-gray-300"
           >
             {getAllComent?.length === 0
-              ? "No comments yet."
+              ? "No comments"
               : `All comments ${getAllComent?.length}`}
           </button>
           <div>
             {!showComments && (
               <>
                 <input
-                  className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none "
+                  className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-800 dark:ring-gray-800  outline-none dark:text-gray-300 dark:bg-gray-900 "
                   name="text"
                   type="text"
                   placeholder="Add a comment "
@@ -172,7 +179,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
                 <button
                   disabled={isLoading}
                   onClick={handleOnComment}
-                  className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
+                  className="bg-black dark:text-gray-300 dark:bg-gray-800 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
                 >
                   {isLoading ? "Commenting..." : `${"Comment"} `}
                 </button>
@@ -181,16 +188,18 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
           </div>
         </div>
         {showComments && (
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg w-full">
-            <h3 className="text-lg font-semibold mb-4">Comments</h3>
-            <ul className="space-y-8 w-full">
-              <li className="p-4 bg-white rounded shadow-sm w-full">
+          <div className="mt-6 p-4 bg-gray-100 rounded-lg w-full dark:bg-gray-800 ">
+            <h3 className="text-lg font-semibold mb-4 dark:bg-gray-800   dark:text-gray-300">
+              Comments
+            </h3>
+            <ul className="space-y-8 w-full  dark:text-gray-300 dark:bg-gray-800">
+              <li className="p-4 bg-white rounded shadow-sm w-full dark:text-gray-300 dark:bg-gray-800">
                 <GetVlogComments />
               </li>
               <li className="p-4  rounded shadow-sm">
                 <div>
                   <input
-                    className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none "
+                    className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none dark:text-gray-300 dark:bg-gray-800"
                     name="text"
                     type="text"
                     placeholder="Add a comment "
@@ -203,9 +212,9 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
                   <button
                     disabled={isLoading}
                     onClick={handleOnComment}
-                    className="bg-black text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
+                    className="bg-black dark:text-gray-300 dark:bg-gray-600 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition dark:outline-gray-800"
                   >
-                    {isLoading ? "Commenting..." : "Comment"}
+                    {isLoading ? "Commenting..." : `${"Comment"} `}
                   </button>
                 </div>
               </li>

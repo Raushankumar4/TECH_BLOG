@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import React from "react";
-import ThemeToggle from "./Utils/ThemeToggle";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Pages/Footer/Footer";
 import { Outlet } from "react-router-dom";
