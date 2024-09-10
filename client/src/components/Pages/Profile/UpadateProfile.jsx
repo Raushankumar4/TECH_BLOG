@@ -16,8 +16,8 @@ const UpdateProfile = () => {
     hover: { scale: 1.05, transition: { duration: 0.3 } },
     tap: { scale: 0.95 },
   };
-  const userProfile = useSelector((state) => state.user.userProfile);
 
+  const userProfile = useSelector((state) => state.user.userProfile);
   const [updateProfile, setUpdateProfile] = useState({
     fullName: userProfile?.fullName || "",
     username: userProfile?.username || "",
@@ -111,8 +111,8 @@ const UpdateProfile = () => {
         variants={cardVariants}
       >
         {/* Left Side: Profile Image */}
-        <div className="md:w-1/3 bg-gray-200">
-          <div className="w-full h-48 md:h-full p-4 flex items-center justify-center">
+        <div className="w-full md:w-1/2 bg-gray-200">
+          <div className="w-full h-64 md:h-full dark:bg-gray-200 p-4 flex items-center justify-center overflow-hidden">
             {imagePreview ? (
               <img
                 src={imagePreview}
@@ -121,14 +121,14 @@ const UpdateProfile = () => {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-400">
-                No Image Selected
+                <p className="text-lg">No Image Selected</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Right Side: Update Form */}
-        <div className="md:w-2/3 dark:bg-gray-800 p-4 md:p-6 flex flex-col">
+        <div className="w-full md:w-1/2 dark:bg-gray-800 p-4 md:p-6 flex flex-col">
           <h2 className="text-2xl dark:text-white md:text-3xl font-bold text-gray-900">
             Update Profile
           </h2>
@@ -136,7 +136,7 @@ const UpdateProfile = () => {
             <div>
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-1"
-                htmlFor="name"
+                htmlFor="fullName"
               >
                 Name
               </label>
@@ -169,7 +169,7 @@ const UpdateProfile = () => {
             <div>
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-1"
-                htmlFor="username"
+                htmlFor="email"
               >
                 Email
               </label>
@@ -177,13 +177,13 @@ const UpdateProfile = () => {
                 disabled
                 value={userProfile?.email}
                 className="w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
               />
             </div>
             <div>
               <label
                 className="block text-gray-700 dark:text-gray-300 mb-1"
-                htmlFor="username"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -195,7 +195,7 @@ const UpdateProfile = () => {
             </div>
             <div>
               <label
-                className="block text-gray-700 rea dark:text-gray-300 mb-1"
+                className="block text-gray-700 dark:text-gray-300 mb-1"
                 htmlFor="profileImage"
               >
                 Profile Image
@@ -228,7 +228,7 @@ const UpdateProfile = () => {
                 whileHover="hover"
                 whileTap="tap"
               >
-                {isLoading ? " Upadting" : "Update"}
+                {isLoading ? "Updating" : "Update"}
               </motion.button>
               {!isLoading && (
                 <motion.button

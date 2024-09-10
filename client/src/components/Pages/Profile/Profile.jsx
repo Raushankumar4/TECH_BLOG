@@ -48,7 +48,7 @@ const Profile = () => {
         {/* Right Side: User Details, Settings, and Update Profile */}
         <div className="md:w-2/3 dark:bg-gray-800 p-4 md:p-6 flex flex-col justify-center">
           <h2 className="text-2xl dark:text-white md:text-3xl font-bold text-gray-900">
-            John Doe
+            {userProfile?.fullName}
           </h2>
           <p className="text-lg md:text-xl text-gray-600 mt-1">
             {userProfile?.email}
