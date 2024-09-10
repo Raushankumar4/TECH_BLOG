@@ -1,8 +1,8 @@
-// src/UserProfile.js
 import React from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { useGetProfile } from "../../../hooks/useGetProfile";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, userProfile } = useSelector((store) => store.user);
@@ -19,6 +19,10 @@ const Profile = () => {
     tap: { scale: 0.95 },
   };
 
+  const navigate = useNavigate();
+  const handltoNavigate = () => {
+    navigate("/upadateProfile");
+  };
   return (
     <div className="min-h-screen dark:bg-gray-900 w-full flex items-center justify-center bg-gray-100 p-4 dark:text-white">
       <motion.div
@@ -62,6 +66,7 @@ const Profile = () => {
           </a>
           <div className="mt-4 md:mt-6 space-y-4 md:space-y-0 md:flex md:space-x-4">
             <motion.button
+              onClick={handltoNavigate}
               className="bg-gray-800 text-white py-3 px-6 rounded-lg text-lg md:text-xl hover:bg-gray-700 w-full md:w-auto"
               variants={buttonVariants}
               whileHover="hover"

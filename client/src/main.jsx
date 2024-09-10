@@ -16,48 +16,23 @@ import Blog from "./components/Blog/Blog.jsx";
 import CreateVlog from "./components/Blog/CreateVlog.jsx";
 import BlogList from "./components/Blog/BlogList.jsx";
 import BlogDetail from "./components/Blog/BlogDetail.jsx";
+import UpdateProfile from "./components/Pages/Profile/UpadateProfile.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "signUp",
-        element: <SignUp />,
-      },
-      {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
-      {
-        path: "blog",
-        element: <Blog />,
-      },
-      {
-        path: "createVlog",
-        element: <CreateVlog />,
-      },
-      {
-        path: "bloglist",
-        element: <BlogList />,
-      },
-      {
-        path: "blog/:id",
-        element: <BlogDetail />,
-      },
-      {
-        path: "*",
-        element: <PageNotFound />,
-      },
+      { index: true, element: <HomePage /> },
+      { path: "signUp", element: <SignUp /> },
+      { path: "login", element: <Login /> },
+      { path: "profile", element: <Profile /> },
+      { path: "blog", element: <Blog /> },
+      { path: "createVlog", element: <CreateVlog /> },
+      { path: "bloglist", element: <BlogList /> },
+      { path: "blog/:id", element: <BlogDetail /> },
+      { path: "upadateProfile", element: <UpdateProfile /> },
+      { path: "*", element: <PageNotFound /> },
     ],
   },
 ]);
