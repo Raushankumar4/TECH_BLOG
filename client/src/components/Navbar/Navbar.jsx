@@ -9,6 +9,11 @@ import { logout } from "../Redux/Store/Slices/authslice";
 import { toast } from "react-hot-toast";
 import { setUser, setUserProfile } from "../Redux/Store/Slices/userSlice";
 import ThemeToggle from "../../Utils/ThemeToggle";
+import {
+  setAllVlogs,
+  setComment,
+  setMyVlogs,
+} from "../Redux/Store/Slices/vlogSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +31,9 @@ const Navbar = () => {
       dispatch(logout());
       dispatch(setUser(null));
       dispatch(setUserProfile(null));
+      dispatch(setAllVlogs(null));
+      dispatch(setMyVlogs(null));
+      dispatch(setComment(null));
       toast.success(data?.message);
       naviagate("/");
     } catch (error) {

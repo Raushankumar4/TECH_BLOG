@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { HiArrowLeft } from "react-icons/hi";
@@ -53,6 +53,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
 
   const handleOnComment = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const { data } = await axios.post(`${url}${vlogrl}/comment`, addComment, {
         headers: {
@@ -66,13 +67,10 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
       toast.success(data?.message);
       setAddComment({ text: "" });
     } catch (error) {
+      setIsLoading(false);
       toast.error(error?.response?.data?.message || error.message);
     }
   };
-  useEffect(() => {
-    const commentength = getAllComent.length;
-    console.log(commentength);
-  }, []);
 
   return (
     <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
