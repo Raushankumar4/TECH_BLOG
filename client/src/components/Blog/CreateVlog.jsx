@@ -98,9 +98,12 @@ const CreateVlog = () => {
   };
 
   return (
-    <div className="max-w-4xl my-10 mx-auto p-4 sm:p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 ">
-        <Link to="/blog" className="mx-4 rounded-md text-xl">
+    <div className="max-w-4xl my-10 mx-auto p-4 sm:p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+        <Link
+          to={-1}
+          className="mx-4 rounded-md text-xl text-blue-500 hover:text-blue-600 dark:text-blue-400"
+        >
           ←
         </Link>
         Create Vlog
@@ -110,7 +113,7 @@ const CreateVlog = () => {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Title
           </label>
@@ -120,7 +123,7 @@ const CreateVlog = () => {
             value={userInput.title}
             onChange={handleOnChange}
             placeholder="Enter the title"
-            className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900"
+            className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           />
         </div>
 
@@ -128,7 +131,7 @@ const CreateVlog = () => {
         <div>
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Description
           </label>
@@ -139,7 +142,7 @@ const CreateVlog = () => {
             onChange={handleOnChange}
             placeholder="Enter the description"
             rows="4"
-            className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900"
+            className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           />
         </div>
 
@@ -147,7 +150,7 @@ const CreateVlog = () => {
         <div>
           <label
             htmlFor="categories"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Categories (Add multiple by pressing Enter)
           </label>
@@ -157,7 +160,7 @@ const CreateVlog = () => {
               value={newCategory}
               onChange={(e) => setNewCategory(e.target.value)}
               placeholder="Add a category"
-              className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900"
+              className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -168,7 +171,7 @@ const CreateVlog = () => {
             <button
               type="button"
               onClick={handleAddCategory}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition"
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               Add
             </button>
@@ -177,13 +180,13 @@ const CreateVlog = () => {
             {userInput.categories.map((category) => (
               <span
                 key={category}
-                className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full flex items-center space-x-2"
+                className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full flex items-center space-x-2 dark:bg-gray-600 dark:text-gray-300"
               >
                 <span>{category}</span>
                 <button
                   type="button"
                   onClick={() => handleRemoveCategory(category)}
-                  className="text-red-500 hover:text-red-700"
+                  className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
                 >
                   &times;
                 </button>
@@ -196,7 +199,7 @@ const CreateVlog = () => {
         <div>
           <label
             htmlFor="image"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Image (Optional)
           </label>
@@ -207,7 +210,7 @@ const CreateVlog = () => {
             onChange={handleOnChange}
             placeholder="Upload an image"
             accept="image/*"
-            className="mt-1 block opacity-0 w-full text-gray-900"
+            className="mt-1 block opacity-0 w-full text-gray-900 dark:text-gray-200"
           />
           {/* Image Preview */}
           {imagePreview && (
@@ -220,7 +223,7 @@ const CreateVlog = () => {
               <button
                 type="button"
                 onClick={handleRemoveImage}
-                className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full hover:bg-red-600"
+                className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700"
               >
                 Remove
               </button>
@@ -233,7 +236,7 @@ const CreateVlog = () => {
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
           >
             {isLoading ? "Loading..." : "Create Vlog"}
           </button>

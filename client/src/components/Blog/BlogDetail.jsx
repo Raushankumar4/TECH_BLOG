@@ -156,7 +156,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
             onClick={() => handleCommentClick()}
             className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 dark:bg-gray-800  transition dark:text-gray-300"
           >
-            {getAllComent?.length === 0
+            {getAllComent && getAllComent?.length === 0
               ? "No comments"
               : `All comments ${getAllComent?.length}`}
           </button>

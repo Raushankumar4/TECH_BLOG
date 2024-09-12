@@ -76,7 +76,9 @@ const Navbar = () => {
               </Link>
             </>
           )}
-          <Link className="hover:text-gray-600">Contact</Link>
+          <Link to="/contactUs" className="hover:text-gray-600">
+            Contact
+          </Link>
           <button onClick={handleLogout} className="hover:text-gray-600">
             {isAuthenticated && "logOut"}
           </button>

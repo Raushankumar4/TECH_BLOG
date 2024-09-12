@@ -9,12 +9,10 @@ const contactSchema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
-    phone: {
-      type: Number,
+    subject: {
+      type: String,
       required: true,
-      min: [10, "Phone number should be 10 digits"],
     },
     message: {
       type: String,

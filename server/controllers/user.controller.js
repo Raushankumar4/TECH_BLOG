@@ -6,7 +6,7 @@ import {
   removeTokenCookie,
   setTokenCookie,
 } from "../utils/generateToken.js";
-import { Contact } from "../models/contactus.model.js";
+import { Contact } from "../models/contactUs.model.js";
 
 // register user
 export const registerUser = async (req, res) => {
@@ -389,21 +389,33 @@ export const getOtherUsers = async (req, res) => {
 
 export const contactUs = async (req, res) => {
   try {
-    const { name, email, phone, message } = req.body;
-    if (!name || !email || !phone || !message) {
+    const { name, email, subject, message } = req.body;
+
+    if (!name || !email || !subject || !message) {
       return res
         .status(400)
         .json({ message: "All fields are required", success: false });
     }
-    const sendMessage = await Contact.create({ name, email, phone, message });
+
+    const existingContact = await Contact.findOne({ email });
+    if (existingContact) {
+      return res.status(400).json({
+        message:
+          "We have already received your message.We will get back to you soon. Thank you for reaching out! 😊",
+        success: false,
+      });
+    }
+
+    const sendMessage = await Contact.create({ name, email, subject, message });
     if (!sendMessage) {
       return res
         .status(400)
         .json({ message: "Message not sent", success: false });
     }
+
     return res
       .status(200)
-      .json({ message: "Message sent successfully", success: true });
+      .json({ message: "Thank you for contacting us!", success: true });
   } catch (error) {
     console.error(`Error while Sending Message: ${error.message}`);
     return res
