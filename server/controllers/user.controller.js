@@ -236,7 +236,7 @@ export const changePassword = async (req, res) => {
     if (!isPasswordMatch) {
       return res
         .status(403)
-        .json({ message: "Current password is in Incorrect", success: false });
+        .json({ message: "Current password is Incorrect", success: false });
     }
     // now hashing the password
     const hashPassword = await bcrypt.hash(newPassword, 16);

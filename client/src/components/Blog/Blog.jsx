@@ -18,10 +18,6 @@ const Blog = () => {
     console.log(`Wishlist vlog with ID: ${vlogId}`);
   };
 
-  const handleUpdate = (vlogId) => {
-    console.log(`Update vlog with ID: ${vlogId}`);
-  };
-
   const handleDelete = async (vlogId) => {
     try {
       const { data } = await axios.delete(`${url}${vlogrl}/delete/${vlogId}`, {
@@ -55,7 +51,6 @@ const Blog = () => {
           <BlogCard
             vlog={vlogItem}
             key={vlogItem._id}
-            onUpdate={() => handleUpdate(vlogItem)}
             onDelete={() => handleDelete(vlogItem._id)}
             onWishlistClick={() => handleWishlistClick(vlogItem._id)}
           />

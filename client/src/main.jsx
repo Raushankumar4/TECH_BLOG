@@ -17,6 +17,7 @@ import CreateVlog from "./components/Blog/CreateVlog.jsx";
 import BlogList from "./components/Blog/BlogList.jsx";
 import BlogDetail from "./components/Blog/BlogDetail.jsx";
 import UpdateProfile from "./components/Pages/Profile/UpadateProfile.jsx";
+import UpdatePassword from "./components/Pages/UpdatePassword/UpdatePassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: "bloglist", element: <BlogList /> },
       { path: "blog/:id", element: <BlogDetail /> },
       { path: "upadateProfile", element: <UpdateProfile /> },
+      { path: "updatePassword", element: <UpdatePassword /> },
       { path: "*", element: <PageNotFound /> },
     ],
   },

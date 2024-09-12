@@ -75,12 +75,13 @@ const Profile = () => {
               Update Profile
             </motion.button>
             <motion.button
+              onClick={() => navigate("/updatePassword")}
               className="bg-gray-600 text-white py-3 px-6 rounded-lg text-lg md:text-xl hover:bg-gray-500 w-full md:w-auto"
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
             >
-              Settings
+              Change Password
             </motion.button>
           </div>
         </div>
