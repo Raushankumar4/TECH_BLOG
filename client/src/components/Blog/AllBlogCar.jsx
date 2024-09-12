@@ -1,15 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const AllBlogCard = ({ vlog, key }) => {
   const navigate = useNavigate();
-  const allVlog = useSelector((state) => state.vlog.allVlogs);
+
   return (
     <div>
-      {allVlog?.length === 0 ? (
+      {vlog && vlog.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen w-full text-center ">
-          No vlogs found.
+          <span className="font-bold text-4xl">No vlogs found.</span>
         </div>
       ) : (
         <div

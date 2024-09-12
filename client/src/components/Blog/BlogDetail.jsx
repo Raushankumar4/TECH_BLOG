@@ -171,7 +171,6 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
                   onChange={handleOnChange}
                   value={addComment.text}
                   required
-                  disabled={isLoading}
                   autoComplete="off"
                 />
                 <button
@@ -205,14 +204,12 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
                     value={addComment.text}
                     required
                     autoComplete="off"
-                    disabled={isLoading}
                   />
                   <button
-                    disabled={isLoading}
                     onClick={handleOnComment}
                     className="bg-black dark:text-gray-300 dark:bg-gray-600 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition dark:outline-gray-800"
                   >
-                    {isLoading ? "Commenting..." : `${"Comment"} `}
+                    Comment
                   </button>
                 </div>
               </li>

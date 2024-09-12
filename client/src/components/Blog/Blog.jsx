@@ -26,8 +26,8 @@ const Blog = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      dispatch(deleteVlog({ id: vlogId }));
       dispatch(getRefresh());
+      dispatch(deleteVlog({ id: vlogId }));
       toast.success(data?.message);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);

@@ -24,14 +24,27 @@ const vlogSlice = createSlice({
 
     deleteVlog: (state, action) => {
       const { id } = action.payload;
-      state.myVlogs = state.myVlogs.filter((vlog) => vlog?._id !== id);
+
+      state.myVlogs = state.myVlogs?.filter((vlog) => vlog?._id !== id) || null;
+
+      state.allVlogs =
+        state.allVlogs?.filter((vlog) => vlog?._id !== id) || null;
+
       state.refresh = !state.refresh;
     },
     updateVlog: (state, action) => {
       const updatedVlog = action.payload;
-      state.myVlogs = state.myVlogs.map((vlog) =>
-        vlog?._id === updatedVlog.id ? updatedVlog : vlog
-      );
+
+      state.myVlogs =
+        state.myVlogs?.map((vlog) =>
+          vlog?._id === updatedVlog.id ? updatedVlog : vlog
+        ) || null;
+
+      state.allVlogs =
+        state.allVlogs?.map((vlog) =>
+          vlog?._id === updatedVlog.id ? updatedVlog : vlog
+        ) || null;
+
       state.refresh = !state.refresh;
     },
   },
