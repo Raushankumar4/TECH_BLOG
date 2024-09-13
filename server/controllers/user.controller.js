@@ -311,7 +311,11 @@ export const getSavedPosts = async (req, res) => {
         .json({ message: "User not found", success: false });
     }
 
-    return res.status(200).json({ savedPosts: user.savedPosts, success: true });
+    return res.status(200).json({
+      message: "Saved Vlogs",
+      savedPosts: user.savedPosts,
+      success: true,
+    });
   } catch (error) {
     console.error(`Error while getting saved posts: ${error.message}`);
     return res

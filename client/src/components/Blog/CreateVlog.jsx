@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { url, vlogrl } from "../../constant";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const CreateVlog = () => {
   const [userInput, setUserInput] = useState({
@@ -98,7 +99,12 @@ const CreateVlog = () => {
   };
 
   return (
-    <div className="max-w-4xl my-10 mx-auto p-4 sm:p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+    <motion.div
+      className="max-w-4xl my-10 mx-auto p-4 sm:p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
         <Link
           to={-1}
@@ -110,7 +116,12 @@ const CreateVlog = () => {
       </h1>
       <form onSubmit={handleOnCreateVlog} className="space-y-6">
         {/* Title Input */}
-        <div>
+        <motion.div
+          className="animate-item"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <label
             htmlFor="title"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -125,10 +136,15 @@ const CreateVlog = () => {
             placeholder="Enter the title"
             className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           />
-        </div>
+        </motion.div>
 
         {/* Description Input */}
-        <div>
+        <motion.div
+          className="animate-item"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <label
             htmlFor="description"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -144,10 +160,15 @@ const CreateVlog = () => {
             rows="4"
             className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
           />
-        </div>
+        </motion.div>
 
         {/* Categories Input */}
-        <div>
+        <motion.div
+          className="animate-item"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <label
             htmlFor="categories"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -178,9 +199,11 @@ const CreateVlog = () => {
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
             {userInput.categories.map((category) => (
-              <span
+              <motion.span
                 key={category}
                 className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full flex items-center space-x-2 dark:bg-gray-600 dark:text-gray-300"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
                 <span>{category}</span>
                 <button
@@ -190,13 +213,18 @@ const CreateVlog = () => {
                 >
                   &times;
                 </button>
-              </span>
+              </motion.span>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Image Upload */}
-        <div>
+        <motion.div
+          className="animate-item"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
           <label
             htmlFor="image"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -214,7 +242,12 @@ const CreateVlog = () => {
           />
           {/* Image Preview */}
           {imagePreview && (
-            <div className="mt-4 relative">
+            <motion.div
+              className="mt-4 relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
               <img
                 src={imagePreview}
                 alt="Image Preview"
@@ -227,12 +260,17 @@ const CreateVlog = () => {
               >
                 Remove
               </button>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {/* Submit Button */}
-        <div>
+        <motion.div
+          className="animate-item"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
           <button
             disabled={isLoading}
             type="submit"
@@ -240,9 +278,9 @@ const CreateVlog = () => {
           >
             {isLoading ? "Loading..." : "Create Vlog"}
           </button>
-        </div>
+        </motion.div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

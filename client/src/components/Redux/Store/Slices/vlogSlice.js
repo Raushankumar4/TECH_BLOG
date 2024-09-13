@@ -7,6 +7,7 @@ const vlogSlice = createSlice({
     refresh: false,
     allVlogs: null,
     comments: null,
+    savedVlogs: null,
   },
   reducers: {
     setMyVlogs: (state, action) => {
@@ -47,6 +48,9 @@ const vlogSlice = createSlice({
 
       state.refresh = !state.refresh;
     },
+    setSavedVlogs: (state, action) => {
+      state.savedVlogs = action.payload;
+    },
   },
 });
 
@@ -57,5 +61,6 @@ export const {
   getRefresh,
   deleteVlog,
   updateVlog,
+  setSavedVlogs,
 } = vlogSlice.actions;
 export default vlogSlice.reducer;

@@ -21,6 +21,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const naviagate = useNavigate();
   const theme = useSelector((state) => state.theme.theme);
+  const savedPost = useSelector((state) => state.vlog.savedVlogs.length);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -71,8 +72,8 @@ const Navbar = () => {
               <Link to="/blog" className="hover:text-gray-600">
                 My Blog
               </Link>
-              <Link to="/blogjj" className="hover:text-gray-600">
-                Favorite
+              <Link to="/savedBlogs" className="hover:text-gray-600">
+                Favorite {savedPost}
               </Link>
             </>
           )}

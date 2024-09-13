@@ -2,20 +2,43 @@ import { useDispatch, useSelector } from "react-redux";
 import BlogCard from "./Blogcard";
 import { useGetMyPost } from "../../hooks/useGetMyPost";
 import axios from "axios";
-import { url, vlogrl } from "../../constant";
+import { url, user, vlogrl } from "../../constant";
 import { deleteVlog, getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const Blog = () => {
-  const user = useSelector((state) => state.user.user);
+  const userId = useSelector((state) => state.user.user);
   const vlog = useSelector((state) => state.vlog.myVlogs);
   const token = useSelector((state) => state.auth.token);
-  const id = user?._id;
+  const id = userId?._id;
   const dispatch = useDispatch();
   useGetMyPost(id);
-  const handleWishlistClick = (vlogId) => {
-    console.log(`Wishlist vlog with ID: ${vlogId}`);
+
+  const handleWishlistClick = async (vlogId) => {
+    try {
+      const { data } = await axios.post(
+        `${url}${user}/savepost/${vlogId}`,
+        {
+          userId: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log(data.message);
+
+      dispatch(getRefresh());
+      toast.success(data?.message);
+    } catch (error) {
+      console.log(error?.response?.data?.message || error.message);
+      toast.error(error?.response?.data?.message || error.message);
+    }
   };
 
   const handleDelete = async (vlogId) => {
