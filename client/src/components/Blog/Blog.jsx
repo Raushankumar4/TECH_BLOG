@@ -15,32 +15,6 @@ const Blog = () => {
   const dispatch = useDispatch();
   useGetMyPost(id);
 
-  const handleWishlistClick = async (vlogId) => {
-    try {
-      const { data } = await axios.post(
-        `${url}${user}/savepost/${vlogId}`,
-        {
-          userId: id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        }
-      );
-
-      console.log(data.message);
-
-      dispatch(getRefresh());
-      toast.success(data?.message);
-    } catch (error) {
-      console.log(error?.response?.data?.message || error.message);
-      toast.error(error?.response?.data?.message || error.message);
-    }
-  };
-
   const handleDelete = async (vlogId) => {
     try {
       const { data } = await axios.delete(`${url}${vlogrl}/delete/${vlogId}`, {
@@ -75,7 +49,6 @@ const Blog = () => {
             vlog={vlogItem}
             key={vlogItem._id}
             onDelete={() => handleDelete(vlogItem._id)}
-            onWishlistClick={() => handleWishlistClick(vlogItem._id)}
           />
         ))
       )}

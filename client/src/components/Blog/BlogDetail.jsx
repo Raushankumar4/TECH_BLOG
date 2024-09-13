@@ -4,19 +4,19 @@ import { FaHeart } from "react-icons/fa";
 import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { url, vlogrl } from "../../constant";
+import { url, user, vlogrl } from "../../constant";
 import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import GetVlogComments from "./GetVlogComments";
 
-const BlogDetail = ({ onWishlistClick = () => {} }) => {
+const BlogDetail = () => {
   const [showComments, setShowComments] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const allVlogs = useSelector((state) => state.vlog.allVlogs);
   const { id } = useParams();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user);
+  const userI = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const vlog = allVlogs.find((vlog) => id === vlog?._id);
@@ -46,7 +46,7 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
     setAddComment((prev) => ({
       ...prev,
       [name]: value,
-      userId: user?._id,
+      userId: userI?._id,
       vlogId: vlog?._id,
     }));
   };
@@ -72,12 +72,38 @@ const BlogDetail = ({ onWishlistClick = () => {} }) => {
     }
   };
 
+  const handleWishlistClick = async (vlogId) => {
+    try {
+      const { data } = await axios.post(
+        `${url}${user}/savepost/${vlogId}`,
+        {
+          userId: userI?._id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      console.log(data.message);
+
+      dispatch(getRefresh());
+      toast.success(data?.message);
+    } catch (error) {
+      console.log(error?.response?.data?.message || error.message);
+      toast.error(error?.response?.data?.message || error.message);
+    }
+  };
+
   return (
     <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
       {/* Icons for back and wishlist */}
       <div className="absolute top-10 right-10 flex space-x-4 z-10 ">
         <button
-          onClick={onWishlistClick}
+          onClick={() => handleWishlistClick(vlog?._id)}
           className="relative group hover:text-red-600 transition"
           aria-label="Wishlist"
         >

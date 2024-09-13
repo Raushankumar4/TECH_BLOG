@@ -3,13 +3,7 @@ import { useSelector } from "react-redux";
 import { FaTrash, FaEdit, FaHeart } from "react-icons/fa";
 import GetVlogComments from "./GetVlogComments";
 
-const BlogCard = ({
-  onWishlistClick = () => {},
-  vlog,
-  key,
-  onDelete = () => {},
-  onUpdate = () => {},
-}) => {
+const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
   const user = useSelector((state) => state.user.user);
   const getAllComent = useSelector((state) => state.vlog.comments);
@@ -25,13 +19,6 @@ const BlogCard = ({
     >
       {/* Icons for update, delete, and wishlist */}
       <div className="absolute top-4 right-4 flex space-x-4 z-10">
-        <button
-          onClick={onWishlistClick}
-          className="text-yellow-500 hover:text-yellow-600 dark:text-yellow-400 dark:hover:text-yellow-300 transition"
-          aria-label="Wishlist"
-        >
-          <FaHeart size={24} />
-        </button>
         <button
           onClick={onUpdate}
           className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition"
