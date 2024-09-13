@@ -3,24 +3,26 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { url, vlogrl } from "../../constant";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const CreateVlog = () => {
+const UpdateBlog = () => {
+  const token = useSelector((state) => state.auth.token);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const myVlogs = useSelector((state) => state.vlog.myVlogs);
+
+  const vlog = myVlogs?.find((vlog) => vlog?._id === id);
+
   const [userInput, setUserInput] = useState({
-    title: "",
-    description: "",
-    postImage: null,
-    categories: [],
+    title: vlog?.title || "",
+    description: vlog?.description || "",
+    postImage: vlog?.postImage || null,
+    categories: vlog?.categories || [],
   });
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(userInput.postImage);
   const [newCategory, setNewCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const user = useSelector((state) => state.user.user);
-  const token = useSelector((state) => state.auth.token);
-  const id = user?._id;
-  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value, files } = e.target;
@@ -69,7 +71,7 @@ const CreateVlog = () => {
     setImagePreview(null);
   };
 
-  const handleOnCreateVlog = async (e) => {
+  const handleOnUpdateVlog = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -79,18 +81,21 @@ const CreateVlog = () => {
       }
       formData.append("title", userInput.title);
       formData.append("description", userInput.description);
-      formData.append("id", id);
       formData.append("categories", userInput.categories);
-      const { data } = await axios.post(`${url}${vlogrl}/create`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
+      const { data } = await axios.put(
+        `${url}${vlogrl}/update/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
 
       toast.success(data?.message);
-      navigate("/myBlog");
+      navigate(-1);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -114,7 +119,7 @@ const CreateVlog = () => {
         </Link>
         Create Vlog
       </h1>
-      <form onSubmit={handleOnCreateVlog} className="space-y-6">
+      <form onSubmit={handleOnUpdateVlog} className="space-y-6">
         {/* Title Input */}
         <motion.div
           className="animate-item"
@@ -248,11 +253,14 @@ const CreateVlog = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
-              <img
-                src={imagePreview}
-                alt="Image Preview"
-                className="w-full h-auto object-cover rounded-lg"
-              />
+              <div className="w-full h-[50vh] flex items-center justify-center bg-gray-200 overflow-hidden">
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                />
+              </div>
+
               <button
                 type="button"
                 onClick={handleRemoveImage}
@@ -276,7 +284,7 @@ const CreateVlog = () => {
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
           >
-            {isLoading ? "Loading..." : "Create Vlog"}
+            {isLoading ? "Loading..." : "Update Vlog"}
           </button>
         </motion.div>
       </form>
@@ -284,4 +292,4 @@ const CreateVlog = () => {
   );
 };
 
-export default CreateVlog;
+export default UpdateBlog;

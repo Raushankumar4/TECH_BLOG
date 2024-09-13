@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { FaTrash, FaEdit, FaHeart } from "react-icons/fa";
 import GetVlogComments from "./GetVlogComments";
 import { useGetAllVlogComments } from "../../hooks/useGetAllComments";
+import { Link } from "react-router-dom";
 
 const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
@@ -21,13 +22,13 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
     >
       {/* Icons for update, delete, and wishlist */}
       <div className="absolute top-4 right-4 flex space-x-4 z-10">
-        <button
-          onClick={onUpdate}
+        <Link
+          to={`/updateblog/${vlog?._id}`}
           className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition"
           aria-label="Update"
         >
           <FaEdit size={24} />
-        </button>
+        </Link>
         <button
           onClick={() =>
             confirm("Are you sure you want to delete this vlog?") && onDelete()

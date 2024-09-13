@@ -1,4 +1,3 @@
-// src/toastUtils.js
 import React from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
@@ -9,7 +8,7 @@ const successToast = (message) => {
       <div
         className={`${
           t.visible ? "animate-enter" : "animate-leave"
-        } flex items-center bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg`}
+        } flex items-center bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg`}
       >
         <AiOutlineCheckCircle className="text-2xl mr-2" />
         <span>{message} 🔥👏</span>

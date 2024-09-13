@@ -6,15 +6,10 @@ import { Link } from "react-router-dom";
 
 const AllBlog = () => {
   const allVlogs = useSelector((state) => state.vlog.allVlogs);
-  console.log("all", allVlogs);
   useGetAllPost();
 
-  const handleWishlistClick = (vlogId) => {
-    console.log(vlogId);
-  };
-
   return (
-    <div>
+    <div className="h-screen">
       {allVlogs && allVlogs?.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen w-full text-center space-y-4">
           <span className="font-bold text-4xl">No vlogs found.</span>
@@ -27,11 +22,7 @@ const AllBlog = () => {
         </div>
       ) : (
         allVlogs?.map((vlogItem) => (
-          <AllBlogCard
-            vlog={vlogItem}
-            key={vlogItem?._id}
-            onWishlistClick={() => handleWishlistClick(vlogItem?._id)}
-          />
+          <AllBlogCard vlog={vlogItem} key={vlogItem?._id} />
         ))
       )}
     </div>

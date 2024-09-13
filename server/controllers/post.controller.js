@@ -94,63 +94,74 @@ export const deleteVlog = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const postId = req.params.id;
-  const { description } = req.body;
+  const { description, title, categories } = req.body;
 
-  if (!description) {
+  if (!description || !title) {
     return res
-      .status(401)
-      .json({ message: "Description field required", success: false });
+      .status(400)
+      .json({ message: "All fields required", success: false });
   }
 
-  // Initialize variables for new image upload
   let postImageUrl = null;
   if (req.file) {
-    // Handle image upload
-    const uploadResult = await uploadOnCloudinary(req.file.path);
-    if (!uploadResult) {
+    try {
+      // Handle image upload
+      const uploadResult = await uploadOnCloudinary(req.file.path);
+      if (!uploadResult || !uploadResult.url) {
+        throw new Error("Failed to upload image to Cloudinary");
+      }
+      postImageUrl = uploadResult.url;
+
+      // Find the existing vlog to get the current image URL
+      const existingVlog = await Vlog.findById(postId);
+      if (existingVlog && existingVlog.postImage) {
+        // Delete the old image from Cloudinary
+        const urlParts = existingVlog.postImage.split("/");
+        const filename = urlParts[urlParts.length - 1];
+        const publicId = filename.split(".")[0]; // Extract public ID
+
+        const deleteResult = await deleteFromCloudinary(publicId);
+        if (!deleteResult.success) {
+          throw new Error(
+            `Failed to delete old image from Cloudinary: ${deleteResult.error}`
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Error handling image upload:", error);
       return res.status(500).json({
-        message: "Failed to upload image to Cloudinary",
+        message: `Error uploading or processing image: ${error.message}`,
         success: false,
       });
     }
-    postImageUrl = uploadResult.url;
-
-    // Find the existing tweet to get the current image URL
-    const existingVlog = await Vlog.findById(postId);
-    if (existingVlog && existingVlog.postImage) {
-      // Delete the old image from Cloudinary
-      const urlParts = existingVlog.postImage.split("/");
-      const filename = urlParts[urlParts.length - 1];
-      const publicId = filename.split(".")[0]; // Extract public ID
-
-      const deleteResult = await deleteFromCloudinary(publicId);
-      if (!deleteResult.success) {
-        return res.status(500).json({
-          message: `Failed to delete old image from Cloudinary: ${deleteResult.error}`,
-          success: false,
-        });
-      }
-    }
   }
 
-  // Update the tweet with new description and (optional) new image
-  const updatedPost = await Vlog.findOneAndUpdate(
-    { _id: postId },
-    { description, postImage: postImageUrl || undefined },
-    { new: true }
-  );
+  try {
+    // Update the post with new description and (optional) new image
+    const updatedPost = await Vlog.findOneAndUpdate(
+      { _id: postId },
+      { description, title, categories, postImage: postImageUrl || undefined },
+      { new: true }
+    );
 
-  if (!updatedPost)
-    return res
-      .status(404)
-      .json({ message: "Failded to update", success: false });
+    if (!updatedPost) {
+      return res
+        .status(404)
+        .json({ message: "Failed to update", success: false });
+    }
 
-  // Return success response
-  return res.status(200).json({
-    message: "Post Updated Successfully",
-    updatedPost,
-    success: true,
-  });
+    return res.status(200).json({
+      message: "Post Updated Successfully",
+      updatedPost,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Database update error:", error);
+    return res.status(500).json({
+      message: `Error updating post: ${error.message}`,
+      success: false,
+    });
+  }
 };
 
 // get  my posts

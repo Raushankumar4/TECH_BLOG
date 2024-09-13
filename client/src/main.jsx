@@ -20,6 +20,7 @@ import UpdateProfile from "./components/Pages/Profile/UpadateProfile.jsx";
 import UpdatePassword from "./components/Pages/UpdatePassword/UpdatePassword.jsx";
 import ContactUs from "./components/Pages/ContactUs/ConatactUs.jsx";
 import SavedBlogs from "./components/Blog/SavedBlogs.jsx";
+import UpdateBlog from "./components/Blog/UpdateBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,8 @@ const router = createBrowserRouter([
       { path: "updatePassword", element: <UpdatePassword /> },
       { path: "contactUs", element: <ContactUs /> },
       { path: "blog", element: <SavedBlogs /> },
+      { path: "updateblog/:id", element: <UpdateBlog /> },
+
 
       { path: "*", element: <PageNotFound /> },
     ],
