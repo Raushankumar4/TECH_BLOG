@@ -8,6 +8,7 @@ import { url, user, vlogrl } from "../../constant";
 import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import GetVlogComments from "./GetVlogComments";
+import { useGetAllVlogComments } from "../../hooks/useGetAllComments";
 
 const BlogDetail = () => {
   const [showComments, setShowComments] = useState(false);
@@ -31,6 +32,7 @@ const BlogDetail = () => {
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
+  useGetAllVlogComments(vlog?._id);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -102,17 +104,19 @@ const BlogDetail = () => {
     <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
       {/* Icons for back and wishlist */}
       <div className="absolute top-10 right-10 flex space-x-4 z-10 ">
-        <button
-          onClick={() => handleWishlistClick(vlog?._id)}
-          className="relative group hover:text-red-600 transition"
-          aria-label="Wishlist"
-        >
-          <FaHeart size={24} />
-          {/* Tooltip */}
-          <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity text-nowrap dark:text-gray-400">
-            Add to favorites
-          </span>
-        </button>
+        {userI?._id !== vlog?.userId?._id && (
+          <button
+            onClick={() => handleWishlistClick(vlog?._id)}
+            className="relative group hover:text-red-600 transition"
+            aria-label="Wishlist"
+          >
+            <FaHeart size={24} />
+            {/* Tooltip */}
+            <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity text-nowrap dark:text-gray-400">
+              Add to favorites
+            </span>
+          </button>
+        )}
         <button
           onClick={handleBackClick}
           className="text-gray-700 hover:text-gray-900 transition"

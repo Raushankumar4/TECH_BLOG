@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaTrash, FaEdit, FaHeart } from "react-icons/fa";
 import GetVlogComments from "./GetVlogComments";
+import { useGetAllVlogComments } from "../../hooks/useGetAllComments";
 
 const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
   const user = useSelector((state) => state.user.user);
   const getAllComent = useSelector((state) => state.vlog.comments);
+  useGetAllVlogComments(vlog?._id);
 
   const handleCommentClick = () => {
     setShowComments(!showComments);

@@ -5,7 +5,6 @@ import { url, vlogrl } from "../../constant";
 import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 
 const CommentCard = ({ comment, onDelete = () => {} }) => {
   const [editComment, setEditComment] = useState(false);
@@ -113,14 +112,14 @@ const CommentCard = ({ comment, onDelete = () => {} }) => {
                   >
                     <FaEdit size={16} />
                   </button>
-                  <button
-                    onClick={onDelete}
-                    className="text-red-500 hover:text-red-700 focus:outline-none"
-                  >
-                    <FaTrash size={16} />
-                  </button>
                 </>
               )}
+              <button
+                onClick={onDelete}
+                className="text-red-500 hover:text-red-700 focus:outline-none"
+              >
+                <FaTrash size={16} />
+              </button>
             </div>
           </li>
         </ul>
