@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,16 +14,18 @@ import {
   setComment,
   setMyVlogs,
 } from "../Redux/Store/Slices/vlogSlice";
+import { useGetSavedPost } from "../../hooks/useGetSavedPost";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
   const naviagate = useNavigate();
-  const theme = useSelector((state) => state.theme.theme);
   const savedPost = useSelector((state) => state.vlog.savedVlogs.length);
-
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const id = useSelector((state) => state.user.user?._id);
+
+  useGetSavedPost(id);
 
   const handleLogout = async () => {
     try {
@@ -69,10 +71,10 @@ const Navbar = () => {
               <Link to="/bloglist" className="hover:text-gray-600">
                 Blog
               </Link>
-              <Link to="/blog" className="hover:text-gray-600">
+              <Link to="/myblog" className="hover:text-gray-600">
                 My Blog
               </Link>
-              <Link to="/savedBlogs" className="hover:text-gray-600">
+              <Link to="/blog" className="hover:text-gray-600">
                 Favorite {savedPost}
               </Link>
             </>

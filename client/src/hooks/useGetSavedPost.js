@@ -9,7 +9,7 @@ export const useGetSavedPost = (userId) => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const refresh = useSelector((state) => state.vlog.refresh);
-  console.log("refresh", refresh);
+  const path = window.location.pathname;
 
   useEffect(() => {
     const fetchAllSavedPost = async () => {
@@ -28,12 +28,13 @@ export const useGetSavedPost = (userId) => {
         );
 
         dispatch(setSavedVlogs(data?.savedPosts));
-        successToast(data?.message);
+
+        if (path === "/blog") successToast(data?.message);
       } catch (error) {
         errorToast(error?.response?.data?.message || error.message);
       }
     };
 
     fetchAllSavedPost();
-  }, [refresh]);
+  }, [refresh, path]);
 };
