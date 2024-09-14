@@ -44,55 +44,66 @@ const AllBlogCard = ({ vlog, key }) => {
     : "Unknown time";
 
   return (
-    <div
-      onClick={() => navigate(`/blog/${vlog?._id}`)}
-      key={key}
-      className="flex flex-col md:flex-row bg-white shadow-lg m-4 rounded-lg overflow-hidden dark:bg-gray-900"
-    >
-      {/* Left Side - Image */}
-      <div className="flex-shrink-0">
-        <img
-          src={vlog?.postImage || "https://via.placeholder.com/150"}
-          alt="Vlog Thumbnail"
-          className="w-full h-48 md:w-80 md:h-52 object-cover"
-        />
-      </div>
+    <>
+      <div className="w-full ">
+        <div
+          onClick={() => navigate(`/blog/${vlog?._id}`)}
+          key={key}
+          className="flex mx-10 md:pt-[6vw] pt-[19vw] flex-col md:flex-row bg-white shadow-lg m-4 rounded-lg overflow-hidden dark:bg-gray-900 transition-transform  cursor-pointer"
+        >
+          {/* Left Side - Image */}
+          <div className="flex-shrink-0">
+            <img
+              src={
+                vlog?.postImage ||
+                "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg?w=360"
+              }
+              alt="Vlog Thumbnail"
+              className="w-full h-48 md:w-80 md:h-52 object-contain"
+            />
+          </div>
 
-      {/* Right Side - Content */}
-      <div className="p-4 flex-1">
-        {/* Category */}
-        <div className="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full inline-block mb-2 dark:bg-gray-600 dark:text-gray-200">
-          {(vlog?.categories && vlog?.categories[0]) || "Category"}
-        </div>
+          {/* Right Side - Content */}
+          <div className="p-4 flex-1">
+            {/* Category */}
+            <div className="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full inline-block mb-2 dark:bg-gray-600 dark:text-gray-200">
+              {(vlog?.categories && vlog?.categories[0]) || "Category"}
+            </div>
 
-        {/* Blog Title and Date */}
-        <div className="text-xs flex flex-col md:flex-row justify-between text-gray-500 mb-2 dark:text-gray-400">
-          <h2 className="text-xl font-semibold mb-2 md:mb-0">{vlog?.title}</h2>
-          <div>
-            <span>{formattedDate}</span>
-            <span className="text-gray-400 text-sm ml-2">({relativeTime})</span>
+            {/* Blog Title and Date */}
+            <div className="text-xs flex flex-col md:flex-row justify-between text-gray-500 mb-2 dark:text-gray-400">
+              <h2 className="text-xl font-semibold mb-2 md:mb-0">
+                {vlog?.title}
+              </h2>
+              <div className="flex flex-col md:flex-row md:items-center">
+                <span className="block md:inline">{formattedDate}</span>
+                <span className="text-gray-400 text-sm ml-2 md:ml-4 block md:inline">
+                  ({relativeTime})
+                </span>
+              </div>
+            </div>
+
+            {/* Username */}
+            <p className="text-sm text-gray-600 mb-2 dark:text-gray-400">
+              by @{vlog?.userId?.fullName}
+            </p>
+
+            {/* Description */}
+            <p className="text-gray-800 mb-4 dark:text-gray-400">
+              {vlog?.description || "Description"}
+            </p>
+
+            {/* Read More Button */}
+            <button
+              onClick={() => navigate(`/blog/${vlog?._id}`)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:text-gray-400 dark:bg-gray-800"
+            >
+              Read More
+            </button>
           </div>
         </div>
-
-        {/* Username */}
-        <p className="text-sm text-gray-600 mb-2 dark:text-gray-400">
-          by @{vlog?.userId?.fullName}
-        </p>
-
-        {/* Description */}
-        <p className="text-gray-800 mb-4 dark:text-gray-400">
-          {vlog?.description || "Description"}
-        </p>
-
-        {/* Read More Button */}
-        <button
-          onClick={() => navigate(`/blog/${vlog?._id}`)}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:text-gray-400 dark:bg-gray-800"
-        >
-          Read More
-        </button>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -53,10 +53,10 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
   return (
     <div
       key={key}
-      className="relative p-4 bg-gray-200 dark:bg-gray-800 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:border-gray-600"
+      className="relative p-4 bg-gray-200 dark:bg-gray-900 overflow-hidden flex flex-col w-full md:mt-[4vw]  mt-[4vw] max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:border-gray-600"
     >
       {/* Icons for update, delete */}
-      <div className="absolute top-4 right-4 flex space-x-4 z-10">
+      <div className="absolute top-20 right-4 flex space-x-4 z-10">
         <Link
           to={`/updateblog/${vlog?._id}`}
           className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 transition"
@@ -78,9 +78,9 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
       <div className="p-6 flex flex-col">
         <div className="flex flex-col mb-4">
           {/* User profile and title */}
-          <div className="flex items-center mb-4">
+          <div className="flex items-center mb-4 pt-4">
             <img
-              className="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-600 mr-4"
+              className="w-16 h-16  rounded-full border border-gray-300 dark:border-gray-600 mr-4"
               src={
                 user?.profileImage ||
                 "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg"
@@ -110,14 +110,16 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
       </div>
 
       <div className="relative">
-        <img
-          className="w-full rounded-md h-80 md:mx-auto md:h-80 object-cover"
-          src={
-            vlog?.postImage ||
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaPcs0BFfc4yvzXRgMPeBHO9AHvgS49Qtoqw&s"
-          }
-          alt="Vlog Cover"
-        />
+        <div className="w-full h-[80vh] flex items-center justify-center overflow-hidden relative">
+          <img
+            className="object-cover rounded-md"
+            src={
+              vlog?.postImage ||
+              "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg?w=360"
+            }
+            alt="Vlog Cover"
+          />
+        </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent text-white">
           {/* Title is moved to be directly above description */}
         </div>

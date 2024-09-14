@@ -98,6 +98,7 @@ const BlogDetail = () => {
       setShowComments(true);
       toast.success(data?.message);
       setAddComment({ text: "" });
+      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       toast.error(error?.response?.data?.message || error.message);
@@ -131,9 +132,9 @@ const BlogDetail = () => {
   };
 
   return (
-    <div className="relative p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
+    <div className="relative p-6 mt-6  bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
       {/* Icons for back and wishlist */}
-      <div className="absolute top-10 right-10 flex space-x-4 z-10">
+      <div className="absolute top-16 right-10 flex space-x-4 z-10">
         {userI?._id !== vlog?.userId?._id && (
           <button
             onClick={() => handleWishlistClick(vlog?._id)}
@@ -194,14 +195,16 @@ const BlogDetail = () => {
       </div>
 
       <div className="relative">
-        <img
-          className="w-full rounded-md h-80 object-cover"
-          src={
-            vlog?.postImage ||
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaPcs0BFfc4yvzXRgMPeBHO9AHvgS49Qtoqw&s"
-          }
-          alt="Vlog Cover"
-        />
+        <div className="w-full h-[80vh] flex items-center justify-center overflow-hidden relative">
+          <img
+            className="object-cover rounded-md"
+            src={
+              vlog?.postImage ||
+              "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg?w=360"
+            }
+            alt="Vlog Cover"
+          />
+        </div>
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent text-white">
           {/* Title overlay on image */}
           <h2 className="text-2xl font-bold dark:text-gray-300">
@@ -220,7 +223,7 @@ const BlogDetail = () => {
               ? "No comments"
               : `All comments ${getAllComent?.length}`}
           </button>
-          <div>
+          <div className="space-y-4 my-4 ">
             {!showComments && (
               <>
                 <input
@@ -236,7 +239,7 @@ const BlogDetail = () => {
                 <button
                   disabled={isLoading}
                   onClick={handleOnComment}
-                  className="bg-black dark:text-gray-300 dark:bg-gray-800 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
+                  className="bg-black dark:text-gray-300 dark:bg-gray-800 text-white p-2 ml-2 rounded-lg text-base hover:bg-gray-500 transition"
                 >
                   {isLoading ? "Commenting..." : "Comment"}
                 </button>
@@ -254,7 +257,7 @@ const BlogDetail = () => {
                 <GetVlogComments />
               </li>
               <li className="p-4 rounded shadow-sm">
-                <div>
+                <div className="space-y-5 ">
                   <input
                     className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none dark:text-gray-300 dark:bg-gray-800"
                     name="text"
@@ -267,9 +270,10 @@ const BlogDetail = () => {
                   />
                   <button
                     onClick={handleOnComment}
-                    className="bg-black dark:text-gray-300 dark:bg-gray-600 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition dark:outline-gray-800"
+                    disabled={isLoading}
+                    className="bg-black ml-2 dark:text-gray-300 dark:bg-gray-600 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition dark:outline-gray-800"
                   >
-                    Comment
+                    {isLoading ? "Commenting..." : "Comment"}
                   </button>
                 </div>
               </li>

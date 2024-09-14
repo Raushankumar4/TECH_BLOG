@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import AllBlogCard from "./AllBlogCar";
 import { useGetAllPost } from "../../hooks/useGetAllPost";
 import { Link } from "react-router-dom";
+import Footer from "../Pages/Footer/Footer";
 
 const AllBlog = () => {
   const allVlogs = useSelector((state) => state.vlog.allVlogs);
   useGetAllPost();
 
   return (
-    <div className="h-screen">
+    <div className="max-h-screen">
       {allVlogs && allVlogs?.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-screen w-full text-center space-y-4">
           <span className="font-bold text-4xl">No vlogs found.</span>
@@ -25,6 +26,7 @@ const AllBlog = () => {
           <AllBlogCard vlog={vlogItem} key={vlogItem?._id} />
         ))
       )}
+      <Footer />
     </div>
   );
 };

@@ -81,7 +81,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen mx-10 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
           Change Password

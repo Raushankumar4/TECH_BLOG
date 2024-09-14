@@ -4,8 +4,6 @@ import Login from "../Auth/Login/Login";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AiFillBackward } from "react-icons/ai";
-import AllBlog from "../Blog/AllBlog";
 import ContactUs from "../Pages/ContactUs/ConatactUs";
 
 const HomePage = () => {
@@ -77,7 +75,7 @@ const HomePage = () => {
           </Modal>
         )}
       </div>
-      <AllBlog />
+
       <ContactUs />
     </>
   );

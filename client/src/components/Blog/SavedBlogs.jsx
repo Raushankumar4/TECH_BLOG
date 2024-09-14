@@ -45,7 +45,7 @@ const SavedBlogs = () => {
 
   return (
     <motion.div
-      className="max-w-6xl mt-10 mx-auto p-4 sm:p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg"
+      className="max-w-6xl md:mt-20 mt-[19vw] mb-[6vw] mx-10  md:mx-auto p-4 sm:p-6 bg-white dark:bg-gray-900 shadow-lg rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -55,7 +55,7 @@ const SavedBlogs = () => {
       </h1>
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {savedVlogs.length === 0 ? (
-          <p className="text-gray-600 h-screen dark:text-gray-300">
+          <p className="text-gray-600 h-auto dark:text-gray-300">
             No saved blogs.
           </p>
         ) : (

@@ -103,7 +103,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="min-h-screen dark:bg-gray-900 w-full flex items-center justify-center bg-gray-100 p-4 dark:text-white">
+    <div className="min-h-screen md:pt-[6vw] pt-[22vw] dark:bg-gray-900 w-full flex items-center justify-center bg-gray-100 p-4 dark:text-white">
       <motion.div
         className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden max-w-screen-md w-full h-full md:h-auto"
         initial="hidden"

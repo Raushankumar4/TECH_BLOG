@@ -38,7 +38,7 @@ const Profile = () => {
               className="w-full h-full object-cover rounded-lg"
               src={
                 userProfile?.profileImage ||
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-kS7ERlqltxZMKtzUBK4LZU1roZd1D3O7RA&s"
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
               }
               alt="Avatar"
             />
