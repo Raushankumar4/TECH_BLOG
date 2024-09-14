@@ -1,9 +1,40 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { FaTrash, FaEdit, FaHeart } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import GetVlogComments from "./GetVlogComments";
 import { useGetAllVlogComments } from "../../hooks/useGetAllComments";
 import { Link } from "react-router-dom";
+
+// Format date function
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(new Date(dateString));
+};
+
+// Time ago function
+const timeAgo = (dateString) => {
+  const now = new Date();
+  const past = new Date(dateString);
+  const seconds = Math.floor((now - past) / 1000);
+
+  const intervals = [
+    { label: "year", value: 31536000 },
+    { label: "month", value: 2592000 },
+    { label: "day", value: 86400 },
+    { label: "hour", value: 3600 },
+    { label: "minute", value: 60 },
+    { label: "second", value: 1 },
+  ];
+
+  for (const interval of intervals) {
+    const count = Math.floor(seconds / interval.value);
+    if (count > 0) {
+      return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
+    }
+  }
+
+  return "just now";
+};
 
 const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
   const [showComments, setShowComments] = useState(false);
@@ -15,12 +46,16 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
     setShowComments(!showComments);
   };
 
+  // Format the createdAt date
+  const formattedDate = formatDate(vlog?.createdAt);
+  const relativeTime = timeAgo(vlog?.createdAt);
+
   return (
     <div
       key={key}
       className="relative p-4 bg-gray-200 dark:bg-gray-800 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:border-gray-600"
     >
-      {/* Icons for update, delete, and wishlist */}
+      {/* Icons for update, delete */}
       <div className="absolute top-4 right-4 flex space-x-4 z-10">
         <Link
           to={`/updateblog/${vlog?._id}`}
@@ -41,25 +76,37 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
       </div>
 
       <div className="p-6 flex flex-col">
-        <div className="flex items-center mb-4">
-          <img
-            className="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-600 mr-4"
-            src={
-              user?.profileImage ||
-              "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg"
-            }
-          />
-          <span className="text-gray-900 dark:text-gray-100 font-medium text-lg">
-            @{user?.fullName}
-          </span>
+        <div className="flex flex-col mb-4">
+          {/* User profile and title */}
+          <div className="flex items-center mb-4">
+            <img
+              className="w-16 h-16 rounded-full border border-gray-300 dark:border-gray-600 mr-4"
+              src={
+                user?.profileImage ||
+                "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg"
+              }
+              alt="User Profile"
+            />
+            <span className="text-gray-900 dark:text-gray-100 font-medium text-lg">
+              @{user?.fullName}
+            </span>
+          </div>
+
+          {/* Title above description */}
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {vlog?.title}
+          </h2>
+          {/* Date and time */}
+
+          <p className="text-gray-700 dark:text-gray-300 text-base mb-6">
+            {vlog?.description}
+          </p>
+          <div className="text-gray-500 flex justify-end dark:text-gray-400 text-sm mb-2">
+            <div>
+              {formattedDate} <span>{relativeTime}</span>
+            </div>
+          </div>
         </div>
-        {/* Title above description */}
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          {vlog?.title}
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 text-base mb-6">
-          {vlog?.description}
-        </p>
       </div>
 
       <div className="relative">
@@ -69,6 +116,7 @@ const BlogCard = ({ vlog, key, onDelete = () => {}, onUpdate = () => {} }) => {
             vlog?.postImage ||
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaPcs0BFfc4yvzXRgMPeBHO9AHvgS49Qtoqw&s"
           }
+          alt="Vlog Cover"
         />
         <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent text-white">
           {/* Title is moved to be directly above description */}

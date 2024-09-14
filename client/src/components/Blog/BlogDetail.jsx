@@ -23,15 +23,44 @@ const BlogDetail = () => {
   const vlog = allVlogs.find((vlog) => id === vlog?._id);
   const getAllComent = useSelector((state) => state.vlog.comments);
 
-  // Format the date
+  // Format the date and time
   const postDate = new Date(vlog?.createdAt);
   const formattedDate = postDate.toLocaleDateString(); // e.g., "9/9/2024"
   const formattedTime = postDate.toLocaleTimeString(); // e.g., "3:45 PM"
   const year = postDate.getFullYear(); // e.g., 2024
 
+  const timeAgo = (dateString) => {
+    const now = new Date();
+    const past = new Date(dateString);
+    const seconds = Math.floor((now - past) / 1000);
+
+    const intervals = [
+      { label: "year", value: 31536000 },
+      { label: "month", value: 2592000 },
+      { label: "day", value: 86400 },
+      { label: "hour", value: 3600 },
+      { label: "minute", value: 60 },
+      { label: "second", value: 1 },
+    ];
+
+    for (const interval of intervals) {
+      const count = Math.floor(seconds / interval.value);
+      if (count > 0) {
+        return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
+      }
+    }
+
+    return "just now";
+  };
+
+  const relativeTime = vlog?.createdAt
+    ? timeAgo(vlog.createdAt)
+    : "Unknown time";
+
   const handleCommentClick = () => {
     setShowComments(!showComments);
   };
+
   useGetAllVlogComments(vlog?._id);
 
   const handleBackClick = () => {
@@ -43,6 +72,7 @@ const BlogDetail = () => {
     userId: "",
     vlogId: "",
   });
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setAddComment((prev) => ({
@@ -101,9 +131,9 @@ const BlogDetail = () => {
   };
 
   return (
-    <div className="relative  p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
+    <div className="relative p-4 bg-gray-200 overflow-hidden flex flex-col w-full max-w-full mx-auto transition-transform duration-300 ease-in-out transform border-t-gray-400 border dark:bg-gray-900">
       {/* Icons for back and wishlist */}
-      <div className="absolute top-10 right-10 flex space-x-4 z-10 ">
+      <div className="absolute top-10 right-10 flex space-x-4 z-10">
         {userI?._id !== vlog?.userId?._id && (
           <button
             onClick={() => handleWishlistClick(vlog?._id)}
@@ -124,13 +154,13 @@ const BlogDetail = () => {
         >
           <HiArrowLeft size={24} />
           <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 hover:opacity-100 transition-opacity text-nowrap dark:text-gray-200">
-            go back
+            Go back
           </span>
         </button>
       </div>
 
-      <div className="p-6 flex flex-col ">
-        <div className="flex items-center mb-4 ">
+      <div className="p-6 flex flex-col">
+        <div className="flex items-center mb-4">
           <img
             className="w-16 h-16 rounded-full border border-gray-400 mr-4"
             src={
@@ -158,7 +188,7 @@ const BlogDetail = () => {
             {(vlog?.categories && vlog?.categories[0]) || "Category"}
           </span>
           <span className="text-gray-500 text-sm">
-            {formattedDate} at {formattedTime} ({year})
+            {formattedDate} at {formattedTime} ({year}) - {relativeTime}
           </span>
         </div>
       </div>
@@ -184,7 +214,7 @@ const BlogDetail = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button
             onClick={() => handleCommentClick()}
-            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 dark:bg-gray-800  transition dark:text-gray-300"
+            className="bg-gray-400 text-black p-2 rounded-lg text-base hover:bg-gray-500 dark:bg-gray-800 transition dark:text-gray-300"
           >
             {getAllComent && getAllComent?.length === 0
               ? "No comments"
@@ -194,10 +224,10 @@ const BlogDetail = () => {
             {!showComments && (
               <>
                 <input
-                  className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-800 dark:ring-gray-800  outline-none dark:text-gray-300 dark:bg-gray-900 "
+                  className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-800 dark:ring-gray-800 outline-none dark:text-gray-300 dark:bg-gray-900"
                   name="text"
                   type="text"
-                  placeholder="Add a comment "
+                  placeholder="Add a comment"
                   onChange={handleOnChange}
                   value={addComment.text}
                   required
@@ -208,28 +238,28 @@ const BlogDetail = () => {
                   onClick={handleOnComment}
                   className="bg-black dark:text-gray-300 dark:bg-gray-800 text-white p-2 rounded-lg text-base hover:bg-gray-500 transition"
                 >
-                  {isLoading ? "Commenting..." : `${"Comment"} `}
+                  {isLoading ? "Commenting..." : "Comment"}
                 </button>
               </>
             )}
           </div>
         </div>
         {showComments && (
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg w-full dark:bg-gray-800 ">
-            <h3 className="text-lg font-semibold mb-4 dark:bg-gray-800   dark:text-gray-300">
+          <div className="mt-6 p-4 bg-gray-100 rounded-lg w-full dark:bg-gray-800">
+            <h3 className="text-lg font-semibold mb-4 dark:text-gray-300">
               Comments
             </h3>
-            <ul className="space-y-8 w-full  dark:text-gray-300 dark:bg-gray-800">
+            <ul className="space-y-8 w-full dark:text-gray-300 dark:bg-gray-800">
               <li className="p-4 bg-white rounded shadow-sm w-full dark:text-gray-300 dark:bg-gray-800">
                 <GetVlogComments />
               </li>
-              <li className="p-4  rounded shadow-sm">
+              <li className="p-4 rounded shadow-sm">
                 <div>
                   <input
                     className="w-fit p-2 mx-2 rounded-lg ring-1 ring-gray-400 focus:outline-gray-300 outline-none dark:text-gray-300 dark:bg-gray-800"
                     name="text"
                     type="text"
-                    placeholder="Add a comment "
+                    placeholder="Add a comment"
                     onChange={handleOnChange}
                     value={addComment.text}
                     required

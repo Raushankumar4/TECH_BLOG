@@ -55,7 +55,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg dark:bg-gray-800">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg dark:bg-gray-900">
       <motion.h1
         className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100"
         initial={{ opacity: 0, y: -20 }}
@@ -172,7 +172,7 @@ const ContactUs = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition disabled:bg-gray-400"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 dark:bg-gray-700 dark:text-gray-300 transition disabled:bg-gray-400"
           >
             {isSubmitting ? "Submitting..." : "Send Message"}
           </button>

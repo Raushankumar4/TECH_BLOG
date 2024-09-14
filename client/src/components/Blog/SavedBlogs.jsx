@@ -17,7 +17,7 @@ const SavedBlogs = () => {
   console.log(savedVlogs);
   const dispatch = useDispatch();
 
-   const handleRemoveBlog = async (blogId) => {
+  const handleRemoveBlog = async (blogId) => {
     if (!token) {
       navigate("/login");
     }
@@ -55,7 +55,9 @@ const SavedBlogs = () => {
       </h1>
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {savedVlogs.length === 0 ? (
-          <p className="text-gray-600 h-screen dark:text-gray-300">No saved blogs.</p>
+          <p className="text-gray-600 h-screen dark:text-gray-300">
+            No saved blogs.
+          </p>
         ) : (
           savedVlogs.map((blog) => (
             <motion.div
@@ -80,12 +82,12 @@ const SavedBlogs = () => {
                 <p className="mt-2 text-gray-600 dark:text-gray-300">
                   {blog.description}
                 </p>
-                <div className="mt-4 flex justify-between items-center">
+                <div className="mt-4 space-x-4">
                   <Link
                     to={`/blog/${blog._id}`}
                     className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
                   >
-                    View
+                    Read
                   </Link>
                   <button
                     onClick={() => handleRemoveBlog(blog._id)}

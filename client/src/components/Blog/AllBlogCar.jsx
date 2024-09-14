@@ -1,21 +1,60 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+const formatDate = (dateString) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(new Date(dateString));
+};
+
+const timeAgo = (dateString) => {
+  const now = new Date();
+  const past = new Date(dateString);
+  const seconds = Math.floor((now - past) / 1000);
+
+  const intervals = [
+    { label: "year", value: 31536000 },
+    { label: "month", value: 2592000 },
+    { label: "day", value: 86400 },
+    { label: "hour", value: 3600 },
+    { label: "minute", value: 60 },
+    { label: "second", value: 1 },
+  ];
+
+  for (const interval of intervals) {
+    const count = Math.floor(seconds / interval.value);
+    if (count > 0) {
+      return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
+    }
+  }
+
+  return "just now";
+};
+
 const AllBlogCard = ({ vlog, key }) => {
   const navigate = useNavigate();
+
+  // Format the creation date
+  const formattedDate = vlog?.createdAt
+    ? formatDate(vlog.createdAt)
+    : "Date Not Available";
+
+  // Get relative time
+  const relativeTime = vlog?.createdAt
+    ? timeAgo(vlog.createdAt)
+    : "Unknown time";
 
   return (
     <div
       onClick={() => navigate(`/blog/${vlog?._id}`)}
       key={key}
-      className="flex bg-white shadow-lg m-4 rounded-lg overflow-hidden dark:bg-gray-900"
+      className="flex flex-col md:flex-row bg-white shadow-lg m-4 rounded-lg overflow-hidden dark:bg-gray-900"
     >
       {/* Left Side - Image */}
       <div className="flex-shrink-0">
         <img
           src={vlog?.postImage || "https://via.placeholder.com/150"}
           alt="Vlog Thumbnail"
-          className="w-80 h-52 object-cover"
+          className="w-full h-48 md:w-80 md:h-52 object-cover"
         />
       </div>
 
@@ -27,9 +66,12 @@ const AllBlogCard = ({ vlog, key }) => {
         </div>
 
         {/* Blog Title and Date */}
-        <div className="text-xs flex justify-between text-gray-500 mb-2  dark:text-gray-400">
-          <h2 className="text-xl font-semibold">{vlog?.title}</h2>
-          <span>{vlog?.createdAt}</span>
+        <div className="text-xs flex flex-col md:flex-row justify-between text-gray-500 mb-2 dark:text-gray-400">
+          <h2 className="text-xl font-semibold mb-2 md:mb-0">{vlog?.title}</h2>
+          <div>
+            <span>{formattedDate}</span>
+            <span className="text-gray-400 text-sm ml-2">({relativeTime})</span>
+          </div>
         </div>
 
         {/* Username */}
@@ -41,6 +83,14 @@ const AllBlogCard = ({ vlog, key }) => {
         <p className="text-gray-800 mb-4 dark:text-gray-400">
           {vlog?.description || "Description"}
         </p>
+
+        {/* Read More Button */}
+        <button
+          onClick={() => navigate(`/blog/${vlog?._id}`)}
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 dark:text-gray-400 dark:bg-gray-800"
+        >
+          Read More
+        </button>
       </div>
     </div>
   );

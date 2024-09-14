@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,10 +18,9 @@ import { useGetSavedPost } from "../../hooks/useGetSavedPost";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
-  const naviagate = useNavigate();
-  const savedPost = useSelector((state) => state.vlog.savedVlogs.length);
+  const navigate = useNavigate();
+  const savedPost = useSelector((state) => state.vlog.savedVlogs?.length);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const id = useSelector((state) => state.user.user?._id);
 
@@ -30,7 +29,6 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const { data } = await axios.get(`${url}${user}/logout`);
-
       dispatch(logout());
       dispatch(setUser(null));
       dispatch(setUserProfile(null));
@@ -38,23 +36,21 @@ const Navbar = () => {
       dispatch(setMyVlogs(null));
       dispatch(setComment(null));
       toast.success(data?.message);
-      naviagate("/");
+      navigate("/");
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
     }
   };
 
   return (
-    <nav
-      className={`dark:bg-gray-900 bg-gray-200  dark:text-white text-gray-800 shadow-md`}
-    >
+    <nav className="fixed top-0 left-0 right-0  dark:bg-gray-900 bg-gray-200 dark:text-white text-gray-800 shadow-md z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold">
           BLOG
         </Link>
         <button
-          className="lg:hidden text-gray-800 text-2xl"
-          onClick={toggleMenu}
+          className="lg:hidden text-gray-800 dark:text-white text-2xl"
+          onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
           {isOpen ? <HiX /> : <HiMenu />}
@@ -62,29 +58,52 @@ const Navbar = () => {
         <div className="hidden lg:flex space-x-6 font-medium text-md">
           {isAuthenticated && (
             <>
-              <h1 className="hover:text-gray-600 pt-1">
-                <ThemeToggle />
-              </h1>
-              <Link to="/profile" className="hover:text-gray-600">
+              <ThemeToggle />
+              <Link
+                to="/profile"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
                 Profile
               </Link>
-              <Link to="/bloglist" className="hover:text-gray-600">
+              <Link
+                to="/bloglist"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
                 Blog
               </Link>
-              <Link to="/myblog" className="hover:text-gray-600">
+              <Link
+                to="/myblog"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
                 My Blog
               </Link>
-              <Link to="/blog" className="hover:text-gray-600">
-                Favorite {savedPost}
+              <Link
+                to="/blog"
+                className="relative hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                Saved
+                {savedPost > 0 && (
+                  <span className="absolute top-[-10px] right-4 bg-red-600 text-white rounded-full px-2 py-1 text-xs">
+                    {savedPost}
+                  </span>
+                )}
               </Link>
             </>
           )}
-          <Link to="/contactUs" className="hover:text-gray-600">
+          <Link
+            to="/contactUs"
+            className="hover:text-gray-600 dark:hover:text-gray-300"
+          >
             Contact
           </Link>
-          <button onClick={handleLogout} className="hover:text-gray-600">
-            {isAuthenticated && "logOut"}
-          </button>
+          {isAuthenticated && (
+            <button
+              onClick={handleLogout}
+              className="hover:text-gray-600 dark:hover:text-gray-300"
+            >
+              LogOut
+            </button>
+          )}
         </div>
         <motion.div
           className={`lg:hidden z-50 fixed inset-0 bg-gray-800 bg-opacity-90 flex flex-col items-center justify-center space-y-6 ${
@@ -96,23 +115,65 @@ const Navbar = () => {
         >
           <button
             className="absolute top-4 right-4 text-white text-3xl"
-            onClick={toggleMenu}
+            onClick={() => setIsOpen(false)}
             aria-label="Close menu"
           >
             <HiX />
           </button>
 
-          <Link className="text-white text-xl" onClick={toggleMenu}>
-            About
-          </Link>
-          <Link className="text-white text-xl" onClick={toggleMenu}>
+          {isAuthenticated && (
+            <>
+              <ThemeToggle />
+              <Link
+                onClick={() => setIsOpen(false)}
+                to="/profile"
+                className="text-white text-lg hover:text-gray-400"
+              >
+                Profile
+              </Link>
+              <Link
+                onClick={() => setIsOpen(false)}
+                to="/bloglist"
+                className="text-white text-lg hover:text-gray-400"
+              >
+                Blog
+              </Link>
+              <Link
+                onClick={() => setIsOpen(false)}
+                to="/myblog"
+                className="text-white text-lg hover:text-gray-400"
+              >
+                My Blog
+              </Link>
+              <Link
+                onClick={() => setIsOpen(false)}
+                to="/blog"
+                className="text-white text-lg hover:text-gray-400"
+              >
+                Saved
+                {savedPost > 0 && (
+                  <span className="absolute top-[-10px] right-4 bg-red-600 text-white rounded-full px-2 py-1 text-xs">
+                    {savedPost}
+                  </span>
+                )}
+              </Link>
+            </>
+          )}
+          <Link
+            onClick={() => setIsOpen(false)}
+            to="/contactUs"
+            className="text-white text-lg hover:text-gray-400"
+          >
             Contact
           </Link>
-          <Link className="text-white text-xl" onClick={toggleMenu}>
-            <button onClick={handleLogout} className="text-white text-xl">
-              {isAuthenticated && "LogOut"}
+          {isAuthenticated && (
+            <button
+              onClick={handleLogout}
+              className="text-white text-lg hover:text-gray-400"
+            >
+              LogOut
             </button>
-          </Link>
+          )}
         </motion.div>
       </div>
     </nav>
