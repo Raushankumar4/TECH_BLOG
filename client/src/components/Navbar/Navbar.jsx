@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,9 +15,12 @@ import {
   setMyVlogs,
 } from "../Redux/Store/Slices/vlogSlice";
 import { useGetSavedPost } from "../../hooks/useGetSavedPost";
+import Modal from "../Modal/Modal";
+import Login from "../Auth/Login/Login";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPostOpen, setIsPostOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const savedPost = useSelector((state) => state.vlog.savedVlogs?.length);
@@ -25,6 +28,12 @@ const Navbar = () => {
   const id = useSelector((state) => state.user.user?._id);
 
   useGetSavedPost(id);
+
+  useEffect(() => {
+    if (isPostOpen) {
+      setIsOpen(false); // Close navbar when modal is open
+    }
+  }, [isPostOpen]);
 
   const handleLogout = async () => {
     try {
@@ -43,7 +52,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0  dark:bg-gray-900 bg-gray-200 dark:text-white text-gray-800 shadow-md z-50">
+    <nav className="fixed top-0 left-0 right-0 dark:bg-gray-900 bg-gray-200 dark:text-white text-gray-800 shadow-md z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold">
           BLOG
@@ -60,6 +69,12 @@ const Navbar = () => {
             <>
               <ThemeToggle />
               <Link
+                to="/"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                Home
+              </Link>
+              <Link
                 to="/profile"
                 className="hover:text-gray-600 dark:hover:text-gray-300"
               >
@@ -71,6 +86,7 @@ const Navbar = () => {
               >
                 Blog
               </Link>
+
               <Link
                 to="/myblog"
                 className="hover:text-gray-600 dark:hover:text-gray-300"
@@ -81,21 +97,34 @@ const Navbar = () => {
                 to="/blog"
                 className="relative hover:text-gray-600 dark:hover:text-gray-300"
               >
-                Saved
+                Saved Post
                 {savedPost > 0 && (
-                  <span className="absolute top-[-10px] right-4 bg-red-600 text-white rounded-full px-2 py-1 text-xs">
+                  <span className="absolute top-[-10px] right-4  bg-gray-600 text-white rounded-full px-2 py-1 text-xs">
                     {savedPost}
                   </span>
                 )}
               </Link>
             </>
           )}
+
           <Link
             to="/contactUs"
             className="hover:text-gray-600 dark:hover:text-gray-300"
           >
             Contact
           </Link>
+          {!isAuthenticated && (
+            <button
+              onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
+            >
+              <Link
+                to="/contactUs"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                Sign In
+              </Link>
+            </button>
+          )}
           {isAuthenticated && (
             <button
               onClick={handleLogout}
@@ -166,6 +195,19 @@ const Navbar = () => {
           >
             Contact
           </Link>
+          {!isAuthenticated && (
+            <button
+              onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
+            >
+              <Link
+                to="/contactUs"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                Sign In
+              </Link>
+            </button>
+          )}
+
           {isAuthenticated && (
             <button
               onClick={handleLogout}
@@ -176,6 +218,11 @@ const Navbar = () => {
           )}
         </motion.div>
       </div>
+      {!isAuthenticated && (
+        <Modal isOpen={isPostOpen} onClose={() => setIsPostOpen(false)}>
+          <Login />
+        </Modal>
+      )}
     </nav>
   );
 };

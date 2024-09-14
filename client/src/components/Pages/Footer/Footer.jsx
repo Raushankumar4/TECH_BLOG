@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaTwitter,
@@ -34,48 +35,46 @@ const Footer = () => {
           >
             <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
               <li>
-                <motion.a
-                  href="#home"
+                <motion.div
                   className="hover:text-yellow-400 transition-colors duration-300"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5 }}
                 >
-                  Home
-                </motion.a>
+                  <Link to="/">Home</Link>
+                </motion.div>
               </li>
+
               <li>
-                <motion.a
-                  href="#about"
-                  className="hover:text-yellow-400 transition-colors duration-300"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  About
-                </motion.a>
-              </li>
-              <li>
-                <motion.a
-                  href="#services"
+                <motion.div
                   className="hover:text-yellow-400 transition-colors duration-300"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  Services
-                </motion.a>
+                  <Link to="/createVlog">Create </Link>
+                </motion.div>
+              </li>
+
+              <li>
+                <motion.div
+                  className="hover:text-yellow-400 transition-colors duration-300"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <Link to="/bloglist">Blog</Link>
+                </motion.div>
               </li>
               <li>
-                <motion.a
-                  href="#contact"
+                <motion.div
                   className="hover:text-yellow-400 transition-colors duration-300"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  Contact
-                </motion.a>
+                  <Link to="#contact">Contact</Link>
+                </motion.div>
               </li>
             </ul>
           </motion.div>

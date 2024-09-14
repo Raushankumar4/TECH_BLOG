@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import Modal from "../Modal/Modal";
-import Login from "../Auth/Login/Login";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ContactUs from "../Pages/ContactUs/ConatactUs";
+import SignUp from "../Auth/SignUp/SignUp";
 
 const HomePage = () => {
   const [isPostOpen, setIsPostOpen] = useState(false);
@@ -71,7 +71,7 @@ const HomePage = () => {
         </div>
         {!isAuthenticated && (
           <Modal isOpen={isPostOpen} onClose={() => setIsPostOpen(false)}>
-            <Login />
+            <SignUp />
           </Modal>
         )}
       </div>

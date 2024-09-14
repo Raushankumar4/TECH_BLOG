@@ -62,7 +62,7 @@ const SavedBlogs = () => {
           savedVlogs.map((blog) => (
             <motion.div
               key={blog._id}
-              className="bg-white dark:bg-gray-700 shadow-md rounded-lg overflow-hidden"
+              className="bg-white dark:bg-gray-900 shadow-2xl rounded-xl overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -91,7 +91,7 @@ const SavedBlogs = () => {
                   </Link>
                   <button
                     onClick={() => handleRemoveBlog(blog._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded-lg text-base hover:bg-red-600 transition dark:bg-red-600 dark:hover:bg-red-700"
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-800 transition dark:bg-gray-600 dark:hover:bg-gray-700"
                   >
                     Remove
                   </button>
