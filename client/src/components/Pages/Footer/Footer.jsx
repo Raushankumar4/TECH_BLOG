@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
 import {
   FaFacebookF,
@@ -10,10 +10,10 @@ import {
 } from "react-icons/fa";
 
 const Footer = () => {
-  const theme = useSelector((state) => state.theme.theme);
-
   return (
-    <footer className={`bg-gray-800 text-white py-8 ${theme}`}>
+    <footer
+      className={`bg-gray-200 dark:bg-gray-900 dark:text-gray-300 text-black py-8 `}
+    >
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Left section */}
