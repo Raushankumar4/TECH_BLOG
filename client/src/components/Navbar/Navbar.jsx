@@ -155,6 +155,13 @@ const Navbar = () => {
               <ThemeToggle />
               <Link
                 onClick={() => setIsOpen(false)}
+                to="/"
+                className="hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                Home
+              </Link>
+              <Link
+                onClick={() => setIsOpen(false)}
                 to="/profile"
                 className="text-white text-lg hover:text-gray-400"
               >
