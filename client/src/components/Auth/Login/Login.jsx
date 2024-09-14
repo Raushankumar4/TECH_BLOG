@@ -93,7 +93,10 @@ const Login = () => {
             {isLoading ? "Logging In..." : "Login"}
           </button>
         </form>
-        <div className="mt-4 text-sm text-gray-500 text-center">
+        <div
+          disabled={isLoading}
+          className="mt-4 text-sm text-gray-500 text-center"
+        >
           Dont have an account?
           <button
             onClick={() => setIsOpenModal((prev) => !prev)}

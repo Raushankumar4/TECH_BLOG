@@ -47,12 +47,12 @@ const HomePage = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl dark:text-white lg:text-5xl font-bold text-gray-900 leading-tight text-center lg:text-left">
-              Welcome to the Vlog
+              Welcome to the Tech Blog
             </h1>
             <p className="mt-4 dark:text-white text-lg text-gray-700 text-center lg:text-left">
-              Dive into our latest adventures and stories. Join us as we explore
-              new places, share unique experiences, and capture moments that
-              matter.
+              Explore cutting-edge technology, gain insights into the latest
+              trends, and discover the future of innovation with us. Join our
+              journey through the tech world and stay ahead of the curve.
             </p>
             <motion.button
               onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}

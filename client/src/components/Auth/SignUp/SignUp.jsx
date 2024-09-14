@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import defaultImage from "../../../../public/default.jpg";
 import axios from "axios";
 import { url, user } from "../../../constant";
 import toast from "react-hot-toast";
 
+const placeholderImage =
+  "https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
+
 const SignUp = () => {
-  const [imagePreview, setImagePreview] = useState(defaultImage);
+  const [imagePreview, setImagePreview] = useState(placeholderImage);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userInput, setUserInput] = useState({
@@ -22,11 +24,20 @@ const SignUp = () => {
     const { name, value, files } = e.target;
     if (name === "profileImage") {
       const file = files[0];
-      setUserInput((prevInput) => ({
-        ...prevInput,
-        [name]: file,
-      }));
-      setImagePreview(file ? URL.createObjectURL(file) : defaultImage);
+      if (file) {
+        setUserInput((prevInput) => ({
+          ...prevInput,
+          [name]: file,
+        }));
+
+        setImagePreview(URL.createObjectURL(file));
+      } else {
+        setImagePreview(placeholderImage);
+        setUserInput((prevInput) => ({
+          ...prevInput,
+          [name]: null,
+        }));
+      }
     } else {
       setUserInput((prevInput) => ({
         ...prevInput,
@@ -36,8 +47,13 @@ const SignUp = () => {
   };
 
   const handleRemoveImage = () => {
+    // Revoke the object URL if it was created
+    if (imagePreview !== placeholderImage) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    // Reset state to placeholder image
     setUserInput((prev) => ({ ...prev, profileImage: null }));
-    setImagePreview(defaultImage);
+    setImagePreview(placeholderImage);
   };
 
   const validateInput = () => {
@@ -79,16 +95,16 @@ const SignUp = () => {
 
   useEffect(() => {
     return () => {
-      if (imagePreview && imagePreview !== defaultImage) {
+      if (imagePreview && imagePreview !== placeholderImage) {
         URL.revokeObjectURL(imagePreview);
       }
     };
   }, [imagePreview]);
 
   return (
-    <div className="flex  flex-col items-center justify-center  bg-gray-50 p-4 dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
+    <div className="flex flex-col items-center justify-center bg-gray-50 p-4 dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
       <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6">
           {/* Profile Image Section */}
           <div className="flex flex-col items-center justify-center">
             <div className="relative">
@@ -97,7 +113,7 @@ const SignUp = () => {
                 type="file"
                 accept="image/*"
                 name="profileImage"
-                className="absolute opacity-0 inset-0 z-50 cursor-pointer"
+                className="absolute top-14 left-5 opacity-0 bg-gray-200 w-20  z-50 cursor-pointer"
               />
               <div className="relative flex justify-center items-center">
                 <img
@@ -105,7 +121,7 @@ const SignUp = () => {
                   alt="Profile Preview"
                   className="w-32 h-32 rounded-full object-cover shadow-md border border-gray-300"
                 />
-                {imagePreview !== defaultImage && (
+                {imagePreview !== placeholderImage && (
                   <button
                     type="button"
                     onClick={handleRemoveImage}
@@ -124,8 +140,8 @@ const SignUp = () => {
 
           {/* Form Section */}
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="grid gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
                 <label
                   htmlFor="fullName"
                   className="block text-sm font-medium text-gray-700"
@@ -145,7 +161,7 @@ const SignUp = () => {
                 )}
               </div>
 
-              <div className="grid gap-2">
+              <div className="space-y-2">
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium text-gray-700"
@@ -165,7 +181,7 @@ const SignUp = () => {
                 )}
               </div>
 
-              <div className="grid gap-2">
+              <div className="space-y-2">
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
@@ -185,7 +201,7 @@ const SignUp = () => {
                 )}
               </div>
 
-              <div className="grid gap-2">
+              <div className="space-y-2">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
@@ -213,12 +229,6 @@ const SignUp = () => {
               {isLoading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
-        </div>
-        <div className="mt-4 text-sm text-gray-500 text-center">
-          Already have an account?{" "}
-          <Link to="/login" className="font-medium text-blue-600 underline">
-            Login
-          </Link>
         </div>
       </div>
     </div>

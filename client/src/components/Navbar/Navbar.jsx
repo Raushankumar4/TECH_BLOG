@@ -65,15 +65,12 @@ const Navbar = () => {
           {isOpen ? <HiX /> : <HiMenu />}
         </button>
         <div className="hidden lg:flex space-x-6 font-medium text-md">
+          <ThemeToggle />
+          <Link to="/" className="hover:text-gray-600 dark:hover:text-gray-300">
+            Home
+          </Link>
           {isAuthenticated && (
             <>
-              <ThemeToggle />
-              <Link
-                to="/"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
-              >
-                Home
-              </Link>
               <Link
                 to="/profile"
                 className="hover:text-gray-600 dark:hover:text-gray-300"
@@ -117,10 +114,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
             >
-              <Link
-                to="/contactUs"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
-              >
+              <Link className="hover:text-gray-600 dark:hover:text-gray-300">
                 Sign In
               </Link>
             </button>

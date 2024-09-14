@@ -166,7 +166,7 @@ const BlogDetail = () => {
             className="w-16 h-16 rounded-full border border-gray-400 mr-4"
             src={
               vlog?.userId?.profileImage ||
-              "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-developer-6521720_640.jpg"
+              "https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"
             }
             alt="User Profile"
           />
