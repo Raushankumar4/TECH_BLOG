@@ -33,25 +33,25 @@ const UpdatePassword = () => {
     const { currentPassword, newPassword, confirmPassword } = userInput;
 
     if (!token) {
-      toast.error("Please login first");
+      errorToast("Please login first");
       setIsLoading(false);
       return;
     }
 
     if (!currentPassword || !newPassword || !confirmPassword) {
-      toast.error("Please fill all the fields");
+      errorToast("Please fill all the fields");
       setIsLoading(false);
       return;
     }
 
     if (newPassword.length <= 6) {
-      toast.error("Password must be longer than 6 characters");
+      errorToast("Password must be longer than 6 characters");
       setIsLoading(false);
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      toast.error("New password and confirmation do not match");
+      errorToast("New password and confirmation do not match");
       setIsLoading(false);
       return;
     }

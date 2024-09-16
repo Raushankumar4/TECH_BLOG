@@ -186,6 +186,13 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
+              <Link
+                onClick={() => setIsOpen(false)}
+                to="/contactUs"
+                className="text-white text-lg hover:text-gray-400"
+              >
+                Contact
+              </Link>
             </>
           )}
 

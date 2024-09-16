@@ -45,7 +45,7 @@ const AllBlogCard = ({ vlog, key }) => {
 
   return (
     <>
-      <div className="w-full  ">
+      <div className="w-full h-[100vh]  ">
         <div
           onClick={() => navigate(`/blog/${vlog?._id}`)}
           key={key}

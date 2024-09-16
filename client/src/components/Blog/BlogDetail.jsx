@@ -125,10 +125,9 @@ const BlogDetail = () => {
       console.log(data.message);
 
       dispatch(getRefresh());
-      toast.success(data?.message);
     } catch (error) {
       console.log(error?.response?.data?.message || error.message);
-      toast.error(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 

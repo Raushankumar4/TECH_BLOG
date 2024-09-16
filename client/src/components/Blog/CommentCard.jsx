@@ -26,7 +26,7 @@ const CommentCard = ({ comment, onDelete = () => {} }) => {
 
   const handleEditCommet = async (commentId) => {
     try {
-      if (!token) return toast.error("Please login first");
+      if (!token) return errorToast("Please login first");
       const { data } = await axios.put(
         `${url}${vlogrl}/updatecomment/${commentId}`,
         updatedComment,
@@ -42,7 +42,7 @@ const CommentCard = ({ comment, onDelete = () => {} }) => {
       setEditComment(false);
       successToast(data?.message);
     } catch (error) {
-     errorToast(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 
