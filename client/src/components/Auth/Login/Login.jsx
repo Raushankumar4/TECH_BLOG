@@ -100,6 +100,7 @@ const Login = () => {
         >
           Dont have an account?
           <button
+            disabled={isLoading}
             onClick={() => setIsOpenModal((prev) => !prev)}
             to="/signup"
             className="font-medium text-gray-800 dark:text-gray-400 underline"
@@ -109,6 +110,7 @@ const Login = () => {
         </div>
       </div>
       <Modal
+        disabled={isLoading}
         isOpen={isOpenModal}
         onClose={() =>
           setIsOpenModal(() => {

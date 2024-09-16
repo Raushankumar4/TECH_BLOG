@@ -143,7 +143,6 @@ const Navbar = () => {
           >
             <HiX />
           </button>
-
           {isAuthenticated && (
             <>
               <ThemeToggle />
@@ -189,38 +188,38 @@ const Navbar = () => {
               </Link>
             </>
           )}
-          <>
-            {" "}
-            <ThemeToggle />
-          </>
-          <Link
-            onClick={() => setIsOpen(false)}
-            to="/"
-            className="hover:text-gray-600 text-white dark:hover:text-gray-300"
-          >
-            Home
-          </Link>
-          <Link
-            onClick={() => setIsOpen(false)}
-            to="/contactUs"
-            className="text-white text-lg hover:text-gray-400"
-          >
-            Contact
-          </Link>
 
           {!isAuthenticated && (
-            <button
-              onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
-            >
+            <>
+              <ThemeToggle />
               <Link
                 onClick={() => setIsOpen(false)}
-                className="hover:text-gray-600 text-white text-lg dark:hover:text-gray-300"
+                to="/"
+                className="hover:text-gray-600 text-white dark:hover:text-gray-300 text-lg"
               >
-                Sign In
+                Home
               </Link>
-            </button>
+              <Link
+                onClick={() => setIsOpen(false)}
+                to="/contactUs"
+                className="text-white text-lg hover:text-gray-400"
+              >
+                Contact
+              </Link>
+              <button
+                onClick={() =>
+                  setIsPostOpen((prev) => !isAuthenticated && !prev)
+                }
+              >
+                <Link
+                  onClick={() => setIsOpen(false)}
+                  className="hover:text-gray-600 text-white text-lg dark:hover:text-gray-300"
+                >
+                  Sign In
+                </Link>
+              </button>
+            </>
           )}
-
           {isAuthenticated && (
             <button
               onClick={handleLogout}
