@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { url, user } from "../constant";
-import { errorToast, successToast } from "../components/Notify/Notify";
+import { errorToast } from "../components/Notify/Notify";
 import axios from "axios";
 import { setSavedVlogs } from "../components/Redux/Store/Slices/vlogSlice";
 
@@ -9,7 +9,7 @@ export const useGetSavedPost = (userId) => {
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const refresh = useSelector((state) => state.vlog.refresh);
-  const path = window.location.pathname;
+  // const path = window.location.pathname;
 
   useEffect(() => {
     const fetchAllSavedPost = async () => {
@@ -29,12 +29,12 @@ export const useGetSavedPost = (userId) => {
 
         dispatch(setSavedVlogs(data?.savedPosts));
 
-        if (path === "/blog") successToast(data?.message);
+        // if (path === "/blog") successToast(data?.message);
       } catch (error) {
         errorToast(error?.response?.data?.message || error.message);
       }
     };
 
     fetchAllSavedPost();
-  }, [refresh, path]);
+  }, [refresh]);
 };

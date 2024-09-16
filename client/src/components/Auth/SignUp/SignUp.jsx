@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { url, user } from "../../../constant";
-import toast from "react-hot-toast";
+import { errorToast, successToast } from "../../Notify/Notify";
 
 const placeholderImage =
   "https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
@@ -85,10 +85,10 @@ const SignUp = () => {
         },
       });
       setIsLoading(false);
-      toast.success(data.message);
+      successToast(data.message);
       navigate("/");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      errorToast(error?.response?.data?.message || error?.message);
       setIsLoading(false);
     }
   };

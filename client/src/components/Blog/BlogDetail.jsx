@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaHeart } from "react-icons/fa";
+import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { HiArrowLeft } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import GetVlogComments from "./GetVlogComments";
 import { useGetAllVlogComments } from "../../hooks/useGetAllComments";
+import { errorToast, successToast } from "../Notify/Notify";
 
 const BlogDetail = () => {
   const [showComments, setShowComments] = useState(false);
@@ -96,12 +97,12 @@ const BlogDetail = () => {
       });
       dispatch(getRefresh());
       setShowComments(true);
-      toast.success(data?.message);
+      successToast(data?.message);
       setAddComment({ text: "" });
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      toast.error(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 
@@ -141,7 +142,7 @@ const BlogDetail = () => {
             className="relative group hover:text-red-600 transition"
             aria-label="Wishlist"
           >
-            <FaHeart size={24} />
+            <MdOutlineBookmarkAdd size={24} />
             {/* Tooltip */}
             <span className="absolute bottom-full right-0 mb-2 p-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100 transition-opacity text-nowrap dark:text-gray-400">
               Add to favorites

@@ -58,7 +58,7 @@ const ContactUs = () => {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-gray-900">
-        <div className="max-w-4xl w-full bg-gray-200 md:my-20 my-10 p-6 shadow-lg rounded-lg dark:bg-gray-900">
+        <div className="max-w-4xl mx-5 w-full bg-gray-200 md:my-20 my-10 p-6 shadow-xl rounded-lg dark:bg-gray-900">
           <motion.h1
             className="text-2xl mt-10 font-bold mb-6 text-gray-900 dark:text-gray-100"
             initial={{ opacity: 0, y: -20 }}

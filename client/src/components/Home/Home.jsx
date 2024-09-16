@@ -57,7 +57,7 @@ const HomePage = () => {
             <motion.button
               onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
               href="#get-started" // Update with the actual link or section ID
-              className="mt-8 inline-block px-6 py-3 text-white bg-blue-500 rounded-xl shadow-lg transition duration-300"
+              className="mt-8 inline-block px-6 py-3 text-white dark:bg-gray-800 bg-gray-800 rounded-xl shadow-lg transition duration-300"
               whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
               whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
             >

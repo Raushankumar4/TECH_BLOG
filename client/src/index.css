@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -61,4 +63,9 @@ body {
 .modal-scrollbar::-webkit-scrollbar-track {
   background: #f1f1f1; /* Color of the scrollbar track */
   border-radius: 6px; /* Rounded corners of the scrollbar track */
+}
+
+* {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
 }

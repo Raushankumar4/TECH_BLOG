@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import BlogCard from "./Blogcard";
 import { useGetMyPost } from "../../hooks/useGetMyPost";
 import axios from "axios";
-import { url, user, vlogrl } from "../../constant";
+import { url, vlogrl } from "../../constant";
 import { deleteVlog, getRefresh } from "../Redux/Store/Slices/vlogSlice";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { errorToast, successToast } from "../Notify/Notify";
 
 const Blog = () => {
   const userId = useSelector((state) => state.user.user);
@@ -25,9 +25,9 @@ const Blog = () => {
       });
       dispatch(getRefresh());
       dispatch(deleteVlog({ id: vlogId }));
-      toast.success(data?.message);
+      successToast(data?.message);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 

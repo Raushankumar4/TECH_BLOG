@@ -10,9 +10,9 @@ const AllBlog = () => {
   useGetAllPost();
 
   return (
-    <div className="max-h-screen">
+    <div className="w-full h-screen overflow-hidden dark:bg-gray-900">
       {allVlogs && allVlogs?.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-screen w-full text-center space-y-4">
+        <div className="flex flex-col items-center justify-center h-screen w-full text-center space-y-4 bg-gray-200">
           <span className="font-bold text-4xl">No vlogs found.</span>
           <Link
             to="/createVlog"

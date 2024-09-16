@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { url, vlogrl } from "../constant";
 import { setMyVlogs } from "../components/Redux/Store/Slices/vlogSlice";
-import toast from "react-hot-toast";
+import { errorToast } from "../components/Notify/Notify";
 
 export const useGetMyPost = (id) => {
   const token = useSelector((state) => state.auth.token);
@@ -23,9 +23,8 @@ export const useGetMyPost = (id) => {
           withCredentials: true,
         });
         dispatch(setMyVlogs(data?.posts));
-        toast.success(data?.message);
       } catch (error) {
-        toast.error(error?.response?.data?.message || error.message);
+        errorToast(error?.response?.data?.message || error.message);
       }
     };
 

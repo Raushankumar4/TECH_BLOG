@@ -18,7 +18,7 @@ export const useGetAllVlogComments = (vlogId) => {
           },
           withCredentials: true,
         });
-        console.log(data);
+
         dispatch(setComment(data?.comments));
       } catch (error) {
         console.log(error);

@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { url, user } from "../../../constant";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { errorToast, successToast } from "../../Notify/Notify";
 
 const UpdateProfile = () => {
   const cardVariants = {
@@ -94,18 +94,18 @@ const UpdateProfile = () => {
         }
       );
       setIsLoading(false);
-      toast.success(data?.message);
+      successToast(data?.message);
       navigate("/profile");
     } catch (error) {
       setIsLoading(false);
-      toast.error(error?.response?.data?.message || error?.message);
+      errorToast(error?.response?.data?.message || error?.message);
     }
   };
 
   return (
-    <div className="min-h-screen md:pt-[6vw] pt-[22vw] dark:bg-gray-900 w-full flex items-center justify-center bg-gray-100 p-4 dark:text-white">
+    <div className="min-h-screen md:pt-[6vw] pt-[22vw] dark:bg-gray-900 w-full flex items-center justify-center bg-gray-200 p-4 dark:text-white">
       <motion.div
-        className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden max-w-screen-md w-full h-full md:h-auto"
+        className="flex flex-col md:flex-row bg-gray-200 shadow-lg rounded-lg overflow-hidden max-w-screen-md w-full h-full md:h-auto"
         initial="hidden"
         animate="visible"
         variants={cardVariants}
@@ -145,7 +145,7 @@ const UpdateProfile = () => {
                 name="fullName"
                 value={updateProfile.fullName}
                 onChange={handleOnChange}
-                className="w-full p-2 border rounded-md dark:bg-gray-900 dark:text-white"
+                className="w-full p-2 bg-gray-50 border rounded-md dark:bg-gray-900 dark:text-white"
                 placeholder="Enter your name"
               />
             </div>
@@ -162,7 +162,7 @@ const UpdateProfile = () => {
                 name="username"
                 value={updateProfile.username}
                 onChange={handleOnChange}
-                className="w-full p-2 border rounded-md dark:bg-gray-900 dark:text-white"
+                className="w-full p-2 bg-gray-50 border rounded-md dark:bg-gray-900 dark:text-white"
                 placeholder="Enter your username"
               />
             </div>
@@ -176,7 +176,7 @@ const UpdateProfile = () => {
               <input
                 disabled
                 value={userProfile?.email}
-                className="w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white"
+                className="w-full p-2 bg-gray-50 border rounded-md dark:bg-gray-700 dark:text-white"
                 placeholder="Enter your email"
               />
             </div>
@@ -189,7 +189,7 @@ const UpdateProfile = () => {
               </label>
               <input
                 disabled
-                className="w-full p-2 border rounded-md dark:bg-gray-700 dark:text-white"
+                className="w-full bg-gray-50 p-2 border rounded-md dark:bg-gray-700 dark:text-white"
                 placeholder="*********"
               />
             </div>
@@ -206,7 +206,7 @@ const UpdateProfile = () => {
                 name="profileImage"
                 accept="image/*"
                 onChange={handleOnChange}
-                className="w-full opacity-0 border rounded-md dark:bg-gray-900 dark:text-white"
+                className="w-full opacity-0 border bg-gray-200 rounded-md dark:bg-gray-900 dark:text-white"
               />
 
               {imagePreview && (
@@ -219,11 +219,11 @@ const UpdateProfile = () => {
                 </button>
               )}
             </div>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 ">
               <motion.button
                 disabled={isLoading}
                 type="submit"
-                className="bg-blue-500 text-white py-3 px-6 rounded-lg text-lg hover:bg-blue-400 w-full md:w-auto"
+                className="bg-blue-500 text-white py-3 px-6 rounded-lg text-lg hover:bg-blue-400 w-full dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-600 md:w-auto"
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
@@ -234,7 +234,7 @@ const UpdateProfile = () => {
                 <motion.button
                   onClick={() => navigate(-1)}
                   type="button"
-                  className="bg-gray-600 text-white py-3 px-6 rounded-lg text-lg hover:bg-gray-500 w-full md:w-auto"
+                  className="bg-gray-600 dark:bg-gray-900 dark:text-gray-300 text-white py-3 px-6 rounded-lg text-lg hover:bg-gray-500 w-full md:w-auto"
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"

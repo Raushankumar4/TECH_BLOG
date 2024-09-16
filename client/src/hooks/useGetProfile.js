@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserProfile } from "../components/Redux/Store/Slices/userSlice";
+import { errorToast, successToast } from "../components/Notify/Notify";
 
 export const useGetProfile = (id) => {
   const navigate = useNavigate();
@@ -24,9 +25,9 @@ export const useGetProfile = (id) => {
           withCredentials: true,
         });
         dispatch(setUserProfile(data?.user));
-        toast.success(data?.message);
+        successToast(data?.message);
       } catch (error) {
-        toast.error(error?.response?.data?.message || error.message);
+        errorToast(error?.response?.data?.message || error.message);
         if (error?.response) {
           const { status, data } = error.response;
 

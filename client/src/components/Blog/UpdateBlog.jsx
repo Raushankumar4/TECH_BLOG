@@ -2,9 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { url, vlogrl } from "../../constant";
-import toast from "react-hot-toast";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { errorToast, successToast } from "../Notify/Notify";
 
 const UpdateBlog = () => {
   const token = useSelector((state) => state.auth.token);
@@ -94,12 +94,12 @@ const UpdateBlog = () => {
         }
       );
 
-      toast.success(data?.message);
+      successToast(data?.message);
       navigate(-1);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      toast.error(error?.response?.data?.message || error?.message);
+      errorToast(error?.response?.data?.message || error?.message);
     }
   };
 

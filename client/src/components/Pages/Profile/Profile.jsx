@@ -24,15 +24,15 @@ const Profile = () => {
     navigate("/upadateProfile");
   };
   return (
-    <div className="min-h-screen dark:bg-gray-900 w-full flex items-center justify-center bg-gray-100 p-4 dark:text-white">
+    <div className="min-h-screen dark:bg-gray-900 w-full flex items-center justify-center bg-gray-200 p-4 dark:text-white">
       <motion.div
-        className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden max-w-screen-md w-full h-full md:h-auto"
+        className="flex flex-col md:flex-row bg-gray-200 shadow-lg rounded-lg overflow-hidden max-w-screen-md w-full h-full md:h-auto"
         initial="hidden"
         animate="visible"
         variants={cardVariants}
       >
         {/* Left Side: User Profile Image */}
-        <div className="md:w-1/3 bg-gray-200">
+        <div className="md:w-1/3 bg-gray-200 dark:bg-gray-100">
           <div className="w-full h-48 md:h-full p-4 flex items-center justify-center">
             <img
               className="w-full h-full object-cover rounded-lg"
@@ -46,7 +46,7 @@ const Profile = () => {
         </div>
 
         {/* Right Side: User Details, Settings, and Update Profile */}
-        <div className="md:w-2/3 dark:bg-gray-800 p-4 md:p-6 flex flex-col justify-center">
+        <div className="md:w-2/3 dark:bg-gray-900 dark:shadow-gray-700 p-4 md:p-6 flex flex-col justify-center">
           <h2 className="text-2xl dark:text-white md:text-3xl font-bold text-gray-900">
             {userProfile?.fullName}
           </h2>
@@ -67,7 +67,7 @@ const Profile = () => {
           <div className="mt-4 md:mt-6 space-y-4 md:space-y-0 md:flex md:space-x-4">
             <motion.button
               onClick={handltoNavigate}
-              className="bg-gray-800 text-white py-3 px-6 rounded-lg text-lg md:text-xl hover:bg-gray-700 w-full md:w-auto"
+              className="bg-gray-800 text-white py-3 px-6 rounded-lg text-lg md:text-xl hover:bg-gray-700 dark:bg-gray-800 w-full md:w-auto"
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
@@ -76,7 +76,7 @@ const Profile = () => {
             </motion.button>
             <motion.button
               onClick={() => navigate("/updatePassword")}
-              className="bg-gray-600 text-white py-3 px-6 rounded-lg text-lg md:text-xl hover:bg-gray-500 w-full md:w-auto"
+              className="bg-gray-600 text-white py-3 px-6 rounded-lg text-lg md:text-xl hover:bg-gray-500 dark:bg-gray-800 w-full md:w-auto"
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"

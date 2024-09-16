@@ -6,7 +6,6 @@ import axios from "axios";
 import { url, user } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Store/Slices/authslice";
-import { toast } from "react-hot-toast";
 import { setUser, setUserProfile } from "../Redux/Store/Slices/userSlice";
 import ThemeToggle from "../../Utils/ThemeToggle";
 import {
@@ -17,6 +16,7 @@ import {
 import { useGetSavedPost } from "../../hooks/useGetSavedPost";
 import Modal from "../Modal/Modal";
 import Login from "../Auth/Login/Login";
+import { errorToast, successToast } from "../Notify/Notify";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,10 +44,10 @@ const Navbar = () => {
       dispatch(setAllVlogs(null));
       dispatch(setMyVlogs(null));
       dispatch(setComment(null));
-      toast.success(data?.message);
+      successToast(data?.message);
       navigate("/");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 
@@ -189,6 +189,17 @@ const Navbar = () => {
               </Link>
             </>
           )}
+          <>
+            {" "}
+            <ThemeToggle />
+          </>
+          <Link
+            onClick={() => setIsOpen(false)}
+            to="/"
+            className="hover:text-gray-600 text-white dark:hover:text-gray-300"
+          >
+            Home
+          </Link>
           <Link
             onClick={() => setIsOpen(false)}
             to="/contactUs"
@@ -196,13 +207,14 @@ const Navbar = () => {
           >
             Contact
           </Link>
+
           {!isAuthenticated && (
             <button
               onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
             >
               <Link
-                to="/contactUs"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
+                onClick={() => setIsOpen(false)}
+                className="hover:text-gray-600 text-white text-lg dark:hover:text-gray-300"
               >
                 Sign In
               </Link>
@@ -214,7 +226,7 @@ const Navbar = () => {
               onClick={handleLogout}
               className="text-white text-lg hover:text-gray-400"
             >
-              LogOut
+              <Link onClick={() => setIsOpen(false)}> LogOut</Link>
             </button>
           )}
         </motion.div>

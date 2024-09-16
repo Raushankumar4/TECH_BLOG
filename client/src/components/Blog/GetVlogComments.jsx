@@ -7,6 +7,7 @@ import { getRefresh, setComment } from "../Redux/Store/Slices/vlogSlice";
 import CommentCard from "./CommentCard";
 import toast from "react-hot-toast";
 import { useGetAllVlogComments } from "../../hooks/useGetAllComments";
+import { errorToast, successToast } from "../Notify/Notify";
 
 const GetVlogComments = () => {
   const { id } = useParams();
@@ -32,9 +33,9 @@ const GetVlogComments = () => {
         }
       );
       dispatch(getRefresh());
-      toast.success(data?.message);
+      successToast(data?.message);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 

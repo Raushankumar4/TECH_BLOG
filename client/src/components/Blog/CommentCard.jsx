@@ -5,6 +5,7 @@ import { url, vlogrl } from "../../constant";
 import { toast } from "react-hot-toast";
 import { getRefresh } from "../Redux/Store/Slices/vlogSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { errorToast, successToast } from "../Notify/Notify";
 
 const CommentCard = ({ comment, onDelete = () => {} }) => {
   const [editComment, setEditComment] = useState(false);
@@ -39,9 +40,9 @@ const CommentCard = ({ comment, onDelete = () => {} }) => {
       );
       dispatch(getRefresh());
       setEditComment(false);
-      toast.success(data?.message);
+      successToast(data?.message);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error.message);
+     errorToast(error?.response?.data?.message || error.message);
     }
   };
 

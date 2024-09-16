@@ -8,6 +8,7 @@ import { loginSuccess } from "../../Redux/Store/Slices/authslice";
 import { setUser } from "../../Redux/Store/Slices/userSlice";
 import Modal from "../../Modal/Modal";
 import SignUp from "../SignUp/SignUp";
+import { errorToast, successToast } from "../../Notify/Notify";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,11 +38,11 @@ const Login = () => {
       setIsLoading(false);
       dispatch(loginSuccess({ token: data?.token }));
       dispatch(setUser(data?.user));
-      toast.success(data?.message);
+     successToast(data?.message);
       navigate("/");
     } catch (error) {
       setIsLoading(false);
-      toast.error(error?.response?.data?.message || error.message);
+      errorToast(error?.response?.data?.message || error.message);
     }
   };
 

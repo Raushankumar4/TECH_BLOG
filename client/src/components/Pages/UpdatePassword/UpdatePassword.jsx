@@ -81,8 +81,8 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div className="min-h-screen mx-10 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200 dark:bg-gray-900">
+      <div className="w-full max-w-md mx-8 p-8 bg-gray-200 dark:bg-gray-900 rounded-lg shadow-xl dark:shadow-lg dark:shadow-gray-800/100">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
           Change Password
         </h2>
@@ -99,14 +99,14 @@ const UpdatePassword = () => {
               name="currentPassword"
               value={userInput.currentPassword}
               onChange={handleOnChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:border-gray-600 bg-gray-100 text-gray-400 dark:bg-gray-900 dark:text-gray-100"
               placeholder="Current Password"
             />
           </div>
           <div>
             <label
               htmlFor="new-password"
-              className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+              className="block text-sm  font-medium mb-1 text-gray-700 dark:text-gray-300"
             >
               New Password
             </label>
@@ -115,7 +115,7 @@ const UpdatePassword = () => {
               name="newPassword"
               value={userInput.newPassword}
               onChange={handleOnChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:border-gray-600  bg-gray-100 text-gray-400 dark:bg-gray-900 dark:text-gray-100"
               placeholder="New Password"
             />
           </div>
@@ -131,15 +131,15 @@ const UpdatePassword = () => {
               name="confirmPassword"
               value={userInput.confirmPassword}
               onChange={handleOnChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:border-gray-600  bg-gray-100 text-gray-400 dark:bg-gray-900 dark:text-gray-100"
               placeholder="Confirm New Password"
             />
           </div>
           <button
             type="submit"
             className={`w-full px-4 py-2 ${
-              isLoading ? "bg-gray-500" : "bg-blue-600"
-            } text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600`}
+              isLoading ? "bg-gray-400" : "bg-gray-600"
+            } text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 dark:bg-gray-800 focus:ring-blue-500 dark:hover:bg-gray-600`}
             disabled={isLoading}
           >
             {isLoading ? "Processing..." : "Change Password"}

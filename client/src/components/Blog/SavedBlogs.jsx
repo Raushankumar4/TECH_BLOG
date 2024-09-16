@@ -45,7 +45,7 @@ const SavedBlogs = () => {
 
   return (
     <motion.div
-      className="max-w-6xl md:mt-20 mt-[19vw] mb-[6vw] mx-10  md:mx-auto p-4 sm:p-6 bg-white dark:bg-gray-900 shadow-lg rounded-lg"
+      className="min-h-[100vh] mt-10   md:mx-auto p-4 sm:p-6 bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -53,7 +53,7 @@ const SavedBlogs = () => {
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
         Saved Blogs
       </h1>
-      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 mx-4 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {savedVlogs.length === 0 ? (
           <p className="text-gray-600 h-auto dark:text-gray-300">
             No saved blogs.
@@ -62,7 +62,7 @@ const SavedBlogs = () => {
           savedVlogs.map((blog) => (
             <motion.div
               key={blog._id}
-              className="bg-white dark:bg-gray-900 shadow-2xl rounded-xl overflow-hidden"
+              className="bg-gray-200 dark:bg-gray-900 shadow-2xl rounded-xl overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -72,7 +72,7 @@ const SavedBlogs = () => {
                   blog?.postImage ||
                   "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg?w=360"
                 }
-                className="w-full h-48 object-cover"
+                className="w-full dark:border-gray-600 h-48 object-cover"
               />
 
               <div className="p-4">
@@ -85,13 +85,13 @@ const SavedBlogs = () => {
                 <div className="mt-4 space-x-4">
                   <Link
                     to={`/blog/${blog._id}`}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
+                    className="bg-gray-500 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-600 transition dark:bg-gray-800 dark:hover:bg-dark-700"
                   >
                     Read
                   </Link>
                   <button
                     onClick={() => handleRemoveBlog(blog._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-800 transition dark:bg-gray-600 dark:hover:bg-gray-700"
+                    className="bg-gray-700 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-800 transition dark:bg-gray-600 dark:hover:bg-gray-700"
                   >
                     Remove
                   </button>

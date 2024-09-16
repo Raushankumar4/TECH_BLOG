@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { url, vlogrl } from "../constant";
 import axios from "axios";
 import { setAllVlogs } from "../components/Redux/Store/Slices/vlogSlice";
-import toast from "react-hot-toast";
 import { errorToast, successToast } from "../components/Notify/Notify";
 
 export const useGetAllPost = () => {
@@ -26,7 +25,6 @@ export const useGetAllPost = () => {
         });
 
         dispatch(setAllVlogs(data?.posts));
-        successToast(data?.message);
       } catch (error) {
         errorToast(error?.response?.data?.message || error.message);
       }

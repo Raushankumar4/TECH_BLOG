@@ -8,7 +8,7 @@ const successToast = (message) => {
       <div
         className={`${
           t.visible ? "animate-enter" : "animate-leave"
-        } flex items-center bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg`}
+        } flex items-center dark:bg-gray-900 bg-gray-600 text-white px-4 py-2 rounded-lg shadow-lg`}
       >
         <AiOutlineCheckCircle className="text-2xl mr-2" />
         <span>{message} 🔥👏</span>
