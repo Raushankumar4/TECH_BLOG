@@ -38,7 +38,7 @@ const Login = () => {
       setIsLoading(false);
       dispatch(loginSuccess({ token: data?.token }));
       dispatch(setUser(data?.user));
-     successToast(data?.message);
+      successToast(data?.message);
       navigate("/");
     } catch (error) {
       setIsLoading(false);
@@ -47,8 +47,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex dark:bg-gray-900 flex-col items-center justify-center   p-4 sm:p-8">
-      <div className="w-full max-w-md p-6  dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] rounded-lg shadow-lg bg-white">
+    <div className="flex dark:bg-gray-900 flex-col items-center justify-center p-4 sm:p-8">
+      <div className="w-full max-w-md p-6  dark:bg-gray-900  rounded-lg  bg-gray-100">
         <div className="text-center mb-6  dark:text-white">
           <h1 className="text-2xl md:text-3xl font-bold">Login</h1>
           <p className="text-gray-500 dark:text-white">Access your account.</p>
@@ -67,7 +67,7 @@ const Login = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm  dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]"
+              className="block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm  dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]"
             />
           </div>
           <div className="grid gap-2">
@@ -83,13 +83,13 @@ const Login = () => {
               type="password"
               name="password"
               placeholder="Enter your password"
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]"
+              className="block w-full px-3 bg-gray-50 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]"
             />
           </div>
           <button
             disabled={isLoading}
             type="submit"
-            className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 dark:bg-gray-800 bg-gray-600 text-white font-semibold rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
             {isLoading ? "Logging In..." : "Login"}
           </button>
@@ -102,7 +102,7 @@ const Login = () => {
           <button
             onClick={() => setIsOpenModal((prev) => !prev)}
             to="/signup"
-            className="font-medium text-blue-600 underline"
+            className="font-medium text-gray-800 dark:text-gray-400 underline"
           >
             Sign Up
           </button>

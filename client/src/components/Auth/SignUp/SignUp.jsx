@@ -102,8 +102,8 @@ const SignUp = () => {
   }, [imagePreview]);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-50 p-4 dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
-      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px]">
+    <div className="flex flex-col items-center  dark:border-gray-300 justify-center bg-gray-200 p-4 dark:text-white dark:bg-gray-900 ">
+      <div className="w-full max-w-4xl p-6 bg-gray-100 rounded-lg dark:text-white dark:bg-gray-900 ">
         <div className="grid gap-6">
           {/* Profile Image Section */}
           <div className="flex flex-col items-center justify-center">
@@ -224,7 +224,7 @@ const SignUp = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 bg-gray-600 dark:bg-gray-800 text-white font-semibold rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
               {isLoading ? "Signing Up..." : "Sign Up"}
             </button>
