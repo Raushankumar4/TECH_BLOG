@@ -34,10 +34,10 @@ const Blog = () => {
   return (
     <div>
       {vlog?.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-screen w-full text-center ">
+        <div className="flex bg-gray-200 dark:bg-gray-900 flex-col items-center justify-center h-screen w-full text-center ">
           <span className="font-bold text-4xl">No vlogs found.</span>
           <Link
-            className="my-2 p-2 bg-blue-800 text-white rounded-md shadow-lg hover:scale-110 duration-200  transition-all ease-in-out hover:bg-blue-700 hover:shadow-xl  "
+            className="my-2 p-2 bg-gray-800 text-white rounded-md shadow-lg hover:scale-110 duration-200  transition-all ease-in-out hover:bg-gray-700 hover:shadow-xl  "
             to="/createVlog"
           >
             Create Vlog

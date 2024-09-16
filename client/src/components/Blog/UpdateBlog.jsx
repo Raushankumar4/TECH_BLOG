@@ -105,7 +105,7 @@ const UpdateBlog = () => {
 
   return (
     <motion.div
-      className="max-w-4xl my-10 mx-auto p-4 sm:p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg"
+      className="max-w-4xl mt-14  mx-auto p-4 sm:p-6 bg-gray-200 dark:bg-gray-900 shadow-lg rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -113,13 +113,13 @@ const UpdateBlog = () => {
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
         <Link
           to={-1}
-          className="mx-4 rounded-md text-xl text-blue-500 hover:text-blue-600 dark:text-blue-400"
+          className="mx-4 rounded-md text-xl text-gray-500 hover:text-gray-600 dark:text-gray-400"
         >
           ←
         </Link>
         Create Vlog
       </h1>
-      <form onSubmit={handleOnUpdateVlog} className="space-y-6">
+      <form onSubmit={handleOnUpdateVlog} className="space-y-6 mb-10">
         {/* Title Input */}
         <motion.div
           className="animate-item"
@@ -197,7 +197,7 @@ const UpdateBlog = () => {
             <button
               type="button"
               onClick={handleAddCategory}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
+              className="bg-gray-500 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-600 transition dark:bg-gray-600 dark:hover:bg-gray-700"
             >
               Add
             </button>
@@ -282,7 +282,7 @@ const UpdateBlog = () => {
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-blue-600 dark:hover:bg-blue-700"
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg text-base hover:bg-blue-600 transition dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             {isLoading ? "Loading..." : "Update Vlog"}
           </button>
