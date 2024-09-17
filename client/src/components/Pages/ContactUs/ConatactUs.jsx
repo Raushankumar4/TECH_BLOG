@@ -175,7 +175,7 @@ const ContactUs = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-600 dark:bg-gray-800 dark:text-gray-300 transition disabled:bg-gray-400"
+                className="bg-gray-800 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-600 dark:bg-gray-800 dark:text-gray-300 transition disabled:bg-gray-400"
               >
                 {isSubmitting ? "Submitting..." : "Send Message"}
               </button>

@@ -123,7 +123,7 @@ const BlogDetail = () => {
       );
 
       console.log(data.message);
-
+      successToast(data?.message);
       dispatch(getRefresh());
     } catch (error) {
       console.log(error?.response?.data?.message || error.message);

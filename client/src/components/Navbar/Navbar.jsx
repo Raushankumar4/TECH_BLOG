@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { url, user } from "../../constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,9 +54,9 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 dark:bg-gray-900 bg-gray-200 dark:text-white text-gray-800 shadow-md z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold">
+        <NavLink to="/" className="text-2xl font-bold">
           TECH
-        </Link>
+        </NavLink>
         <button
           className="lg:hidden text-gray-800 dark:text-white text-2xl"
           onClick={() => setIsOpen(!isOpen)}
@@ -66,60 +66,82 @@ const Navbar = () => {
         </button>
         <div className="hidden lg:flex space-x-6 font-medium text-md">
           <ThemeToggle />
-          <Link to="/" className="hover:text-gray-600 dark:hover:text-gray-300">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-500 dark:text-blue-300"
+                : "hover:text-gray-600 dark:hover:text-gray-300"
+            }
+          >
             Home
-          </Link>
+          </NavLink>
           {isAuthenticated && (
             <>
-              <Link
+              <NavLink
                 to="/profile"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300"
+                    : "hover:text-gray-600 dark:hover:text-gray-300"
+                }
               >
                 Profile
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/bloglist"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300"
+                    : "hover:text-gray-600 dark:hover:text-gray-300"
+                }
               >
                 Blog
-              </Link>
-
-              <Link
+              </NavLink>
+              <NavLink
                 to="/myblog"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300"
+                    : "hover:text-gray-600 dark:hover:text-gray-300"
+                }
               >
                 My Blog
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/blog"
-                className="relative hover:text-gray-600 dark:hover:text-gray-300"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 relative"
+                    : "hover:text-gray-600 dark:hover:text-gray-300 relative"
+                }
               >
-                Saved Post
+                Favorite
                 {savedPost > 0 && (
-                  <span className="absolute top-[-10px] right-4  bg-gray-600 text-white rounded-full px-2 py-1 text-xs">
+                  <span className="absolute top-[-10px] right-4 bg-red-600 text-white rounded-full px-2 py-1 text-xs">
                     {savedPost}
                   </span>
                 )}
-              </Link>
+              </NavLink>
             </>
           )}
-
-          <Link
+          <NavLink
             to="/contactUs"
-            className="hover:text-gray-600 dark:hover:text-gray-300"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-500 dark:text-blue-300"
+                : "hover:text-gray-600 dark:hover:text-gray-300"
+            }
           >
             Contact
-          </Link>
-          {!isAuthenticated && (
-            <button
-              onClick={() => setIsPostOpen((prev) => !isAuthenticated && !prev)}
-            >
-              <Link className="hover:text-gray-600 dark:hover:text-gray-300">
+          </NavLink>
+          {!isAuthenticated ? (
+            <button onClick={() => setIsPostOpen((prev) => !prev)}>
+              <NavLink className="hover:text-gray-600 dark:hover:text-gray-300">
                 Sign In
-              </Link>
+              </NavLink>
             </button>
-          )}
-          {isAuthenticated && (
+          ) : (
             <button
               onClick={handleLogout}
               className="hover:text-gray-600 dark:hover:text-gray-300"
@@ -143,97 +165,121 @@ const Navbar = () => {
           >
             <HiX />
           </button>
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <>
               <ThemeToggle />
-              <Link
+              <NavLink
                 onClick={() => setIsOpen(false)}
                 to="/"
-                className="hover:text-gray-600 dark:hover:text-gray-300"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
+                }
               >
                 Home
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 onClick={() => setIsOpen(false)}
                 to="/profile"
-                className="text-white text-lg hover:text-gray-400"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
+                }
               >
                 Profile
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 onClick={() => setIsOpen(false)}
                 to="/bloglist"
-                className="text-white text-lg hover:text-gray-400"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
+                }
               >
                 Blog
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 onClick={() => setIsOpen(false)}
                 to="/myblog"
-                className="text-white text-lg hover:text-gray-400"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
+                }
               >
                 My Blog
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 onClick={() => setIsOpen(false)}
                 to="/blog"
-                className="text-white text-lg hover:text-gray-400"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg relative"
+                    : "text-white text-lg hover:text-gray-400 relative"
+                }
               >
-                Saved
+                Favorite
                 {savedPost > 0 && (
                   <span className="absolute top-[-10px] right-4 bg-red-600 text-white rounded-full px-2 py-1 text-xs">
                     {savedPost}
                   </span>
                 )}
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 onClick={() => setIsOpen(false)}
                 to="/contactUs"
-                className="text-white text-lg hover:text-gray-400"
-              >
-                Contact
-              </Link>
-            </>
-          )}
-
-          {!isAuthenticated && (
-            <>
-              <ThemeToggle />
-              <Link
-                onClick={() => setIsOpen(false)}
-                to="/"
-                className="hover:text-gray-600 text-white dark:hover:text-gray-300 text-lg"
-              >
-                Home
-              </Link>
-              <Link
-                onClick={() => setIsOpen(false)}
-                to="/contactUs"
-                className="text-white text-lg hover:text-gray-400"
-              >
-                Contact
-              </Link>
-              <button
-                onClick={() =>
-                  setIsPostOpen((prev) => !isAuthenticated && !prev)
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
                 }
               >
-                <Link
-                  onClick={() => setIsOpen(false)}
-                  className="hover:text-gray-600 text-white text-lg dark:hover:text-gray-300"
-                >
-                  Sign In
-                </Link>
+                Contact
+              </NavLink>
+              <button
+                onClick={handleLogout}
+                className="text-white text-lg hover:text-gray-400"
+              >
+                LogOut
               </button>
             </>
-          )}
-          {isAuthenticated && (
-            <button
-              onClick={handleLogout}
-              className="text-white text-lg hover:text-gray-400"
-            >
-              <Link onClick={() => setIsOpen(false)}> LogOut</Link>
-            </button>
+          ) : (
+            <>
+              <ThemeToggle />
+              <NavLink
+                onClick={() => setIsOpen(false)}
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
+                }
+              >
+                Home
+              </NavLink>
+              <NavLink
+                onClick={() => setIsOpen(false)}
+                to="/contactUs"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 dark:text-blue-300 text-lg"
+                    : "text-white text-lg hover:text-gray-400"
+                }
+              >
+                Contact
+              </NavLink>
+              <button onClick={() => setIsPostOpen((prev) => !prev)}>
+                <NavLink
+                  className="text-white text-lg hover:text-gray-400"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign In
+                </NavLink>
+              </button>
+            </>
           )}
         </motion.div>
       </div>
