@@ -24,7 +24,7 @@ const AllBlog = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 mx-4 sm:grid-cols-1 lg:grid-cols-1 ">
-            {allVlogs.map((vlogItem) => (
+            {allVlogs?.map((vlogItem) => (
               <AllBlogCard vlog={vlogItem} key={vlogItem?._id} />
             ))}
           </div>
