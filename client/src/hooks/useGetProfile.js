@@ -25,7 +25,6 @@ export const useGetProfile = (id) => {
           withCredentials: true,
         });
         dispatch(setUserProfile(data?.user));
-        successToast(data?.message);
       } catch (error) {
         errorToast(error?.response?.data?.message || error.message);
         if (error?.response) {

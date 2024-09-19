@@ -31,7 +31,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (isPostOpen) {
-      setIsOpen(false); // Close navbar when modal is open
+      setIsOpen(false);
     }
   }, [isPostOpen]);
 
