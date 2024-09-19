@@ -250,7 +250,7 @@ const Navbar = () => {
             <>
               <ThemeToggle />
               <NavLink
-                onClick={() => setIsOpen(false)}
+                onClick={() => setIsOpen(false) && setIsPostOpen(false)}
                 to="/"
                 className={({ isActive }) =>
                   isActive
