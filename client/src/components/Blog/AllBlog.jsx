@@ -15,7 +15,7 @@ const AllBlog = () => {
       return allVlogs;
     } else {
       return allVlogs.filter((vlog) =>
-        vlog?.title.toLowerCase().includes(searchQuery.toLowerCase())
+        vlog?.title?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
   };
@@ -38,7 +38,7 @@ const AllBlog = () => {
         </div>
       </div>
       <div className="flex-1 p-4">
-        {filteredVlogs.length === 0 ? (
+        {filteredVlogs?.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
             <span className="font-bold text-4xl">No vlogs found.</span>
             <Link
@@ -50,7 +50,7 @@ const AllBlog = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 mx-4 sm:grid-cols-1 lg:grid-cols-1">
-            {filteredVlogs.map((vlogItem) => (
+            {filteredVlogs?.map((vlogItem) => (
               <AllBlogCard vlog={vlogItem} key={vlogItem?._id} />
             ))}
           </div>
