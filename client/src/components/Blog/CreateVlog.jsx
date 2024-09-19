@@ -134,6 +134,7 @@ const CreateVlog = () => {
                 <input
                   type="text"
                   name="title"
+                  disabled={isLoading}
                   value={userInput.title}
                   onChange={handleOnChange}
                   placeholder="Enter the title"
@@ -157,6 +158,7 @@ const CreateVlog = () => {
                 <textarea
                   id="description"
                   name="description"
+                  disabled={isLoading}
                   value={userInput.description}
                   onChange={handleOnChange}
                   placeholder="Enter the description"
@@ -182,6 +184,7 @@ const CreateVlog = () => {
                   <input
                     type="text"
                     value={newCategory}
+                    disabled={isLoading}
                     onChange={(e) => setNewCategory(e.target.value)}
                     placeholder="Add a category"
                     className="mt-1 block  bg-gray-100 text-gray-400 w-full border border-gray-300 rounded-lg p-3  dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
@@ -195,6 +198,7 @@ const CreateVlog = () => {
                   <button
                     type="button"
                     onClick={handleAddCategory}
+                    disabled={isLoading}
                     className="bg-gray-600 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-600 transition dark:bg-gray-700 dark:hover:bg-gray-700"
                   >
                     Add
@@ -238,6 +242,7 @@ const CreateVlog = () => {
                   type="file"
                   id="image"
                   name="postImage"
+                  disabled={isLoading}
                   onChange={handleOnChange}
                   placeholder="Upload an image"
                   accept="image/*"
@@ -259,6 +264,7 @@ const CreateVlog = () => {
                     <button
                       type="button"
                       onClick={handleRemoveImage}
+                      disabled={isLoading}
                       className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700"
                     >
                       Remove

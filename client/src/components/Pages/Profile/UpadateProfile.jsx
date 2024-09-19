@@ -143,6 +143,7 @@ const UpdateProfile = () => {
               <input
                 type="text"
                 name="fullName"
+                disabled={isLoading}
                 value={updateProfile.fullName}
                 onChange={handleOnChange}
                 className="w-full p-2 bg-gray-50 border rounded-md dark:bg-gray-900 dark:text-white"
@@ -162,6 +163,7 @@ const UpdateProfile = () => {
                 name="username"
                 value={updateProfile.username}
                 onChange={handleOnChange}
+                disabled={isLoading}
                 className="w-full p-2 bg-gray-50 border rounded-md dark:bg-gray-900 dark:text-white"
                 placeholder="Enter your username"
               />
@@ -205,6 +207,7 @@ const UpdateProfile = () => {
                 type="file"
                 name="profileImage"
                 accept="image/*"
+                disabled={isLoading}
                 onChange={handleOnChange}
                 className="w-full opacity-0 border bg-gray-200 rounded-md dark:bg-gray-900 dark:text-white"
               />
@@ -213,6 +216,7 @@ const UpdateProfile = () => {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
+                  disabled={isLoading}
                   className="mt-2 text-red-500"
                 >
                   Remove Image

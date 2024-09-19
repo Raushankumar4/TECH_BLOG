@@ -137,6 +137,7 @@ const UpdateBlog = () => {
             type="text"
             name="title"
             value={userInput.title}
+            disabled={isLoading}
             onChange={handleOnChange}
             placeholder="Enter the title"
             className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
@@ -159,6 +160,7 @@ const UpdateBlog = () => {
           <textarea
             id="description"
             name="description"
+            disabled={isLoading}
             value={userInput.description}
             onChange={handleOnChange}
             placeholder="Enter the description"
@@ -184,6 +186,7 @@ const UpdateBlog = () => {
             <input
               type="text"
               value={newCategory}
+              disabled={isLoading}
               onChange={(e) => setNewCategory(e.target.value)}
               placeholder="Add a category"
               className="mt-1 block w-full border border-gray-300 rounded-lg p-3 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
@@ -197,6 +200,7 @@ const UpdateBlog = () => {
             <button
               type="button"
               onClick={handleAddCategory}
+              disabled={isLoading}
               className="bg-gray-500 text-white px-4 py-2 rounded-lg text-base hover:bg-gray-600 transition dark:bg-gray-600 dark:hover:bg-gray-700"
             >
               Add
@@ -214,6 +218,7 @@ const UpdateBlog = () => {
                 <button
                   type="button"
                   onClick={() => handleRemoveCategory(category)}
+                  disabled={isLoading}
                   className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500"
                 >
                   &times;
@@ -240,6 +245,7 @@ const UpdateBlog = () => {
             type="file"
             id="image"
             name="postImage"
+            disabled={isLoading}
             onChange={handleOnChange}
             placeholder="Upload an image"
             accept="image/*"
@@ -264,6 +270,7 @@ const UpdateBlog = () => {
               <button
                 type="button"
                 onClick={handleRemoveImage}
+                disabled={isLoading}
                 className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700"
               >
                 Remove

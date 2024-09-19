@@ -37,7 +37,9 @@ const ContactUs = () => {
         subject: "",
         message: "",
       });
+      setIsSubmitting(false);
     } catch (error) {
+      setIsSubmitting(false);
       console.error("Submission error:", error);
 
       alert(

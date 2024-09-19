@@ -114,6 +114,7 @@ const SignUp = () => {
                 accept="image/*"
                 name="profileImage"
                 className="absolute top-14 left-5 opacity-0 bg-gray-200 w-20  z-50 cursor-pointer"
+                disabled={isLoading}
               />
               <div className="relative flex justify-center items-center">
                 <img
@@ -125,6 +126,7 @@ const SignUp = () => {
                   <button
                     type="button"
                     onClick={handleRemoveImage}
+                    disabled={isLoading}
                     className="absolute top-1 right-1 bg-white p-1 rounded-full shadow-lg border border-gray-300 text-black text-lg"
                   >
                     &times;
@@ -153,6 +155,7 @@ const SignUp = () => {
                   type="text"
                   name="fullName"
                   onChange={handleInChange}
+                  disabled={isLoading}
                   placeholder="Enter your full name"
                   className="block w-full px-3 py-2 dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
@@ -171,6 +174,7 @@ const SignUp = () => {
                 <input
                   value={userInput.username}
                   type="text"
+                  disabled={isLoading}
                   name="username"
                   onChange={handleInChange}
                   placeholder=" username"
@@ -192,6 +196,7 @@ const SignUp = () => {
                   value={userInput.email}
                   type="email"
                   name="email"
+                  disabled={isLoading}
                   onChange={handleInChange}
                   placeholder="Enter your email"
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -213,6 +218,7 @@ const SignUp = () => {
                   name="password"
                   value={userInput.password}
                   onChange={handleInChange}
+                  disabled={isLoading}
                   placeholder="Enter a password"
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none dark:text-white dark:bg-gray-900 dark:border-gray-800 dark:border-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
