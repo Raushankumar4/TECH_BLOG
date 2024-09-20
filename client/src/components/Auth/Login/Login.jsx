@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url, user } from "../../../constant";
 import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
 import { loginSuccess } from "../../Redux/Store/Slices/authslice";
 import { setUser } from "../../Redux/Store/Slices/userSlice";
 import Modal from "../../Modal/Modal";
@@ -39,7 +38,8 @@ const Login = () => {
       dispatch(loginSuccess({ token: data?.token }));
       dispatch(setUser(data?.user));
       successToast(data?.message);
-      navigate("/");
+      setIsOpenModal(false);
+      navgivate("/");
     } catch (error) {
       setIsLoading(false);
       errorToast(error?.response?.data?.message || error.message);
@@ -114,11 +114,7 @@ const Login = () => {
       <Modal
         disabled={isLoading}
         isOpen={isOpenModal}
-        onClose={() =>
-          setIsOpenModal(() => {
-            navgivate("/");
-          })
-        }
+        onClose={() => setIsOpenModal(false)}
       >
         <SignUp />
       </Modal>

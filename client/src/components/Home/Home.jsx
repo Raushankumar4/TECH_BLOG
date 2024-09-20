@@ -62,16 +62,16 @@ const HomePage = () => {
               whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
             >
               {!isAuthenticated ? (
-                "Create Account"
+                "Create Your Account"
               ) : (
-                <Link to="/createVlog">Create Article</Link>
+                <Link to="/createVlog">Create an Article</Link>
               )}
             </motion.button>
           </motion.div>
         </div>
         {!isAuthenticated && (
           <Modal isOpen={isPostOpen} onClose={() => setIsPostOpen(false)}>
-            <SignUp />
+            {isPostOpen && <SignUp />}
           </Modal>
         )}
       </div>
