@@ -11,7 +11,7 @@
     <li><a href="#installation">Installation</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+
 </ul>
 
 <h2 id="features">Features</h2>
@@ -70,8 +70,7 @@ JWT_SECRET=your_jwt_secret
 </ol>
 <p>Please ensure your code follows the project's coding standards and includes tests where applicable.</p>
 
-<h2 id="license">License</h2>
-<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+
 
 <p>Thank you for checking out the Blog Website! We hope you find it useful and engaging. If you have any questions or feedback, feel free to open an issue or reach out!</p>
 
