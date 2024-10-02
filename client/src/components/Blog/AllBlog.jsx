@@ -14,7 +14,7 @@ const AllBlog = () => {
     if (!searchQuery) {
       return allVlogs;
     } else {
-      return allVlogs.filter((vlog) =>
+      return allVlogs?.filter((vlog) =>
         vlog?.title?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
