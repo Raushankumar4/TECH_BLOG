@@ -3,9 +3,9 @@
 <h1>Blog Website </h1>
 
 <p>Welcome to the Blog Website! This repository contains the code for a simple, user-friendly blog platform where users can read, create, and manage blog posts.</p>
+<a href="https://tech-blog-smoky.vercel.app">Visit</a>
 
 <h2>Table of Contents</h2>
-    <li><a href="https://tech-blog-smoky.vercel.app">Visit</a></li>
 <ul>
     <li><a href="#features">Features</a></li>
     <li><a href="#technologies-used">Technologies Used</a></li>
